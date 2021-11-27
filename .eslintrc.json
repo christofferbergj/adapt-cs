@@ -17,5 +17,8 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"]
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "react/jsx-curly-brace-presence": [1, "never"]
+  }
 }

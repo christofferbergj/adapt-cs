@@ -8,16 +8,26 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "type-check": "tsc --pretty --noEmit",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
     "prepare": "husky install"
   },
+  "lent-staged": {
+    "*.@(ts|tsx)": [
+      "next lint --fix --file",
+      "npm run format"
+    ]
+  },
   "dependencies": {
-    "@emotion/react": "^11.7.0",
-    "@emotion/styled": "^11.6.0",
-    "@mui/material": "^5.2.1",
+    "@next-auth/prisma-adapter": "^0.5.2-next.19",
+    "@prisma/client": "^3.5.0",
     "clsx": "^1.1.1",
     "next": "12.0.4",
+    "next-auth": "^4.0.0-beta.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "redux-toolkit": "^1.1.2"
   },
   "devDependencies": {
     "@types/node": "16.11.10",
@@ -34,13 +44,9 @@
     "lint-staged": "^12.1.2",
     "postcss": "^8.4.3",
     "prettier": "^2.5.0",
+    "prettier-plugin-prisma": "^3.5.0",
+    "prisma": "^3.5.0",
     "tailwindcss": "^2.2.19",
     "typescript": "4.5.2"
-  },
-  "lint-staged": {
-    "*.@(ts|tsx)": [
-      "next lint --fix --file",
-      "npm run format"
-    ]
   }
 }
