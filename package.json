@@ -39,7 +39,7 @@
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
-      "eslint --fix",
+      "next lint --fix --file",
       "npm run format"
     ]
   }
