@@ -26,11 +26,16 @@
     "@next-auth/prisma-adapter": "^0.5.2-next.19",
     "@prisma/client": "^3.5.0",
     "clsx": "^1.1.1",
+    "dayjs": "^1.10.7",
     "next": "12.0.4",
     "next-auth": "^4.0.0-beta.7",
+    "next-superjson": "0.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "redux-toolkit": "^1.1.2"
+    "react-use": "^17.3.1",
+    "redux-toolkit": "^1.1.2",
+    "superjson": "^1.8.0",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "16.11.10",

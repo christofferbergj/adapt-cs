@@ -41,19 +41,12 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model FineType {
-  id    String @id @default(cuid())
-  title String
-  price Int    @default(10)
-  fines Fine[]
-}
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-model Fine {
-  id         String   @id @default(cuid())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  fineType   FineType @relation(fields: [fineTypeId], references: [id])
-  fineTypeId String
+  @@unique([identifier, token])
 }
 
 model User {
@@ -68,10 +61,20 @@ model User {
   fines         Fine[]
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model FineType {
+  id    String @id @default(cuid())
+  title String @unique
+  price Int    @default(10)
+  fines Fine[]
+}
 
-  @@unique([identifier, token])
+model Fine {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+  owner      User     @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  fineType   FineType @relation(fields: [fineTypeId], references: [id])
+  fineTypeId String
+  paid       Boolean  @default(false)
 }

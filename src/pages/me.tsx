@@ -1,37 +1,33 @@
-import dayjs from 'dayjs'
-import type { InferGetServerSidePropsType, NextPage } from 'next'
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+  NextPage,
+} from 'next'
+import { getSession } from 'next-auth/react'
 
 import { prisma } from '@lib/prisma'
 
 import { Layout } from '@components/common/Layout'
 import { Container } from '@components/layout/Container'
 import clsx from 'clsx'
+import dayjs from 'dayjs'
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
-const Home: NextPage<Props> = ({ fines }) => {
+const Me: NextPage<Props> = ({ fines }) => {
   return (
     <Layout>
       <Container>
         {fines.length > 0 && (
-          <div className="flex flex-col mx-auto my-14 max-w-screen-lg text-sm border rounded-lg">
+          <div className="flex flex-col mx-auto my-14 max-w-prose text-sm border rounded-lg">
             {fines.map((fine) => (
               <div
                 key={fine.id}
-                className="grid gap-4 grid-cols-4 items-center p-4 border-b"
+                className="flex gap-4 items-center justify-between p-4 border-b"
               >
                 <div className="flex flex-col">
-                  <span className="font-bold">Betaler</span>
-                  <span className="text-gray-500">{fine.owner.name}</span>
-                </div>
+                  <span className="font-bold">{fine.fineType.title}</span>
 
-                <div className="flex flex-col">
-                  <span className="font-bold">Bøde</span>
-                  <span className="text-gray-500">{fine.fineType.title}</span>
-                </div>
-
-                <div className="flex flex-col">
-                  <span className="font-bold">Betaler</span>
                   <span className="text-gray-500">
                     {dayjs(fine.createdAt).format('DD/MM/YYYY HH:MM')}
                   </span>
@@ -57,14 +53,19 @@ const Home: NextPage<Props> = ({ fines }) => {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({
+  req,
+}: GetServerSidePropsContext) => {
+  const session = await getSession({ req })
+
   const fines = await prisma.fine.findMany({
-    include: {
-      owner: true,
-      fineType: true,
+    where: {
+      owner: {
+        email: session?.user?.email,
+      },
     },
-    orderBy: {
-      createdAt: 'desc',
+    include: {
+      fineType: true,
     },
   })
 
@@ -75,4 +76,4 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default Home
+export default Me
