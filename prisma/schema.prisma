@@ -7,6 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -36,14 +41,31 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model FineType {
+  id    String @id @default(cuid())
+  title String
+  price Int    @default(10)
+  fines Fine[]
+}
+
+model Fine {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  fineType   FineType @relation(fields: [fineTypeId], references: [id])
+  fineTypeId String
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  role          Role      @default(USER)
   accounts      Account[]
   sessions      Session[]
+  fines         Fine[]
 }
 
 model VerificationToken {
