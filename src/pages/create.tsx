@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 import { useState } from 'react'
 import clsx from 'clsx'
 import Router from 'next/router'
-import type { NextPage, InferGetServerSidePropsType } from 'next'
+import type { NextPage, InferGetStaticPropsType } from 'next'
 
 import { prisma } from '@lib/prisma'
 import type { FineType, User } from '.prisma/client'
@@ -10,7 +10,7 @@ import type { FineType, User } from '.prisma/client'
 import { Layout } from '@components/common/Layout'
 import { Container } from '@components/layout/Container'
 
-type Props = InferGetServerSidePropsType<typeof getStaticProps>
+type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const Create: NextPage<Props> = ({ fineTypes, users }) => {
   const [selectedUser, setSelectedUser] = useState<User['id'] | null>(null)
