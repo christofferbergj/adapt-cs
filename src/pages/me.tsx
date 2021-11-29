@@ -58,16 +58,18 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const session = await getSession({ req })
 
-  const fines = await prisma.fine.findMany({
-    where: {
-      owner: {
-        email: session?.user?.email,
+  const fines = await prisma.fine
+    .findMany({
+      where: {
+        owner: {
+          email: session?.user?.email,
+        },
       },
-    },
-    include: {
-      fineType: true,
-    },
-  })
+      include: {
+        fineType: true,
+      },
+    })
+    .finally(async () => await prisma.$disconnect())
 
   return {
     props: {
