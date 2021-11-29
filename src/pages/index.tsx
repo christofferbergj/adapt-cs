@@ -33,7 +33,7 @@ const Home: NextPage<Props> = ({ fines }) => {
                 <div className="flex flex-col">
                   <span className="font-bold">Dato</span>
                   <span className="text-gray-500">
-                    {dayjs(fine.createdAt).format('DD/MM/YYYY HH:MM')}
+                    {dayjs(fine.createdAt).format('DD/MM/YYYY HH:mm')}
                   </span>
                 </div>
 
