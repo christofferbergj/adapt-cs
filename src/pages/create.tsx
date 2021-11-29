@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { useState } from 'react'
 import clsx from 'clsx'
+import Image from 'next/image'
 import Router from 'next/router'
 import type { NextPage, InferGetStaticPropsType } from 'next'
 
@@ -56,26 +57,6 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
     <Layout>
       <Container>
         <div className="py-20">
-          {fineTypes.length > 0 && (
-            <div className="grid gap-6 mb-20 sm:grid-cols-2 md:grid-cols-3">
-              {fineTypes.map((fineType) => (
-                <button
-                  key={fineType.id}
-                  onClick={() => setSelectedFineType(fineType.id)}
-                  className={clsx(
-                    'p-6 text-white bg-green-600 hover:bg-green-700 focus:bg-green-700 rounded outline-none shadow transition duration-100 text-lg',
-                    {
-                      'bg-green-800 ring-4 ring-green-500':
-                        selectedFineType === fineType.id,
-                    }
-                  )}
-                >
-                  <h2>{fineType.title}</h2>
-                </button>
-              ))}
-            </div>
-          )}
-
           {users.length > 0 && (
             <div className="grid gap-6 mb-20 sm:grid-cols-2 md:grid-cols-3">
               {users.map((user) => (
@@ -91,12 +72,35 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
                   )}
                 >
                   <div className="flex items-center space-x-5">
-                    <img
-                      className="ring-[3px] w-14 rounded-full ring-indigo-300"
-                      src={user.image}
-                    />
+                    {user.image ? (
+                      <Image
+                        alt="avatar"
+                        className="ring-[3px] w-14 rounded-full ring-indigo-300"
+                        src={user.image}
+                      />
+                    ) : null}
                     <h2 className="text-lg">{user.name}</h2>
                   </div>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {fineTypes.length > 0 && (
+            <div className="grid gap-6 mb-20 sm:grid-cols-2 md:grid-cols-3">
+              {fineTypes.map((fineType) => (
+                <button
+                  key={fineType.id}
+                  onClick={() => setSelectedFineType(fineType.id)}
+                  className={clsx(
+                    'p-6 text-white text-lg bg-green-600 hover:bg-green-700 focus:bg-green-700 rounded outline-none shadow transition duration-100',
+                    {
+                      'bg-green-800 ring-4 ring-green-500':
+                        selectedFineType === fineType.id,
+                    }
+                  )}
+                >
+                  <h2>{fineType.title}</h2>
                 </button>
               ))}
             </div>
