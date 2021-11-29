@@ -119,8 +119,10 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
 }
 
 export const getServerSideProps = async () => {
-  const fineTypes = await prisma.fineType.findMany()
-  const users = await prisma.user.findMany()
+  const getFineTypes = prisma.fineType.findMany()
+  const getUsers = prisma.user.findMany()
+
+  const [fineTypes, users] = await Promise.all([getFineTypes, getUsers])
 
   return {
     props: {
