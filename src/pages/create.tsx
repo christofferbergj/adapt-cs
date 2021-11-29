@@ -129,6 +129,7 @@ export const getStaticProps = async () => {
       fineTypes,
       users,
     },
+    revalidate: 10,
   }
 }
 
