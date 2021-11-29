@@ -18,7 +18,7 @@ const Home: NextPage<Props> = ({ fines }) => {
             {fines.map((fine) => (
               <div
                 key={fine.id}
-                className="grid gap-4 grid-cols-4 items-center p-4 border-b"
+                className="grid gap-4 grid-cols-5 items-center p-4 border-b"
               >
                 <div className="flex flex-col">
                   <span className="font-bold">Betaler</span>
@@ -34,6 +34,13 @@ const Home: NextPage<Props> = ({ fines }) => {
                   <span className="font-bold">Dato</span>
                   <span className="text-gray-500">
                     {dayjs(fine.createdAt).format('DD/MM/YYYY HH:MM')}
+                  </span>
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="font-bold">Status</span>
+                  <span className="text-gray-500">
+                    {fine.paid ? 'Betalt' : 'Ikke betalt'}
                   </span>
                 </div>
 
