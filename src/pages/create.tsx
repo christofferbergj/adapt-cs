@@ -10,7 +10,7 @@ import type { FineType, User } from '.prisma/client'
 import { Layout } from '@components/common/Layout'
 import { Container } from '@components/layout/Container'
 
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>
+type Props = InferGetServerSidePropsType<typeof getStaticProps>
 
 export const Create: NextPage<Props> = ({ fineTypes, users }) => {
   const [selectedUser, setSelectedUser] = useState<User['id'] | null>(null)
@@ -118,7 +118,7 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
   )
 }
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const getFineTypes = prisma.fineType.findMany()
   const getUsers = prisma.user.findMany()
 
