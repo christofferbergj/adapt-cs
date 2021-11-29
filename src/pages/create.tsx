@@ -63,7 +63,7 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
                   key={fineType.id}
                   onClick={() => setSelectedFineType(fineType.id)}
                   className={clsx(
-                    'p-6 text-white bg-green-600 hover:bg-green-700 focus:bg-green-700 rounded outline-none shadow transition duration-100',
+                    'p-6 text-white bg-green-600 hover:bg-green-700 focus:bg-green-700 rounded outline-none shadow transition duration-100 text-lg',
                     {
                       'bg-green-800 ring-4 ring-green-500':
                         selectedFineType === fineType.id,
@@ -90,7 +90,13 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
                     }
                   )}
                 >
-                  <h2>{user.name}</h2>
+                  <div className="flex items-center space-x-5">
+                    <img
+                      className="ring-[3px] w-14 rounded-full ring-indigo-300"
+                      src={user.image}
+                    />
+                    <h2 className="text-lg">{user.name}</h2>
+                  </div>
                 </button>
               ))}
             </div>
