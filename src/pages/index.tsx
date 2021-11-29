@@ -46,11 +46,7 @@ const Home: NextPage<Props> = ({ fines }) => {
 
                 <span
                   className={clsx(
-                    'ml-auto px-3 py-1 text-white font-bold rounded',
-                    {
-                      'bg-red-600': !fine.paid,
-                      'bg-green-600': fine.paid,
-                    }
+                    'ml-auto px-3 py-1 text-white font-bold bg-gray-300 rounded'
                   )}
                 >
                   {fine.fineType.price} kr.
