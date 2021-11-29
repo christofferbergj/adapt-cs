@@ -20,9 +20,6 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
 
   const canSubmit = selectedUser && selectedFineType
 
-  console.log('fineTypes', fineTypes)
-  console.log('users', users)
-
   const handleSubmitData = async () => {
     if (!canSubmit) return
 
