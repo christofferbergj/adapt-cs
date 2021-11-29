@@ -73,11 +73,15 @@ export const Create: NextPage<Props> = ({ fineTypes, users }) => {
                 >
                   <div className="flex items-center space-x-5">
                     {user.image ? (
-                      <Image
-                        alt="avatar"
-                        className="ring-[3px] w-14 rounded-full ring-indigo-300"
-                        src={user.image}
-                      />
+                      <div className="ring-[3px] w-[44px] h-[44px] rounded-full overflow-hidden ring-indigo-300">
+                        <Image
+                          alt="avatar"
+                          width={44}
+                          height={44}
+                          layout="fixed"
+                          src={user.image}
+                        />
+                      </div>
                     ) : null}
                     <h2 className="text-lg">{user.name}</h2>
                   </div>
@@ -129,7 +133,10 @@ export const getStaticProps = async () => {
   const getFineTypes = prisma.fineType.findMany()
   const getUsers = prisma.user.findMany()
 
-  const [fineTypes, users] = await Promise.all([getFineTypes, getUsers])
+  const [fineTypes, users] = await Promise.all([
+    getFineTypes,
+    getUsers,
+  ]).finally(async () => await prisma.$disconnect())
 
   return {
     props: {

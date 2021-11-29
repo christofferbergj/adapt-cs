@@ -8,4 +8,7 @@ module.exports = withSuperjson()({
 /** @type {import('next').NextConfig} */
 module.exports = withSuperjson()({
   reactStrictMode: true,
+  images: {
+    domains: ['lh3.googleusercontent.com'],
+  },
 })

@@ -61,15 +61,17 @@ const Home: NextPage<Props> = ({ fines }) => {
 }
 
 export const getServerSideProps = async () => {
-  const fines = await prisma.fine.findMany({
-    include: {
-      owner: true,
-      fineType: true,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  })
+  const fines = await prisma.fine
+    .findMany({
+      include: {
+        owner: true,
+        fineType: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+    .finally(async () => await prisma.$disconnect())
 
   return {
     props: {
