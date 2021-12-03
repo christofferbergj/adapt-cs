@@ -15,9 +15,12 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "paths": {
+      "@adapters/*": ["adapters/*"],
       "@api/*": ["pages/api/*"],
+      "@application/*": ["application/*"],
       "@components/*": ["components/*"],
       "@config/*": ["config/*"],
+      "@entities/*": ["entities/*"],
       "@lib/*": ["lib/*"],
       "@services/*": ["services/*"],
       "@styles/*": ["styles/*"],

@@ -1,13 +1,13 @@
-import dayjs from 'dayjs'
-import type { InferGetServerSidePropsType, NextPage } from 'next'
-
-import { prisma } from '@lib/prisma'
-
-import { Layout } from '@components/common/Layout'
-import { Container } from '@components/layout/Container'
 import clsx from 'clsx'
+import dayjs from 'dayjs'
+import type { InferGetStaticPropsType, NextPage } from 'next'
 
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>
+import { getFines } from '@services/fine/getFines'
+
+import { Container } from '@components/layout/Container'
+import { Layout } from '@components/common/Layout'
+
+type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 const Home: NextPage<Props> = ({ fines }) => {
   return (
@@ -40,7 +40,7 @@ const Home: NextPage<Props> = ({ fines }) => {
                 <div className="flex flex-col">
                   <span className="font-bold">Status</span>
                   <span className="text-gray-500">
-                    {fine.paid ? 'Betalt' : 'Ikke betalt'}
+                    {fine.isPaid ? 'Betalt' : 'Ikke betalt'}
                   </span>
                 </div>
 
@@ -60,18 +60,8 @@ const Home: NextPage<Props> = ({ fines }) => {
   )
 }
 
-export const getServerSideProps = async () => {
-  const fines = await prisma.fine
-    .findMany({
-      include: {
-        owner: true,
-        fineType: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
-    .finally(async () => await prisma.$disconnect())
+export const getStaticProps = async () => {
+  const fines = await getFines()
 
   return {
     props: {
