@@ -1,4 +1,5 @@
 import Prisma from '.prisma/client'
+import axios from 'axios'
 
 import type { Fine } from '@entities/fine/types'
 import type { FineService } from '@application/ports'
@@ -10,8 +11,7 @@ type ApiResponse = (Prisma.Fine & {
 
 export const getFines: FineService['getFines'] = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/fine')
-    const data: ApiResponse = await res.json()
+    const { data } = await axios.get('http://localhost:3000/api/fine')
 
     const transformer = (fine: typeof data[number]): Fine => ({
       id: fine.id,
