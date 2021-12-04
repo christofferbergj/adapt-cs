@@ -1,4 +1,4 @@
-import { useFineService } from '@services/fine'
+import { useFineService } from '@services/fines'
 
 export function useGetFines() {
   const fineService = useFineService()

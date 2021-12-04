@@ -1,6 +1,5 @@
 import type Prisma from '.prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/react'
 
 import { prisma } from '@lib/prisma'
 
@@ -15,13 +14,7 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<Response | Error>
 ) => {
-  const session = await getSession({ req })
   const { method } = req
-
-  //
-  // if (!session) {
-  //   res.status(400).json({ message: 'Not authenticated' })
-  // }
 
   if (method === 'GET') {
     try {

@@ -20,19 +20,19 @@ const options: NextAuthOptions = {
     async signIn({ user }) {
       return !!user.email?.endsWith('adaptagency.com')
     },
-    async session({ session, user }) {
-      const prismaUser = await prisma.user.findUnique({
-        where: {
-          id: user.id,
-        },
-      })
-
-      invariant(prismaUser, 'User does not exist')
-
-      session.user = prismaUser
-
-      return session
-    },
+    // async session({ session, user }) {
+    //   const prismaUser = await prisma.user.findUnique({
+    //     where: {
+    //       id: user.id,
+    //     },
+    //   })
+    //
+    //   invariant(prismaUser, 'User does not exist')
+    //
+    //   session.user = prismaUser
+    //
+    //   return session
+    // },
   },
 }
 

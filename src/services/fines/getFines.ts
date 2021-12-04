@@ -1,17 +1,12 @@
-import Prisma from '.prisma/client'
-import axios from 'axios'
+import api from '@services/api'
 
 import type { Fine } from '@entities/fine/types'
 import type { FineService } from '@application/ports'
-
-type ApiResponse = (Prisma.Fine & {
-  owner: Prisma.User
-  fineType: Prisma.FineType
-})[]
+import { getErrorMessage } from '@utils/getErrorMessage'
 
 export const getFines: FineService['getFines'] = async () => {
   try {
-    const { data } = await axios.get('http://localhost:3000/api/fine')
+    const { data } = await api.get('/fines')
 
     const transformer = (fine: typeof data[number]): Fine => ({
       id: fine.id,
@@ -33,8 +28,9 @@ export const getFines: FineService['getFines'] = async () => {
     const result: Fine[] = data.map(transformer)
 
     return result
-  } catch (e) {
-    console.warn('getFines catch', e)
+  } catch (error) {
+    const message = getErrorMessage(error)
+    console.warn(message)
 
     return []
   }

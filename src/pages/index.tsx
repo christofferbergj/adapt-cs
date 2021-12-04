@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import type { InferGetStaticPropsType, NextPage } from 'next'
 
-import { getFines } from '@services/fine/getFines'
+import { getFines } from '@services/fines/getFines'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'

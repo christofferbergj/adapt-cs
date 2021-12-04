@@ -1,5 +1,5 @@
 import type { Fine } from '@entities/fine/types'
-import { useFineService } from '@services/fine'
+import { useFineService } from '@services/fines'
 
 export function useCreateFine() {
   const fineService = useFineService()
