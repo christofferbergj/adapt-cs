@@ -17,22 +17,26 @@ const options: NextAuthOptions = {
   ],
   secret: process.env.SECRET,
   callbacks: {
-    async signIn({ user }) {
-      return !!user.email?.endsWith('adaptagency.com')
+    async signIn({ user, profile, account }) {
+      if (account.provider === 'google') {
+        return !!profile.email?.endsWith('@adaptagency.com')
+      }
+
+      return true
     },
-    // async session({ session, user }) {
-    //   const prismaUser = await prisma.user.findUnique({
-    //     where: {
-    //       id: user.id,
-    //     },
-    //   })
-    //
-    //   invariant(prismaUser, 'User does not exist')
-    //
-    //   session.user = prismaUser
-    //
-    //   return session
-    // },
+    async session({ session, user }) {
+      const savedUser = await prisma.user.findUnique({
+        where: {
+          id: user.id,
+        },
+      })
+
+      invariant(savedUser, 'User does not exist')
+
+      session.user = savedUser
+
+      return session
+    },
   },
 }
 

@@ -4,7 +4,7 @@ import { Layout } from '@components/common/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-export const Create: NextPage<Props> = ({ hello }) => {
+export const Statistics: NextPage<Props> = ({ hello }) => {
   return (
     <Layout>
       <h2>{hello}</h2>
@@ -20,4 +20,4 @@ export const getStaticProps = async () => {
   }
 }
 
-export default Create
+export default Statistics
