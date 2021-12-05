@@ -6,7 +6,9 @@ import type { GetResponseData } from '@pages/api/fines'
 import { getErrorMessage } from '@utils/getErrorMessage'
 import { AsyncReturnType } from 'type-fest'
 
-export const getFines: FineService['getFines'] = async () => {
+type GetFines = FineService['getFines']
+
+export const getFines: GetFines = async () => {
   try {
     const { data } = await api.get<GetResponseData['fines']>('/fines')
 
@@ -31,8 +33,7 @@ export const getFines: FineService['getFines'] = async () => {
       }
     }
 
-    const fines: AsyncReturnType<FineService['getFines']> =
-      data.map(transformer)
+    const fines: AsyncReturnType<GetFines> = data.map(transformer)
 
     return fines
   } catch (error) {
