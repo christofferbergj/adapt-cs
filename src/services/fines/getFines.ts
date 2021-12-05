@@ -4,6 +4,7 @@ import type { FineService } from '@application/ports'
 import type { GetResponseData } from '@pages/api/fines'
 
 import { getErrorMessage } from '@utils/getErrorMessage'
+import { AsyncReturnType } from 'type-fest'
 
 export const getFines: FineService['getFines'] = async () => {
   try {
@@ -30,7 +31,10 @@ export const getFines: FineService['getFines'] = async () => {
       }
     }
 
-    return data.map(transformer)
+    const fines: AsyncReturnType<FineService['getFines']> =
+      data.map(transformer)
+
+    return fines
   } catch (error) {
     const message = getErrorMessage(error)
     console.warn(message)

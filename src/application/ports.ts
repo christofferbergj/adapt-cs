@@ -1,8 +1,8 @@
 import type { Fine } from '@entities/fine/types'
 
-type CreateFinePayload = {
-  ownerId: Pick<Fine['owner'], 'id'>
-  fineTypeId: Pick<Fine['fineType'], 'id'>
+export type CreateFinePayload = {
+  ownerId: Fine['owner']['id']
+  fineTypeId: Fine['fineType']['id']
 }
 
 export interface FineService {

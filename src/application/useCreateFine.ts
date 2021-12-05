@@ -1,22 +1,20 @@
 import { useCallback } from 'react'
 
+import type { CreateFinePayload } from '@application/ports'
 import { useFineService } from '@services/fines'
-import { FineService } from '@application/ports'
 
-export function useCreateFine(payload: Parameters<FineService['createFine']>) {
+export function useCreateFine() {
   const { createFine } = useFineService()
 
-  const notificationMock = (message: string) => window.prompt(message)
-
-  const fn = async () => {
+  const fn = async (payload: CreateFinePayload) => {
     try {
-      await createFine(...payload)
+      await createFine(payload)
 
-      notificationMock('Successfully created fine')
-    } catch (e) {
-      notificationMock('Error occurred')
+      console.log('Successfully created fine')
+    } catch (error) {
+      console.error(error)
     }
   }
 
-  return useCallback(fn, [createFine, payload])
+  return useCallback(fn, [createFine])
 }

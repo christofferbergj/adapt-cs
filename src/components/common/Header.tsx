@@ -8,6 +8,7 @@ type Link = {
   href: string
   title: string
   isActive?: boolean
+  isAuth?: boolean
 }
 
 const links: Link[] = [
@@ -22,6 +23,7 @@ const links: Link[] = [
   {
     href: '/create',
     title: 'Create fine',
+    isAuth: true,
   },
 ]
 
@@ -32,9 +34,9 @@ export const Header = () => {
   return (
     <header className="border-gray-6 border-b">
       <div className="flex flex-col justify-between mx-auto px-5 max-w-screen-lg">
-        <div className="flex items-center justify-between py-4 min-h-[68px]">
+        <div className="min-h-[84px] flex items-center justify-between py-4 md:py-6">
           <Link href="/">
-            <a>Adapt CS</a>
+            <a className="text-xl font-bold">Adapt CS</a>
           </Link>
 
           {status === 'authenticated' ? (
@@ -48,21 +50,20 @@ export const Header = () => {
                 />
               </div>
             ) : null
-          ) : (
+          ) : status === 'unauthenticated' ? (
             <button onClick={() => signIn('google')}>Sign in</button>
-          )}
+          ) : null}
         </div>
 
-        <div className="flex -mb-px overflow-x-auto space-x-4 md:space-x-6">
+        <div className="flex -mb-px overflow-x-auto">
           {links.map(({ href, title }, i) => (
             <Link href={href} key={i}>
               <a
                 className={clsx(
-                  'pb-4 pt-2 whitespace-nowrap leading-none border-b border-transparent transition',
+                  'font-sm pb-4 pt-2 px-3 whitespace-nowrap leading-none border-b border-transparent',
                   {
-                    'dark:hover:border-gray-7 hover:border-gray-8':
-                      router.pathname !== href,
-                    'border-purple-9': router.pathname === href,
+                    'hover:border-gray-8': router.pathname !== href,
+                    'border-purple-9 font-semibold': router.pathname === href,
                   }
                 )}
               >

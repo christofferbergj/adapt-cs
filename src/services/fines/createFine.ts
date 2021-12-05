@@ -27,9 +27,9 @@ export const createFine: FineService['createFine'] = async (payload) => {
     }
 
     return fine
-  } catch (e) {
-    console.warn(getErrorMessage(e))
+  } catch (error) {
+    const message = getErrorMessage(error)
 
-    return null
+    throw new Error(message)
   }
 }

@@ -3,6 +3,7 @@ import type Prisma from '@prisma/client'
 
 import { apiHandler } from '@utils/apiHandler'
 import { prisma } from '@lib/prisma'
+import { getSession } from 'next-auth/react'
 
 export type GetResponseData = {
   fines: (Prisma.Fine & {
@@ -34,6 +35,11 @@ handler
   })
   .post<void, PostResponseData>(async (req, res) => {
     const { body } = req
+    const session = await getSession({ req })
+
+    if (session?.user?.email === 'christoffer.berg@adaptagency.com') {
+      res.status(401).json({ message: 'Not admin' })
+    }
 
     try {
       res.fine = await prisma.fine.create({
@@ -54,6 +60,7 @@ handler
           fineType: true,
         },
       })
+
       res.json(res.fine)
     } finally {
       prisma.$disconnect()
