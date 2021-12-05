@@ -22,6 +22,7 @@
       "@config/*": ["config/*"],
       "@entities/*": ["entities/*"],
       "@lib/*": ["lib/*"],
+      "@pages/*": ["pages/*"],
       "@services/*": ["services/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]

@@ -7,7 +7,9 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 export const Create: NextPage<Props> = ({ hello }) => {
   return (
     <Layout>
-      <h2>{hello}</h2>
+      <div className="bg-red-6 mx-auto px-5 py-16 max-w-prose">
+        <h2>{hello}</h2>
+      </div>
     </Layout>
   )
 }

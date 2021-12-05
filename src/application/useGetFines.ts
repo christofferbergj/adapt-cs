@@ -1,7 +1,9 @@
+import { useCallback } from 'react'
+
 import { useFineService } from '@services/fines'
 
 export function useGetFines() {
-  const fineService = useFineService()
+  const { getFines } = useFineService()
 
-  return async () => await fineService.getFines()
+  return useCallback(getFines, [getFines])
 }

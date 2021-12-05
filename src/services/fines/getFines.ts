@@ -1,33 +1,36 @@
 import api from '@services/api'
-
 import type { Fine } from '@entities/fine/types'
 import type { FineService } from '@application/ports'
+import type { GetResponseData } from '@pages/api/fines'
+
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 export const getFines: FineService['getFines'] = async () => {
   try {
-    const { data } = await api.get('/fines')
+    const { data } = await api.get<GetResponseData['fines']>('/fines')
 
-    const transformer = (fine: typeof data[number]): Fine => ({
-      id: fine.id,
-      createdAt: fine.createdAt.toString(),
-      updatedAt: fine.updatedAt.toString(),
-      isPaid: fine.paid,
-      fineType: {
-        id: fine.fineType.id,
-        price: fine.fineType.price,
-        title: fine.fineType.title,
-      },
-      owner: {
-        id: fine.owner.id,
-        name: fine.owner.name ?? 'No owner',
-        email: fine.owner.email ?? 'No email',
-      },
-    })
+    const transformer = (fine: typeof data[number]): Fine => {
+      const { createdAt, fineType, id, owner, paid, updatedAt } = fine
 
-    const result: Fine[] = data.map(transformer)
+      return {
+        id,
+        createdAt: createdAt.toString(),
+        updatedAt: updatedAt.toString(),
+        isPaid: paid,
+        fineType: {
+          id: fineType.id,
+          price: fineType.price,
+          title: fineType.title,
+        },
+        owner: {
+          id: owner.id,
+          name: owner.name ?? 'No owner',
+          email: owner.email ?? 'No email',
+        },
+      }
+    }
 
-    return result
+    return data.map(transformer)
   } catch (error) {
     const message = getErrorMessage(error)
     console.warn(message)

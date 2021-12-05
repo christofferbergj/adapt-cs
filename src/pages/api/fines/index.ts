@@ -1,41 +1,63 @@
-import type Prisma from '.prisma/client'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import nc from 'next-connect'
+import type Prisma from '@prisma/client'
 
+import { apiHandler } from '@utils/apiHandler'
 import { prisma } from '@lib/prisma'
 
-type Response = (Prisma.Fine & {
-  owner: Prisma.User
-  fineType: Prisma.FineType
-})[]
+export type GetResponseData = {
+  fines: (Prisma.Fine & {
+    owner: Prisma.User
+    fineType: Prisma.FineType
+  })[]
+}
 
-type Error = { message: string }
+export type PostResponseData = {
+  fine: Prisma.Fine & { owner: Prisma.User; fineType: Prisma.FineType }
+}
 
-const handler = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Response | Error>
-) => {
-  const { method } = req
+const handler = nc(apiHandler)
 
-  if (method === 'GET') {
+handler
+  .get<void, GetResponseData>(async (req, res) => {
     try {
-      const response = await prisma.fine.findMany({
+      res.fines = await prisma.fine.findMany({
         include: {
           owner: true,
           fineType: true,
         },
       })
 
-      res.status(200).json(response)
-    } catch (e) {
-      res.status(500).json({ message: 'Error occurred' })
+      res.json(res.fines)
     } finally {
       prisma.$disconnect()
     }
-  } else {
-    // Default
-    res.setHeader('Allow', ['GET'])
-    res.status(405).end(`Method ${method} Not Allowed`)
-  }
-}
+  })
+  .post<void, PostResponseData>(async (req, res) => {
+    const { body } = req
+
+    try {
+      res.fine = await prisma.fine.create({
+        data: {
+          fineType: {
+            connect: {
+              id: body.fineTypeId || '',
+            },
+          },
+          owner: {
+            connect: {
+              id: body.ownerId || '',
+            },
+          },
+        },
+        include: {
+          owner: true,
+          fineType: true,
+        },
+      })
+      res.json(res.fine)
+    } finally {
+      prisma.$disconnect()
+    }
+  })
 
 export default handler

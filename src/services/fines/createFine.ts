@@ -1,47 +1,34 @@
-import type { Fine } from '@entities/fine/types'
+import type { AsyncReturnType } from 'type-fest'
+
+import api from '@services/api'
 import type { FineService } from '@application/ports'
-import { prisma } from '@lib/prisma'
+import type { PostResponseData } from '@api/fines'
+import { getErrorMessage } from '@utils/getErrorMessage'
 
-export const createFine: FineService['createFine'] = async (fine) => {
-  const { fineType, owner, isPaid = false } = fine
-
+export const createFine: FineService['createFine'] = async (payload) => {
   try {
-    const response = await prisma.fine.create({
-      data: {
-        fineTypeId: fineType.id,
-        ownerId: owner.id,
-        paid: isPaid,
-      },
-      include: {
-        fineType: true,
-        owner: true,
-      },
-    })
+    const { data } = await api.post<PostResponseData['fine']>('/fines', payload)
 
-    const { createdAt, updatedAt, id, paid } = response
-    const { name, id: ownerId, email } = response.owner
-    const { price, id: fineTypeId, title } = response.fineType
-
-    const result: Fine = {
-      id: id,
-      isPaid: paid,
-      updatedAt: updatedAt.toString(),
-      createdAt: createdAt.toString(),
-      owner: {
-        id: ownerId,
-        email: email ?? 'No email',
-        name: name ?? 'No name',
-      },
+    const fine: AsyncReturnType<FineService['createFine']> = {
+      id: data.id,
+      isPaid: data.paid,
+      createdAt: data.createdAt.toString(),
+      updatedAt: data.updatedAt.toString(),
       fineType: {
-        id: fineTypeId,
-        title,
-        price,
+        id: data.fineType.id,
+        price: data.fineType.price,
+        title: data.fineType.title,
+      },
+      owner: {
+        id: data.owner.id,
+        name: data.owner.name ?? '',
+        email: data.owner.email ?? '',
       },
     }
 
-    return result
+    return fine
   } catch (e) {
-    console.warn(e)
+    console.warn(getErrorMessage(e))
 
     return null
   }

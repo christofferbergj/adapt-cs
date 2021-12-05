@@ -21,7 +21,7 @@ const links: Link[] = [
   },
   {
     href: '/create',
-    title: 'Add fines',
+    title: 'Create fine',
   },
 ]
 
