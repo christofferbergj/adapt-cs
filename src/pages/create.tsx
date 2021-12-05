@@ -10,8 +10,8 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 export const Create: NextPage<Props> = ({ hello }) => {
   const createFine = useCreateFine()
 
-  const ownerId = 'ckwrx83l40058uyib2r2uygav'
-  const fineTypeId = 'ckwt9apqv0057i3ib45bzxhym'
+  const ownerId = 'ckws11137000809le3sn9lg3p'
+  const fineTypeId = 'ckwrt6rxc002049ibq548p8uf'
 
   return (
     <Layout>
