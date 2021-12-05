@@ -16,9 +16,9 @@ export type PostResponseData = {
   fine: Prisma.Fine & { owner: Prisma.User; fineType: Prisma.FineType }
 }
 
-const handler = nc(apiHandler)
+const finesHandler = nc(apiHandler)
 
-handler
+finesHandler
   .get<void, GetResponseData>(async (req, res) => {
     try {
       res.fines = await prisma.fine.findMany({
@@ -37,7 +37,7 @@ handler
     const { body } = req
     const session = await getSession({ req })
 
-    if (session?.user?.email === 'christoffer.berg@adaptagency.com') {
+    if (session?.user?.email !== 'christoffer.berg@adaptagency.com') {
       res.status(401).json({ message: 'Not admin' })
     }
 
@@ -67,4 +67,4 @@ handler
     }
   })
 
-export default handler
+export default finesHandler
