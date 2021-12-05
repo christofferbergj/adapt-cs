@@ -12,7 +12,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const Create: NextPage<Props> = () => {
   const { mutate } = useCreateFine()
-  const { users } = useUsers()
+  const { users, isLoading } = useUsers()
 
   const ownerId = 'ckwtoot9l0028riib2jtnp4wr'
   const fineTypeId = 'ckwtos5df0215veibsteu37pv'
@@ -21,7 +21,9 @@ export const Create: NextPage<Props> = () => {
     <Layout>
       <Container>
         <div className="py-14">
-          {users && users.length > 0 ? (
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : users && users.length > 0 ? (
             <div>
               {users.map((user) => (
                 <div key={user.id}>
@@ -30,6 +32,7 @@ export const Create: NextPage<Props> = () => {
               ))}
             </div>
           ) : null}
+
           <button
             className="border-purple-6 px-3 py-1 text-sm border rounded"
             onClick={() => mutate({ ownerId, fineTypeId })}
