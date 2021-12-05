@@ -9,3 +9,8 @@ export type Fine = {
   fineType: FineType
   isPaid: boolean
 }
+
+export type CreateFine = {
+  ownerId: Fine['owner']['id']
+  fineTypeId: Fine['fineType']['id']
+}

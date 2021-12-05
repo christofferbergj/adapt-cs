@@ -20,6 +20,12 @@ const finesHandler = nc(apiHandler)
 
 finesHandler
   .get<void, GetResponseData>(async (req, res) => {
+    const session = await getSession({ req })
+
+    if (!session) {
+      res.status(401).json({ message: 'Not authenticated' })
+    }
+
     try {
       res.fines = await prisma.fine.findMany({
         include: {

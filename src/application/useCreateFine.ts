@@ -1,20 +1,14 @@
-import { useCallback } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
 
-import type { CreateFinePayload } from '@application/ports'
-import { useFineService } from '@services/fines'
+import { useFineAdapter } from '@adapters/fines'
 
 export function useCreateFine() {
-  const { createFine } = useFineService()
+  const queryClient = useQueryClient()
+  const { createFine, getFines } = useFineAdapter()
 
-  const fn = async (payload: CreateFinePayload) => {
-    try {
-      await createFine(payload)
-
-      console.log('Successfully created fine')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  return useCallback(fn, [createFine])
+  return useMutation(createFine, {
+    onSuccess: async () => {
+      return await queryClient.prefetchQuery('fines', getFines)
+    },
+  })
 }

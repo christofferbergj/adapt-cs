@@ -1,11 +1,11 @@
 import type { ResponseData } from '@api/fines/[id]'
 import type { Fine } from '@entities/fine/types'
-import type { FineService } from '@application/ports'
+import type { FineAdapter } from '@application/ports'
 
-import api from '@services/api'
+import api from '../api'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
-export const getFine: FineService['getFine'] = async (id: Fine['id']) => {
+export const getFine: FineAdapter['getFine'] = async (id: Fine['id']) => {
   try {
     const { data } = await api.get<ResponseData['fine']>(`/fines/${id}`)
 

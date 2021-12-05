@@ -1,10 +1,10 @@
-import type { FineService } from '@application/ports'
+import type { FineAdapter } from '@application/ports'
 
 import { createFine } from './createFine'
 import { getFine } from './getFine'
 import { getFines } from './getFines'
 
-export function useFineService(): FineService {
+export function useFineAdapter(): FineAdapter {
   return {
     createFine,
     getFines,

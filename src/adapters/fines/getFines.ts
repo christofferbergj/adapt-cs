@@ -1,12 +1,11 @@
-import api from '@services/api'
+import api from '@adapters/api'
 import type { Fine } from '@entities/fine/types'
-import type { FineService } from '@application/ports'
+import type { FineAdapter } from '@application/ports'
 import type { GetResponseData } from '@pages/api/fines'
 
 import { getErrorMessage } from '@utils/getErrorMessage'
-import { AsyncReturnType } from 'type-fest'
 
-type GetFines = FineService['getFines']
+type GetFines = FineAdapter['getFines']
 
 export const getFines: GetFines = async () => {
   try {
@@ -33,9 +32,7 @@ export const getFines: GetFines = async () => {
       }
     }
 
-    const fines: AsyncReturnType<GetFines> = data.map(transformer)
-
-    return fines
+    return data.map(transformer)
   } catch (error) {
     const message = getErrorMessage(error)
     console.warn(message)
