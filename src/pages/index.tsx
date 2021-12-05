@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import type { InferGetStaticPropsType, NextPage } from 'next'
+import type { InferGetServerSidePropsType, NextPage } from 'next'
 
 import { getFines } from '@services/fines/getFines'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>
 
 const Overview: NextPage<Props> = ({ fines }) => {
   console.log('fines', fines)
@@ -16,11 +16,11 @@ const Overview: NextPage<Props> = ({ fines }) => {
     <Layout>
       <Container>
         {fines.length > 0 && (
-          <div className="flex flex-col mx-auto my-14 max-w-screen-lg text-sm border border-gray-6 rounded-lg">
+          <div className="border-gray-6 flex flex-col mx-auto my-14 max-w-screen-lg text-sm border rounded-lg">
             {fines.map((fine) => (
               <div
                 key={fine.id}
-                className="grid gap-4 grid-cols-5 items-center p-5 border-b border-gray-6"
+                className="border-gray-6 grid gap-4 grid-cols-5 items-center p-5 border-b"
               >
                 <div className="flex flex-col">
                   <span className="font-bold">Betaler</span>
@@ -48,7 +48,7 @@ const Overview: NextPage<Props> = ({ fines }) => {
 
                 <span
                   className={clsx(
-                    'ml-auto px-4 py-2 text-white font-bold bg-red-9 rounded'
+                    'bg-red-9 ml-auto px-4 py-2 text-white font-bold rounded'
                   )}
                 >
                   {fine.fineType.price} kr.
@@ -62,7 +62,7 @@ const Overview: NextPage<Props> = ({ fines }) => {
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const fines = await getFines()
 
   return {
