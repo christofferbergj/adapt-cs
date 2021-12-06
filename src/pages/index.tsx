@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import type { InferGetStaticPropsType, NextPage } from 'next'
-import { dehydrate, QueryClient, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 
 import { getFines } from '@adapters/fines/getFines'
 
@@ -10,8 +10,10 @@ import { Layout } from '@components/common/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-const Overview: NextPage<Props> = () => {
-  const { data: fines, isLoading } = useQuery('fines', getFines)
+const Overview: NextPage<Props> = (props) => {
+  const { data: fines, isLoading } = useQuery('fines', getFines, {
+    initialData: props.fines,
+  })
 
   return (
     <Layout>
@@ -68,14 +70,11 @@ const Overview: NextPage<Props> = () => {
 }
 
 export async function getStaticProps() {
-  const queryClient = new QueryClient()
-
-  await queryClient.prefetchQuery('fines', getFines)
+  const fines = await getFines()
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
-      revalidate: 10,
+      fines,
     },
   }
 }

@@ -1,17 +1,19 @@
 import type { NextPage, InferGetStaticPropsType } from 'next'
-import { dehydrate, QueryClient } from 'react-query'
+import { useQuery } from 'react-query'
+
 import { getUsers } from '@adapters/users/getUsers'
 import { useCreateFine } from '@application/useCreateFine'
-import { useUsers } from '@application/useUsers'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-export const Create: NextPage<Props> = () => {
+export const Create: NextPage<Props> = (props) => {
   const { mutate } = useCreateFine()
-  const { users, isLoading } = useUsers()
+  const { data: users, isLoading } = useQuery('users', getUsers, {
+    initialData: props.users,
+  })
 
   const ownerId = 'ckwtoot9l0028riib2jtnp4wr'
   const fineTypeId = 'ckwtos5df0215veibsteu37pv'
@@ -45,14 +47,11 @@ export const Create: NextPage<Props> = () => {
 }
 
 export const getStaticProps = async () => {
-  const queryClient = new QueryClient()
-
-  await queryClient.prefetchQuery('users', getUsers)
+  const users = await getUsers()
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
-      revalidate: 10,
+      users,
     },
   }
 }
