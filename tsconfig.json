@@ -23,6 +23,7 @@
       "@entities/*": ["entities/*"],
       "@lib/*": ["lib/*"],
       "@pages/*": ["pages/*"],
+      "@public/*": ["/*"],
       "@services/*": ["services/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]

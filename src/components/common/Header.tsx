@@ -4,6 +4,9 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useSession, signIn } from 'next-auth/react'
 
+import logo from '/public/logo.png'
+import { Container } from '@components/layout/Container'
+
 type Link = {
   href: string
   title: string
@@ -33,11 +36,39 @@ export const Header = () => {
 
   return (
     <header className="border-gray-6 border-b">
-      <div className="flex flex-col justify-between mx-auto px-5 max-w-screen-lg">
-        <div className="min-h-[84px] flex items-center justify-between py-4 md:py-6">
+      <Container>
+        <div className="flex items-center justify-center py-6 md:py-10">
           <Link href="/">
-            <a className="text-xl font-bold">Adapt CS</a>
+            <a>
+              <Image
+                alt="logo"
+                src={logo}
+                placeholder="blur"
+                width={400}
+                height={400}
+              />
+            </a>
           </Link>
+        </div>
+
+        <div className="flex justify-between -mb-px text-sm">
+          <div className="flex">
+            {links.map(({ href, title }, i) => (
+              <Link href={href} key={i}>
+                <a
+                  className={clsx(
+                    'font-sm pb-4 px-3 py-3 whitespace-nowrap leading-none border-b border-transparent',
+                    {
+                      'hover:border-gray-8': router.pathname !== href,
+                      'border-purple-9 font-semibold': router.pathname === href,
+                    }
+                  )}
+                >
+                  {title}
+                </a>
+              </Link>
+            ))}
+          </div>
 
           {status === 'authenticated' ? (
             session?.user?.image ? (
@@ -51,28 +82,15 @@ export const Header = () => {
               </div>
             ) : null
           ) : status === 'unauthenticated' ? (
-            <button onClick={() => signIn('google')}>Sign in</button>
+            <button
+              className="font-sm hover:border-gray-8 pb-4 px-3 py-3 whitespace-nowrap leading-none border-b border-transparent hover:cursor-pointer"
+              onClick={() => signIn('google')}
+            >
+              Sign in
+            </button>
           ) : null}
         </div>
-
-        <div className="flex -mb-px">
-          {links.map(({ href, title }, i) => (
-            <Link href={href} key={i}>
-              <a
-                className={clsx(
-                  'font-sm py-4 px-3 whitespace-nowrap leading-none border-b border-transparent',
-                  {
-                    'hover:border-gray-8': router.pathname !== href,
-                    'border-purple-9 font-semibold': router.pathname === href,
-                  }
-                )}
-              >
-                {title}
-              </a>
-            </Link>
-          ))}
-        </div>
-      </div>
+      </Container>
     </header>
   )
 }
