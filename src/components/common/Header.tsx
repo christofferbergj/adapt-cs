@@ -55,12 +55,12 @@ export const Header = () => {
           ) : null}
         </div>
 
-        <div className="flex -mb-px overflow-x-auto">
+        <div className="flex -mb-px">
           {links.map(({ href, title }, i) => (
             <Link href={href} key={i}>
               <a
                 className={clsx(
-                  'font-sm pb-4 pt-2 px-3 whitespace-nowrap leading-none border-b border-transparent',
+                  'font-sm py-4 px-3 whitespace-nowrap leading-none border-b border-transparent',
                   {
                     'hover:border-gray-8': router.pathname !== href,
                     'border-purple-9 font-semibold': router.pathname === href,
