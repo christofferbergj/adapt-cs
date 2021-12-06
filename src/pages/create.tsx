@@ -1,6 +1,5 @@
 import type { NextPage, InferGetStaticPropsType } from 'next'
 import { dehydrate, QueryClient } from 'react-query'
-
 import { getUsers } from '@adapters/users/getUsers'
 import { useCreateFine } from '@application/useCreateFine'
 import { useUsers } from '@application/useUsers'

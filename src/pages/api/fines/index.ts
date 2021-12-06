@@ -1,9 +1,9 @@
 import nc from 'next-connect'
 import type Prisma from '@prisma/client'
+import { getSession } from 'next-auth/react'
 
 import { apiHandler } from '@utils/apiHandler'
 import { prisma } from '@lib/prisma'
-import { getSession } from 'next-auth/react'
 
 export type GetResponseData = {
   fines: (Prisma.Fine & {
@@ -20,12 +20,6 @@ const finesHandler = nc(apiHandler)
 
 finesHandler
   .get<void, GetResponseData>(async (req, res) => {
-    const session = await getSession({ req })
-
-    if (!session) {
-      res.status(401).json({ message: 'Not authenticated' })
-    }
-
     try {
       res.fines = await prisma.fine.findMany({
         include: {
