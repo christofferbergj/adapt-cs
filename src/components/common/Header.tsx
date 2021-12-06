@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { signOut, useSession, signIn } from 'next-auth/react'
-import { useRouter } from 'next/router'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
+import { useSession, signIn } from 'next-auth/react'
 
 type Link = {
   href: string

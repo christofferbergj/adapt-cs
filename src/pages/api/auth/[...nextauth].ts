@@ -17,7 +17,7 @@ const options: NextAuthOptions = {
   ],
   secret: process.env.SECRET,
   callbacks: {
-    async signIn({ user, profile, account }) {
+    async signIn({ profile, account }) {
       if (account.provider === 'google') {
         return !!profile.email?.endsWith('@adaptagency.com')
       }

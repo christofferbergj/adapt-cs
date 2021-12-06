@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import type { InferGetStaticPropsType, NextPage } from 'next'
-import { dehydrate, QueryClient, useQuery } from 'react-query'
+import { dehydrate, QueryClient } from 'react-query'
 
 import { getFines } from '@adapters/fines/getFines'
+import { useFines } from '@application/useFines'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
@@ -11,7 +12,7 @@ import { Layout } from '@components/common/Layout'
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 const Overview: NextPage<Props> = () => {
-  const { data: fines } = useQuery('fines', getFines)
+  const { fines } = useFines()
 
   return (
     <Layout>

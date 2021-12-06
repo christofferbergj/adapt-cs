@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
 
-import { useUsersService } from '@adapters/users'
+import { useUsersAdapter } from '@adapters/users'
 
 export function useUsers() {
-  const { getUsers } = useUsersService()
+  const { getUsers } = useUsersAdapter()
   const { data: users, ...rest } = useQuery('users', getUsers)
 
   return {

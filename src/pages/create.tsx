@@ -1,19 +1,18 @@
 import type { NextPage, InferGetStaticPropsType } from 'next'
-import { useQuery } from 'react-query'
+import { dehydrate, QueryClient } from 'react-query'
 
 import { getUsers } from '@adapters/users/getUsers'
 import { useCreateFine } from '@application/useCreateFine'
+import { useUsers } from '@application/useUsers'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-export const Create: NextPage<Props> = (props) => {
+export const Create: NextPage<Props> = () => {
   const { mutate } = useCreateFine()
-  const { data: users, isLoading } = useQuery('users', getUsers, {
-    initialData: props.users,
-  })
+  const { users } = useUsers()
 
   const ownerId = 'ckwtoot9l0028riib2jtnp4wr'
   const fineTypeId = 'ckwtos5df0215veibsteu37pv'
@@ -22,9 +21,7 @@ export const Create: NextPage<Props> = (props) => {
     <Layout>
       <Container>
         <div className="py-14">
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : users && users.length > 0 ? (
+          {users && users.length > 0 ? (
             <div>
               {users.map((user) => (
                 <div key={user.id}>
@@ -47,11 +44,12 @@ export const Create: NextPage<Props> = (props) => {
 }
 
 export const getStaticProps = async () => {
-  const users = await getUsers()
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery('users', getUsers)
 
   return {
     props: {
-      users,
+      dehydratedState: dehydrate(queryClient),
     },
   }
 }
