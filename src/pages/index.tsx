@@ -11,15 +11,13 @@ import { Layout } from '@components/common/Layout'
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 const Overview: NextPage<Props> = () => {
-  const { data: fines, isLoading } = useQuery('fines', getFines)
+  const { data: fines } = useQuery('fines', getFines)
 
   return (
     <Layout>
       <div className="py-14">
         <Container>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : fines && fines.length > 0 ? (
+          {fines && fines.length > 0 ? (
             <div className="border-gray-6 flex flex-col text-sm border rounded-lg">
               {fines.map((fine) => (
                 <div
