@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 
-import { useFineAdapter } from '@adapters/fines'
+import { useFineAdapter } from '@features/fine/adapters'
 
 export function useFines() {
   const { getFines } = useFineAdapter()

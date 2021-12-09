@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query'
 
-import { useFineAdapter } from '@adapters/fines'
+import { useFineAdapter } from '@features/fine/adapters'
 
 export function useCreateFine() {
   const queryClient = useQueryClient()

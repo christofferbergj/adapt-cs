@@ -30,7 +30,7 @@ finesHandler
 
       res.json(res.fines)
     } finally {
-      prisma.$disconnect()
+      await prisma.$disconnect()
     }
   })
   .post<void, PostResponseData>(async (req, res) => {

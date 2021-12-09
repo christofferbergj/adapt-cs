@@ -1,6 +1,6 @@
 import type { AsyncReturnType } from 'type-fest'
 
-import api from '../api'
+import api from '@application/api'
 import type { FineAdapter } from '@application/ports'
 import type { PostResponseData } from '@api/fines'
 import { getErrorMessage } from '@utils/getErrorMessage'

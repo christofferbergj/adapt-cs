@@ -1,8 +1,7 @@
-import api from '@adapters/api'
+import api from '@application/api'
 import type { GetResponseData } from '@api/users'
-import type { User } from '@entities/user/types'
+import type { User } from '@features/user/entities/types'
 import type { UserAdapter } from '@application/ports'
-
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 type GetUsers = UserAdapter['getUsers']

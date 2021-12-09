@@ -1,5 +1,5 @@
 import type { UserAdapter } from '@application/ports'
-import { getUsers } from '@adapters/users/getUsers'
+import { getUsers } from '@features/user/adapters/getUsers'
 
 export function useUsersAdapter(): UserAdapter {
   return {

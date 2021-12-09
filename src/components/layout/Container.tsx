@@ -1,12 +1,19 @@
 import { ReactNode } from 'react'
+import clsx from 'clsx'
 
 type Props = {
+  className?: string
   children: ReactNode
 }
 
-export const Container = ({ children }: Props) => {
+export const Container = ({ className, children }: Props) => {
   return (
-    <div className="content-box mx-auto px-5 w-full max-w-screen-lg">
+    <div
+      className={clsx(
+        'content-box mx-auto px-5 w-full max-w-screen-lg',
+        className
+      )}
+    >
       {children}
     </div>
   )

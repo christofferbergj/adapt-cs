@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query'
-
-import { useUsersAdapter } from '@adapters/users'
+import { useUsersAdapter } from '@features/user/adapters'
 
 export function useUsers() {
   const { getUsers } = useUsersAdapter()

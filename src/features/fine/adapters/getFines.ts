@@ -1,8 +1,7 @@
-import api from '@adapters/api'
-import type { Fine } from '@entities/fine/types'
+import api from '@application/api'
+import type { Fine } from '@features/fine/entities/types'
 import type { FineAdapter } from '@application/ports'
-import type { GetResponseData } from '@pages/api/fines'
-
+import type { GetResponseData } from '@api/fines'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 type GetFines = FineAdapter['getFines']

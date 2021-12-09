@@ -1,12 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { Options } from 'next-connect'
+
 import { getErrorMessage } from '@utils/getErrorMessage'
 
-export const apiHandler = {
-  onError: (err: unknown, req: NextApiRequest, res: NextApiResponse) => {
+export const apiHandler: Options<NextApiRequest, NextApiResponse> = {
+  onError: (err: unknown, req, res) => {
     const message = getErrorMessage(err)
     res.status(500).end(message)
   },
-  onNoMatch: (req: NextApiRequest, res: NextApiResponse) => {
+  onNoMatch: (req, res) => {
     res.status(405).send(`Method ${req.method} Not Allowed`)
   },
 }

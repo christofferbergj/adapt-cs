@@ -1,8 +1,7 @@
-import type { ResponseData } from '@api/fines/[id]'
-import type { Fine } from '@entities/fine/types'
+import api from '@application/api'
+import type { Fine } from '@features/fine/entities/types'
 import type { FineAdapter } from '@application/ports'
-
-import api from '../api'
+import type { ResponseData } from '@api/fines/[id]'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 export const getFine: FineAdapter['getFine'] = async (id: Fine['id']) => {
