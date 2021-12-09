@@ -79,4 +79,7 @@ model Fine {
   fineType   FineType @relation(fields: [fineTypeId], references: [id])
   fineTypeId String
   paid       Boolean  @default(false)
+
+  @@index([fineTypeId])
+  @@index([ownerId])
 }
