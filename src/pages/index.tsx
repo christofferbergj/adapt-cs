@@ -92,7 +92,7 @@ const MobileSteffen = () => {
     Array.from({ length }, () => ['0%', '5%']).flat()
 
   return (
-    <div className="top-[-6%] md:top-[-9%] absolute z-0 left-0 w-full pointer-events-none overflow-hidden lg:hidden">
+    <div className="top-[-7%] md:top-[-9%] absolute z-0 left-0 w-full pointer-events-none overflow-hidden lg:hidden">
       <motion.div
         className="inline-block"
         animate={{
