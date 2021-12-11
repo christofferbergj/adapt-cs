@@ -24,6 +24,7 @@ export const getFine: FineAdapter['getFine'] = async (id: Fine['id']) => {
         id: data.owner.id,
         name: data.owner.name ?? '',
         email: data.owner.email ?? '',
+        avatar: data.owner.image,
       },
     }
 

@@ -11,7 +11,8 @@ type Link = {
   href: string
   title: string
   isActive?: boolean
-  isAuth?: boolean
+  isAdmin?: boolean
+  isDisabled?: boolean
 }
 
 const links: Link[] = [
@@ -20,13 +21,9 @@ const links: Link[] = [
     title: 'Overview',
   },
   {
-    href: '/statistics',
-    title: 'Statistics',
-  },
-  {
     href: '/create',
     title: 'Create fine',
-    isAuth: true,
+    isAdmin: true,
   },
 ]
 
@@ -39,8 +36,11 @@ export const Header = () => {
       <Container>
         <div className="flex items-center justify-between py-6">
           <Link href="/">
-            <a className="px-3 py-2 text-sm font-bold border border-purple-6 hover:border-purple-7 rounded transition-colors">
-              Adapt CS
+            <a className="px-3 py-2 text-sm font-bold border border-purple-6 hover:border-purple-7 rounded transition-colors hover:cursor-default">
+              Adapt CS{' '}
+              <span className="ml-2" aria-label="gun emoji">
+                🔫
+              </span>
             </a>
           </Link>
 
@@ -77,21 +77,27 @@ export const Header = () => {
 
         <div className="flex items-center justify-between -mb-px text-sm">
           <div className="flex">
-            {links.map(({ href, title }, i) => (
-              <Link href={href} key={i}>
-                <a
-                  className={clsx(
-                    'font-sm px-3 py-5 whitespace-nowrap leading-none border-b border-transparent transition-colors',
-                    {
-                      'hover:border-gray-8': router.pathname !== href,
-                      'border-purple-9 font-semibold': router.pathname === href,
-                    }
-                  )}
-                >
-                  {title}
-                </a>
-              </Link>
-            ))}
+            {links.map(({ href, title, isAdmin, isDisabled }, i) => {
+              if (isAdmin && session?.user.role !== 'ADMIN') return null
+
+              return (
+                <Link href={href} key={i}>
+                  <a
+                    className={clsx(
+                      'font-sm px-3 py-5 whitespace-nowrap leading-none border-b border-transparent transition-colors',
+                      {
+                        'opacity-40 pointer-events-none': isDisabled,
+                        'hover:border-gray-8': router.pathname !== href,
+                        'border-purple-9 font-semibold':
+                          router.pathname === href,
+                      }
+                    )}
+                  >
+                    {title}
+                  </a>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </Container>

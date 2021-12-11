@@ -23,6 +23,7 @@ export const createFine: FineAdapter['createFine'] = async (payload) => {
         id: data.owner.id,
         name: data.owner.name ?? '',
         email: data.owner.email ?? '',
+        avatar: data.owner.image,
       },
     }
 

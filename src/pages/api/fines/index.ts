@@ -6,6 +6,7 @@ import { apiHandler } from '@utils/apiHandler'
 import { prisma } from '@lib/prisma'
 
 export type GetResponseData = {
+  count: number
   fines: (Prisma.Fine & {
     owner: Prisma.User
     fineType: Prisma.FineType
@@ -19,16 +20,27 @@ export type PostResponseData = {
 const finesHandler = nc(apiHandler)
 
 finesHandler
-  .get<void, GetResponseData>(async (req, res) => {
+  .get(async (req, res) => {
     try {
-      res.fines = await prisma.fine.findMany({
-        include: {
-          owner: true,
-          fineType: true,
-        },
-      })
+      const [count, fines] = await prisma.$transaction([
+        prisma.fine.count(),
+        prisma.fine.findMany({
+          take: Number(req.query.take) || 5,
+          skip: Number(req.query.skip) || undefined,
+          include: {
+            owner: true,
+            fineType: true,
+          },
+          orderBy: [{ paid: 'asc' }, { createdAt: 'desc' }],
+        }),
+      ])
 
-      res.json(res.fines)
+      const response: GetResponseData = {
+        fines,
+        count,
+      }
+
+      res.json(response)
     } finally {
       await prisma.$disconnect()
     }

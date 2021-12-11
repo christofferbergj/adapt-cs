@@ -32,7 +32,6 @@ const options: NextAuthOptions = {
       })
 
       invariant(savedUser, 'User does not exist')
-
       session.user = savedUser
 
       return session

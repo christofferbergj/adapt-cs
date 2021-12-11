@@ -6,11 +6,18 @@ import { getErrorMessage } from '@utils/getErrorMessage'
 
 type GetFines = FineAdapter['getFines']
 
-export const getFines: GetFines = async () => {
+export const getFines: GetFines = async (params) => {
   try {
-    const { data } = await api.get<GetResponseData['fines']>('/fines')
+    const { data } = await api.get<GetResponseData>('/fines', {
+      params: {
+        skip: params?.skip,
+        take: params?.take,
+      },
+    })
 
-    const transformer = (fine: typeof data[number]): Fine => {
+    const { fines, count } = data
+
+    const transformer = (fine: typeof fines[number]): Fine => {
       const { createdAt, fineType, id, owner, paid, updatedAt } = fine
 
       return {
@@ -27,15 +34,22 @@ export const getFines: GetFines = async () => {
           id: owner.id,
           name: owner.name ?? 'No owner',
           email: owner.email ?? 'No email',
+          avatar: owner.image,
         },
       }
     }
 
-    return data.map(transformer)
+    return {
+      fines: fines.map(transformer),
+      count,
+    }
   } catch (error) {
     const message = getErrorMessage(error)
     console.warn(message)
 
-    return []
+    return {
+      fines: [],
+      count: 0,
+    }
   }
 }

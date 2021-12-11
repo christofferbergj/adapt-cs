@@ -8,7 +8,7 @@ export function useCreateFine() {
 
   return useMutation(createFine, {
     onSuccess: async () => {
-      return await queryClient.prefetchQuery('fines', getFines)
+      return await queryClient.prefetchQuery('fines', () => getFines())
     },
   })
 }

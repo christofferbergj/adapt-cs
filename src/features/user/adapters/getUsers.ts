@@ -11,12 +11,13 @@ export const getUsers: GetUsers = async () => {
     const { data } = await api.get<GetResponseData['users']>('/users')
 
     const transformer = (user: typeof data[number]): User => {
-      const { id, name, email, emailVerified, image } = user
+      const { id, name, email, image } = user
 
       return {
         id,
         name: name ?? 'No name',
         email: email ?? 'No email',
+        avatar: image,
       }
     }
 
