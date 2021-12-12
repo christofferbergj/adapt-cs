@@ -14,7 +14,6 @@ import steffen from '/public/steffen.png'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
-import ContentLoader from 'react-content-loader'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -56,17 +55,15 @@ const Overview: NextPage<Props> = () => {
     if (!isFetching && hasMore) prefetchNextPage()
   }, [hasMore, isFetching, prefetchNextPage])
 
-  console.log('fines', fines)
-
   return (
     <Layout>
       <div className="py-20 lg:py-14">
         <Container className="relative">
-          <MobileSteffen />
-          <DesktopSteffen />
-
           {fines && fines.length > 0 ? (
             <div>
+              <MobileSteffen />
+              <DesktopSteffen />
+
               <div className="relative flex flex-col text-sm border border-gray-6 rounded-lg overflow-hidden bg-gray-1 lg:min-h-[600px]">
                 <div className="hidden items-center lg:gap-8 lg:flex p-5 bg-gray-2 border-b border-gray-6 font-bold">
                   <span className="basis-52">Bødetager</span>
@@ -138,33 +135,33 @@ const Overview: NextPage<Props> = () => {
                   </div>
                 ))}
               </div>
+
+              <div className="flex w-full mt-4 gap-6 justify-end px-2 items-center text-sm">
+                <span className="font-semibold">
+                  {current} - {pageTotal < count ? pageTotal : count} of {count}
+                </span>
+
+                <div className="flex items-center gap-2 text-sm">
+                  <button
+                    onClick={() => setPage((old) => Math.max(old - 1, 0))}
+                    disabled={page === 0}
+                    className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <ArrowLeftIcon />
+                  </button>{' '}
+                  <button
+                    onClick={() =>
+                      !isPreviousData && hasMore && setPage((old) => old + 1)
+                    }
+                    disabled={isPreviousData || !hasMore || isLoading}
+                    className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    <ArrowRightIcon />
+                  </button>
+                </div>
+              </div>
             </div>
           ) : null}
-
-          <div className="flex w-full mt-4 gap-6 justify-end px-2 items-center text-sm">
-            <span className="font-semibold">
-              {current} - {pageTotal < count ? pageTotal : count} of {count}
-            </span>
-
-            <div className="flex items-center gap-2 text-sm">
-              <button
-                onClick={() => setPage((old) => Math.max(old - 1, 0))}
-                disabled={page === 0}
-                className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <ArrowLeftIcon />
-              </button>{' '}
-              <button
-                onClick={() =>
-                  !isPreviousData && hasMore && setPage((old) => old + 1)
-                }
-                disabled={isPreviousData || !hasMore || isLoading}
-                className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <ArrowRightIcon />
-              </button>
-            </div>
-          </div>
         </Container>
       </div>
     </Layout>
