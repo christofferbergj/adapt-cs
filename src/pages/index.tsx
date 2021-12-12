@@ -177,30 +177,24 @@ const MobileSteffen = () => {
   return (
     <div className="top-[-70px] absolute z-0 left-0 w-full pointer-events-none overflow-hidden lg:hidden">
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        className="inline-flex"
+        animate={{
+          x: 'calc(100vw - 95%)',
+          y: isWide ? generateY(10) : generateY(6),
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: isWide ? 3 : 2,
+          repeatType: 'mirror',
+        }}
       >
-        <motion.div
-          className="inline-flex"
-          animate={{
-            x: 'calc(100vw - 95%)',
-            y: isWide ? generateY(10) : generateY(6),
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: isWide ? 3 : 2,
-            repeatType: 'mirror',
-          }}
-        >
-          <Image
-            alt="steffen"
-            src={steffen}
-            placeholder="blur"
-            width={160}
-            height={160}
-          />
-        </motion.div>
+        <Image
+          alt="steffen"
+          src={steffen}
+          placeholder="blur"
+          width={160}
+          height={160}
+        />
       </motion.div>
     </div>
   )
