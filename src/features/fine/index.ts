@@ -1,5 +1,5 @@
-import type { FineType } from '@features/fine-types/entities/types'
-import type { User } from '@features/user/entities/types'
+import type { FineType } from '@features/fine-types'
+import type { User } from '@features/user'
 
 export type Fine = {
   id: string

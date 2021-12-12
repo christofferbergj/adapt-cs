@@ -1,6 +1,6 @@
 import api from '@application/api'
 import type { GetResponseData } from '@api/users'
-import type { User } from '@features/user/entities/types'
+import type { User } from '@features/user'
 import type { UserAdapter } from '@application/ports'
 import { getErrorMessage } from '@utils/getErrorMessage'
 

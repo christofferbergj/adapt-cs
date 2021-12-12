@@ -1,6 +1,6 @@
-import type { CreateFine, Fine } from '@features/fine/entities/types'
-import type { FineType } from '@features/fine-types/entities/types'
-import type { User } from '@features/user/entities/types'
+import type { CreateFine, Fine } from '@features/fine'
+import type { FineType } from '@features/fine-types'
+import type { User } from '@features/user'
 
 export interface FineAdapter {
   createFine(payload: CreateFine): Promise<Fine | null>

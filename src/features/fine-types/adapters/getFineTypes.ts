@@ -1,5 +1,5 @@
 import api from '@application/api'
-import type { FineType } from '@features/fine-types/entities/types'
+import type { FineType } from '@features/fine-types'
 import type { FineTypeAdapter } from '@application/ports'
 import type { GetResponseData } from '@api/fine-types'
 import { getErrorMessage } from '@utils/getErrorMessage'
