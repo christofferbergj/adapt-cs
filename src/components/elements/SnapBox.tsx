@@ -21,7 +21,7 @@ const Item = ({ children }: Props) => {
 }
 
 const Title = ({ children }: Props) => {
-  return <h3 className="font-bold text-lg">{children}</h3>
+  return <h3 className="font-bold text-lg truncate">{children}</h3>
 }
 
 export const SnapBox = Object.assign(Root, { Item, Title })

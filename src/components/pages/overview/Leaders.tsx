@@ -17,7 +17,7 @@ export const Leaders = () => {
         <SnapBox>
           {leaders.map((leader) => (
             <SnapBox.Item key={leader.id}>
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-4 items-center w-full justify-center">
                 {leader.avatar && (
                   <div className="w-[24px] h-[24px] rounded-full overflow-hidden">
                     <Image
