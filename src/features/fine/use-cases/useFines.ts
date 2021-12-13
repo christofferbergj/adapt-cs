@@ -8,6 +8,8 @@ export function useFines(page = 0, amount = 10) {
   const queryClient = useQueryClient()
   const skip = page * amount
 
+  console.log('amount', amount)
+
   const { data, ...rest } = useQuery(
     ['fines', page],
     () => getFines({ skip, take: amount }),

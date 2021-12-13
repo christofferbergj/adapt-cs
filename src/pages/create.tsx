@@ -3,6 +3,7 @@ import { dehydrate, QueryClient } from 'react-query'
 
 import { getFineTypes } from '@features/fine-types/adapters/getFineTypes'
 import { getUsers } from '@features/user/adapters/getUsers'
+import { queryKeys } from '@config/constants'
 import { useCreateFine } from '@features/fine/use-cases/useCreateFine'
 import { useFineTypes } from '@features/fine-types/use-cases/useFineTypes'
 import { useUsers } from '@features/user/use-cases/useUsers'
@@ -52,8 +53,8 @@ export const Create: NextPage<Props> = () => {
 export const getStaticProps = async () => {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery('users', getUsers)
-  await queryClient.prefetchQuery('fine-types', getFineTypes)
+  await queryClient.prefetchQuery(queryKeys.fineTypes, getFineTypes)
+  await queryClient.prefetchQuery(queryKeys.users, getUsers)
 
   return {
     props: {

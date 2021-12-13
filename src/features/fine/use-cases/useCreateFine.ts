@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query'
 
+import { queryKeys } from '@config/constants'
 import { useFineAdapter } from '@features/fine/adapters'
 
 export function useCreateFine() {
@@ -8,7 +9,7 @@ export function useCreateFine() {
 
   return useMutation(createFine, {
     onSuccess: async () => {
-      return await queryClient.prefetchQuery('fines', () => getFines())
+      return await queryClient.prefetchQuery(queryKeys.fines, () => getFines())
     },
   })
 }

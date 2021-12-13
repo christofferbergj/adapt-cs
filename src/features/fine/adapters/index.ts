@@ -1,13 +1,17 @@
 import type { FineAdapter } from '@application/ports'
 
-import { createFine } from './createFine'
-import { getFine } from './getFine'
-import { getFines } from './getFines'
+import { createFine } from '@features/fine/adapters/createFine'
+import { getFine } from '@features/fine/adapters/getFine'
+import { getFines } from '@features/fine/adapters/getFines'
+import { getLeaders } from '@features/fine/adapters/getLeaders'
+import { getMostPaidFines } from '@features/fine/adapters/getMostPaidFines'
 
 export function useFineAdapter(): FineAdapter {
   return {
     createFine,
-    getFines,
     getFine,
+    getFines,
+    getLeaders,
+    getMostPaidFines,
   }
 }

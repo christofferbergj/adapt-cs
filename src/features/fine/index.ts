@@ -14,3 +14,17 @@ export type CreateFine = {
   ownerId: Fine['owner']['id']
   fineTypeId: Fine['fineType']['id']
 }
+
+export type MostPaidFine = {
+  id: string
+  title: string
+  paidTimes: number
+}
+
+export type FineLeader = {
+  id: string
+  name: string
+  avatar: string | null
+  totalPaid: number
+  totalFines: number
+}

@@ -5,9 +5,11 @@ import { apiHandler } from '@utils/apiHandler'
 import { prisma } from '@lib/prisma'
 
 export type GetResponseData = {
-  user: Prisma.User
-  totalPaid: number
-}[]
+  leaders: (Prisma.User & {
+    fines: { fineType: { price: number } }[]
+    _count: { fines: number }
+  })[]
+}
 
 const leadersHandler = nc(apiHandler)
 
@@ -30,9 +32,14 @@ leadersHandler.get(async (req, res) => {
           },
         },
       },
+      take: 3,
     })
 
-    res.json(result)
+    const response: GetResponseData = {
+      leaders: result,
+    }
+
+    res.json(response)
   } catch (error) {
     console.log(error)
   } finally {

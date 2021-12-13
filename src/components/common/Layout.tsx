@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { Footer } from '@components/common/Footer'
 import { Header } from '@components/common/Header'
 
 type Props = {
@@ -11,6 +12,7 @@ export const Layout = ({ children }: Props) => {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="relative z-10 flex-1 w-full">{children}</main>
+      <Footer />
     </div>
   )
 }
