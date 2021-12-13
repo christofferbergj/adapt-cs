@@ -1,5 +1,5 @@
 import type { InferGetStaticPropsType, NextPage } from 'next'
-import { dehydrate, QueryClient } from 'react-query'
+import { dehydrate, QueryClient, useQueryClient } from 'react-query'
 
 import { getFines } from '@features/fine/adapters/getFines'
 import { getLeaders } from '@features/fine/adapters/getLeaders'
@@ -10,6 +10,8 @@ import { FinesOverview } from '@components/pages/overview/FinesOverview'
 import { Layout } from '@components/common/Layout'
 import { Leaders } from '@components/pages/overview/Leaders'
 import { MostPaidFines } from '@components/pages/overview/MostPaidFines'
+import { useFineAdapter } from '@features/fine/adapters'
+import { useSession } from 'next-auth/react'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -31,6 +33,15 @@ export async function getStaticProps() {
 }
 
 const Overview: NextPage<Props> = () => {
+  const queryClient = useQueryClient()
+  const { data: session } = useSession()
+  const { getOwnFines } = useFineAdapter()
+
+  // Prefetch own fines for `My fines` page
+  queryClient.prefetchQuery([queryKeys.ownFines, 0], () =>
+    getOwnFines({ userId: session?.user.id })
+  )
+
   return (
     <Layout>
       <Layout.Space>

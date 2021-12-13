@@ -91,7 +91,8 @@ export const Header = () => {
                       'font-sm px-3 py-5 whitespace-nowrap leading-none border-b transition-colors',
                       {
                         'opacity-40 pointer-events-none': isDisabled,
-                        'hover:border-gray-8 border-transparent': router.pathname !== href,
+                        'hover:border-gray-8 border-transparent':
+                          router.pathname !== href,
                         'border-purple-9 font-semibold':
                           router.pathname === href,
                       }
