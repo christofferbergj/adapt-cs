@@ -21,6 +21,10 @@ const links: Link[] = [
     title: 'Overview',
   },
   {
+    href: '/me',
+    title: 'My fines',
+  },
+  {
     href: '/create',
     title: 'Create fine',
     isAdmin: true,
@@ -84,10 +88,10 @@ export const Header = () => {
                 <Link href={href} key={i}>
                   <a
                     className={clsx(
-                      'font-sm px-3 py-5 whitespace-nowrap leading-none border-b border-transparent transition-colors',
+                      'font-sm px-3 py-5 whitespace-nowrap leading-none border-b transition-colors',
                       {
                         'opacity-40 pointer-events-none': isDisabled,
-                        'hover:border-gray-8': router.pathname !== href,
+                        'hover:border-gray-8 border-transparent': router.pathname !== href,
                         'border-purple-9 font-semibold':
                           router.pathname === href,
                       }

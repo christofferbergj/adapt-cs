@@ -1,8 +1,8 @@
 import Image from 'next/image'
 
 import { Container } from '@components/layout/Container'
-import { useLeaders } from '@features/fine/use-cases/useLeaders'
 import { SnapBox } from '@components/elements/SnapBox'
+import { useLeaders } from '@features/fine/use-cases/useLeaders'
 
 export const Leaders = () => {
   const { leaders } = useLeaders()

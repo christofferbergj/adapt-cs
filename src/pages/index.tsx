@@ -33,11 +33,11 @@ export async function getStaticProps() {
 const Overview: NextPage<Props> = () => {
   return (
     <Layout>
-      <div className="py-10 md:mt-10 lg:py-14 flex flex-col gap-16 md:gap-24">
+      <Layout.Space>
         <Leaders />
         <MostPaidFines />
         <FinesOverview />
-      </div>
+      </Layout.Space>
     </Layout>
   )
 }

@@ -1,23 +1,26 @@
-import ms from 'ms'
 import { useCallback } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 
-import { getFines } from '@features/fine/adapters/getFines'
 import { queryKeys } from '@config/constants'
+import { getOwnFinesAdapter } from '@features/fine/adapters/getOwnFinesAdapter'
 
 type Params = {
   page?: number
   take?: number
+  userId?: string
 }
 
-export function useFines({ page = 0, take = 10 }: Params) {
+export function useOwnFines({ page = 0, take = 10, userId }: Params) {
   const queryClient = useQueryClient()
   const skip = page * take
 
   const { data, ...rest } = useQuery(
-    [queryKeys.fines, page],
-    () => getFines({ skip, take: take }),
-    { keepPreviousData: true, staleTime: ms('10s') }
+    [queryKeys.ownFines, page],
+    () => getOwnFinesAdapter({ skip, take }),
+    {
+      keepPreviousData: true,
+      enabled: !!userId,
+    }
   )
 
   const count = data?.count ?? 0
@@ -30,16 +33,14 @@ export function useFines({ page = 0, take = 10 }: Params) {
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    return queryClient.prefetchQuery(
-      [queryKeys.fines, page + 1],
-      () =>
-        getFines({
-          skip: skip === 0 ? take : skip + take,
-          take: take,
-        }),
-      { staleTime: ms('10s') }
+    return queryClient.prefetchQuery([queryKeys.ownFines, page + 1], () =>
+      getOwnFinesAdapter({
+        skip: skip === 0 ? take : skip + take,
+        take,
+        userId,
+      })
     )
-  }, [take, hasMore, page, queryClient, skip])
+  }, [hasMore, queryClient, page, skip, take, userId])
 
   return {
     fines,

@@ -32,7 +32,12 @@ leadersHandler.get(async (req, res) => {
           },
         },
       },
-      take: 3,
+      orderBy: {
+        fines: {
+          _count: 'desc',
+        },
+      },
+      take: 6,
     })
 
     const response: GetResponseData = {

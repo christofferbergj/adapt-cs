@@ -1,6 +1,7 @@
 export const queryKeys = {
   fineTypes: 'fine-types',
   fines: 'fines',
+  ownFines: 'own-fines',
   mostPaidFines: 'most-paid-fines',
   users: 'users',
   leaders: 'leaders',

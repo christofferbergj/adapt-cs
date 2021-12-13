@@ -7,7 +7,7 @@ type Props = {
   children: ReactNode
 }
 
-export const Layout = ({ children }: Props) => {
+export const Root = ({ children }: Props) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -16,3 +16,13 @@ export const Layout = ({ children }: Props) => {
     </div>
   )
 }
+
+export const Space = ({ children }: Props) => {
+  return (
+    <div className="py-10 md:py-16 flex flex-col gap-16 md:gap-24">
+      {children}
+    </div>
+  )
+}
+
+export const Layout = Object.assign(Root, { Space })

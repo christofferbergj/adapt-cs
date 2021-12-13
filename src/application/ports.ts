@@ -1,12 +1,18 @@
 import type { CreateFine, Fine, FineLeader, MostPaidFine } from '@features/fine'
 import type { FineType } from '@features/fine-types'
 import type { User } from '@features/user'
+import { AsyncReturnType } from 'type-fest'
 
 export interface FineAdapter {
   createFine(payload: CreateFine): Promise<Fine | null>
   getFines(params?: {
     skip?: number
     take?: number
+  }): Promise<{ fines: Fine[]; count: number }>
+  getOwnFines(params?: {
+    skip?: number
+    take?: number
+    userId?: string
   }): Promise<{ fines: Fine[]; count: number }>
   getMostPaidFines(): Promise<MostPaidFine[]>
   getLeaders(): Promise<FineLeader[]>

@@ -1,44 +1,38 @@
 import Image from 'next/image'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { useMedia } from 'react-use'
+import { useSession } from 'next-auth/react'
 
-import { amountOfFines } from '@config/constants'
-import { useFines } from '@features/fine/use-cases/useFines'
+import { useOwnFines } from '@features/fine/use-cases/useOwnFines'
 
-import steffen from '/public/steffen.png'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import { Container } from '@components/layout/Container'
 import { Overview } from '@components/elements/Overview'
 
-export const FinesOverview = () => {
+export const OwnFinesOverview = () => {
   const [page, setPage] = useState(0)
+  const { data: session } = useSession()
+  const userId = session?.user.id
 
   const {
     fines,
+    isFetching,
     isLoading,
     isPreviousData,
-    isFetching,
+    meta: { hasMore, current, pageTotal, count },
     prefetchNextPage,
-    meta: { count, current, hasMore, pageTotal },
-  } = useFines({ page, take: amountOfFines })
+  } = useOwnFines({ userId, page })
 
   useEffect(() => {
     if (!isFetching && hasMore) prefetchNextPage()
   }, [hasMore, isFetching, prefetchNextPage])
 
   return (
-    <Container className="relative">
-      <h2 className="text-lg font-bold">Fine overview</h2>
-
+    <Container className="relative mt-4">
       {fines && fines.length > 0 ? (
-        <div className="relative mt-4">
-          <MobileSteffen />
-          <DesktopSteffen />
-
-          <Overview className="lg:min-h-[703px]">
+        <div>
+          <Overview>
             <div className="hidden items-center lg:gap-8 lg:flex p-5 bg-gray-2 border-b border-gray-6 font-bold">
               <span className="basis-52">Bødetager</span>
               <span className="basis-36">Bøde</span>
@@ -137,64 +131,5 @@ export const FinesOverview = () => {
         </div>
       ) : null}
     </Container>
-  )
-}
-
-const MobileSteffen = () => {
-  const isWide = useMedia('(min-width: 768px)')
-
-  const generateY = (length = 5) =>
-    Array.from({ length }, () => ['0%', '5%']).flat()
-
-  return (
-    <div className="top-[-70px] absolute z-0 right-0 pointer-events-none lg:hidden">
-      <motion.div
-        className="inline-flex"
-        animate={{
-          x: isWide ? -240 : -100,
-          y: generateY(6),
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: isWide ? 2 : 2,
-          repeatType: 'mirror',
-        }}
-      >
-        <Image
-          alt="steffen"
-          src={steffen}
-          placeholder="blur"
-          width={160}
-          height={160}
-        />
-      </motion.div>
-    </div>
-  )
-}
-
-const DesktopSteffen = () => {
-  return (
-    <motion.div
-      className="absolute z-0 left-5 top-20 hidden lg:block"
-      animate={{
-        x: ['0%', '-50%', '-50%', '-50%', '0%'],
-        rotate: [0, -12, -15, -12, 0],
-      }}
-      transition={{
-        repeat: Infinity,
-        duration: 5,
-        repeatType: 'loop',
-        repeatDelay: 3,
-        delay: 3,
-      }}
-    >
-      <Image
-        alt="steffen"
-        src={steffen}
-        placeholder="blur"
-        width={300}
-        height={300}
-      />
-    </motion.div>
   )
 }

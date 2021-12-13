@@ -25,7 +25,7 @@ finesHandler
       const [count, fines] = await prisma.$transaction([
         prisma.fine.count(),
         prisma.fine.findMany({
-          take: Number(req.query.take) || 5,
+          take: Number(req.query.take) || 10,
           skip: Number(req.query.skip) || undefined,
           include: {
             owner: true,
