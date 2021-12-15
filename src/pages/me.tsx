@@ -11,12 +11,12 @@ const Me: NextPage = () => {
   return (
     <Layout>
       <Layout.Space>
-        {!session ? (
+        {session ? (
           <OwnFinesOverview />
         ) : (
           <Container>
             <h2 className="border border-purple-9 px-6 py-3 inline font-semibold">
-              You are not signed in, idiot..{' '}
+              You are not signed in.{' '}
               <span aria-label="emoji upside down face">🙃</span>
             </h2>
           </Container>
