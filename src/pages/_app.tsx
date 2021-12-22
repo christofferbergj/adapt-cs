@@ -38,9 +38,11 @@ export default withTRPC<AppRouter>({
      * @link https://trpc.io/docs/ssr
      */
     const url =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000/api/trpc'
-        : 'https://adapt-cs.vercel.app/api/trpc'
+      process.env.NODE_ENV === 'production'
+        ? 'https://adapt-cs.vercel.app/api/trpc'
+        : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}/api/trpc`
+        : 'http://localhost:3000/api/trpc'
 
     return {
       url,
