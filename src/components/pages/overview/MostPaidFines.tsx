@@ -1,4 +1,4 @@
-import { useMostPaidFines } from '@features/fine/use-cases/useMostPaidFines'
+import { useMostPaidFines } from '@features/fine/hooks/useMostPaidFines'
 
 import { Container } from '@components/layout/Container'
 import { SnapBox } from '@components/elements/SnapBox'

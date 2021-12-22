@@ -1,8 +1,7 @@
 import { useCallback } from 'react'
 
 import { InferQueryInput, trpc } from '@utils/trpc'
-import { amountOfFines, queryKeys } from '@config/constants'
-import { getOwnFines } from '@features/fine/adapters/getOwnFines'
+import { amountOfFines } from '@config/constants'
 
 type Params = Omit<InferQueryInput<'fines.own'>, 'skip'> & {
   page: number
