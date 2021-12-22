@@ -37,14 +37,14 @@ export default withTRPC<AppRouter>({
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr
      */
-    const urls: Record<string, string> = {
-      development: 'http://localhost:3000/api/trpc',
-      preview: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`,
-      production: 'https://adapt-cs.vercel.app/api/trpc',
-    }
+
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/api/trpc'
+        : 'https://adapt-cs.vercel.app'
 
     return {
-      url: urls[process.env.NEXT_PUBLIC_VERCEL_ENV || ''],
+      url,
       transformer,
     }
   },
