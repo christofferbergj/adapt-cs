@@ -5,7 +5,7 @@ import { getFine } from '@features/fine/adapters/getFine'
 import { getFines } from '@features/fine/adapters/getFines'
 import { getLeaders } from '@features/fine/adapters/getLeaders'
 import { getMostPaidFines } from '@features/fine/adapters/getMostPaidFines'
-import { getOwnFinesAdapter } from '@features/fine/adapters/getOwnFinesAdapter'
+import { getOwnFines } from '@features/fine/adapters/getOwnFines'
 
 export function useFineAdapter(): FineAdapter {
   return {
@@ -14,6 +14,6 @@ export function useFineAdapter(): FineAdapter {
     getFines,
     getLeaders,
     getMostPaidFines,
-    getOwnFines: getOwnFinesAdapter,
+    getOwnFines,
   }
 }

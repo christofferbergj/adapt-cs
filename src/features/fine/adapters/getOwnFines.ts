@@ -1,12 +1,12 @@
 import api from '@application/api'
 import type { FineAdapter } from '@application/ports'
 import type { GetResponseData } from '@api/fines'
-import { finesListTransformer } from '@features/fine/transformers/finesListTransformer'
+import { transformFine } from '@features/fine/transformers/fines-list'
 import { getErrorMessage } from '@utils/getErrorMessage'
 
 type GetFines = FineAdapter['getOwnFines']
 
-export const getOwnFinesAdapter: GetFines = async (params) => {
+export const getOwnFines: GetFines = async (params) => {
   try {
     const { data } = await api.get<GetResponseData>('/fines/own', {
       params: {
@@ -16,7 +16,7 @@ export const getOwnFinesAdapter: GetFines = async (params) => {
     })
 
     return {
-      fines: data.fines.map(finesListTransformer),
+      fines: data.fines.map(transformFine),
       count: data.count,
     }
   } catch (error) {

@@ -1,24 +1,22 @@
 import ms from 'ms'
 import { useCallback } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
 
-import { getFines } from '@features/fine/adapters/getFines'
-import { queryKeys } from '@config/constants'
+import { InferQueryInput, trpc } from '@utils/trpc'
+import { amountOfFines } from '@config/constants'
 
 type Params = {
   page?: number
   take?: number
 }
 
-export function useFines({ page = 0, take = 10 }: Params) {
-  const queryClient = useQueryClient()
+export function useFines({ page = 0, take = amountOfFines }: Params) {
   const skip = page * take
+  const { prefetchQuery } = trpc.useContext()
 
-  const { data, ...rest } = useQuery(
-    [queryKeys.fines, page],
-    () => getFines({ skip, take: take }),
-    { keepPreviousData: true, staleTime: ms('10s') }
-  )
+  const { data, ...rest } = trpc.useQuery(['fines.all', { take, skip }], {
+    keepPreviousData: true,
+    staleTime: ms('10s'),
+  })
 
   const count = data?.count ?? 0
   const fines = data?.fines ?? []
@@ -30,16 +28,15 @@ export function useFines({ page = 0, take = 10 }: Params) {
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    return queryClient.prefetchQuery(
-      [queryKeys.fines, page + 1],
-      () =>
-        getFines({
-          skip: skip === 0 ? take : skip + take,
-          take: take,
-        }),
-      { staleTime: ms('10s') }
-    )
-  }, [take, hasMore, page, queryClient, skip])
+    const params: InferQueryInput<'fines.all'> = {
+      skip: skip === 0 ? take : skip + take,
+      take,
+    }
+
+    return prefetchQuery(['fines.all', params], {
+      staleTime: ms('10s'),
+    })
+  }, [hasMore, prefetchQuery, skip, take])
 
   return {
     fines,

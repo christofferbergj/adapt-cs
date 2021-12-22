@@ -41,6 +41,10 @@
     "@radix-ui/react-portal": "^0.1.3",
     "@radix-ui/react-separator": "^0.1.3",
     "@radix-ui/react-tabs": "^0.1.4",
+    "@trpc/client": "^9.16.0",
+    "@trpc/next": "^9.16.0",
+    "@trpc/react": "^9.16.0",
+    "@trpc/server": "^9.16.0",
     "axios": "^0.24.0",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.7",
@@ -63,7 +67,8 @@
     "superjson": "^1.8.0",
     "swr": "^1.1.1",
     "tailwindcss-debug-screens": "^2.2.1",
-    "tiny-invariant": "^1.2.0"
+    "tiny-invariant": "^1.2.0",
+    "zod": "^3.11.6"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.4.0",

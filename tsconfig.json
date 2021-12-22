@@ -31,6 +31,8 @@
       "@lib/*": ["lib/*"],
       "@pages": ["pages"],
       "@pages/*": ["pages/*"],
+      "@server": ["server"],
+      "@server/*": ["server/*"],
       "@services": ["services"],
       "@services/*": ["services/*"],
       "@styles": ["styles"],

@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 
 import { queryKeys } from '@config/constants'
-import { getOwnFinesAdapter } from '@features/fine/adapters/getOwnFinesAdapter'
+import { getOwnFines } from '@features/fine/adapters/getOwnFines'
 
 type Params = {
   page?: number
@@ -16,7 +16,7 @@ export function useOwnFines({ page = 0, take = 10, userId }: Params) {
 
   const { data, ...rest } = useQuery(
     [queryKeys.ownFines, page],
-    () => getOwnFinesAdapter({ skip, take }),
+    () => getOwnFines({ skip, take }),
     {
       keepPreviousData: true,
       enabled: !!userId,
@@ -34,7 +34,7 @@ export function useOwnFines({ page = 0, take = 10, userId }: Params) {
     if (!hasMore) return
 
     return queryClient.prefetchQuery([queryKeys.ownFines, page + 1], () =>
-      getOwnFinesAdapter({
+      getOwnFines({
         skip: skip === 0 ? take : skip + take,
         take,
         userId,
