@@ -10,6 +10,11 @@ export type Fine = {
   isPaid: boolean
 }
 
+export type FineList = {
+  fines: Fine[]
+  count: number
+}
+
 export type CreateFine = {
   ownerId: Fine['owner']['id']
   fineTypeId: Fine['fineType']['id']

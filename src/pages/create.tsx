@@ -5,9 +5,7 @@ import { useSession } from 'next-auth/react'
 import { getFineTypes } from '@features/fine-types/adapters/getFineTypes'
 import { getUsers } from '@features/user/adapters/getUsers'
 import { queryKeys } from '@config/constants'
-import { useCreateFine } from '@features/fine/use-cases/useCreateFine'
-import { useFineTypes } from '@features/fine-types/use-cases/useFineTypes'
-import { useUsers } from '@features/user/use-cases/useUsers'
+import { useUsers } from '@features/user/hooks/useUsers'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
@@ -17,8 +15,6 @@ import Image from 'next/image'
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const Create: NextPage<Props> = () => {
-  const { fineTypes } = useFineTypes()
-  const { mutate } = useCreateFine()
   const { users } = useUsers()
 
   const { data: session } = useSession()
@@ -34,7 +30,9 @@ export const Create: NextPage<Props> = () => {
           height={300}
         />
 
-        <h1 className="mt-10 text-2xl font-bold border border-purple-9 px-4 py-2 bg-purple-3">You are not an admin</h1>
+        <h1 className="mt-10 text-2xl font-bold border border-purple-9 px-4 py-2 bg-purple-3">
+          You are not an admin
+        </h1>
       </div>
     )
   }

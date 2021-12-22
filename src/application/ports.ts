@@ -1,4 +1,4 @@
-import type { CreateFine, Fine, FineLeader, MostPaidFine } from '@features/fine'
+import type { CreateFine, Fine, FineLeader, MostPaidFine } from '@features/fine/entities'
 import type { FineType } from '@features/fine-types'
 import type { User } from '@features/user'
 import { AsyncReturnType } from 'type-fest'
@@ -28,3 +28,6 @@ export interface FineTypeAdapter {
 export interface UserAdapter {
   getUsers(): Promise<User[]>
 }
+
+type Lol = ReturnType<FineAdapter['getFines']>
+type Lol2 = AsyncReturnType<FineAdapter['getFines']>

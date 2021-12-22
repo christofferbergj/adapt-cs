@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { useOwnFines } from '@features/fine/use-cases/useOwnFines'
+import { useOwnFines } from '@features/fine/hooks/useOwnFines'
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import { Container } from '@components/layout/Container'
