@@ -1,22 +1,23 @@
 import { useCallback } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
 
-import { queryKeys } from '@config/constants'
+import { InferQueryInput, trpc } from '@utils/trpc'
+import { amountOfFines, queryKeys } from '@config/constants'
 import { getOwnFines } from '@features/fine/adapters/getOwnFines'
 
-type Params = {
-  page?: number
-  take?: number
-  userId?: string
+type Params = Omit<InferQueryInput<'fines.own'>, 'skip'> & {
+  page: number
 }
 
-export function useOwnFines({ page = 0, take = 10, userId }: Params) {
-  const queryClient = useQueryClient()
+export function useOwnFines({
+  page = 0,
+  take = amountOfFines,
+  userId,
+}: Params) {
   const skip = page * take
+  const { prefetchQuery } = trpc.useContext()
 
-  const { data, ...rest } = useQuery(
-    [queryKeys.ownFines, page],
-    () => getOwnFines({ skip, take }),
+  const { data, ...rest } = trpc.useQuery(
+    ['fines.own', { userId, take, skip }],
     {
       keepPreviousData: true,
       enabled: !!userId,
@@ -33,14 +34,14 @@ export function useOwnFines({ page = 0, take = 10, userId }: Params) {
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    return queryClient.prefetchQuery([queryKeys.ownFines, page + 1], () =>
-      getOwnFines({
-        skip: skip === 0 ? take : skip + take,
-        take,
-        userId,
-      })
-    )
-  }, [hasMore, queryClient, page, skip, take, userId])
+    const params: InferQueryInput<'fines.own'> = {
+      skip: skip === 0 ? take : skip + take,
+      take,
+      userId,
+    }
+
+    return prefetchQuery(['fines.own', params])
+  }, [hasMore, prefetchQuery, skip, take, userId])
 
   return {
     fines,

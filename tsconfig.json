@@ -25,6 +25,8 @@
       "@components/*": ["components/*"],
       "@config": ["config"],
       "@config/*": ["config/*"],
+      "@custom-types": ["custom-types"],
+      "@custom-types/*": ["custom-types/*"],
       "@features": ["features"],
       "@features/*": ["features/*"],
       "@lib": ["lib"],

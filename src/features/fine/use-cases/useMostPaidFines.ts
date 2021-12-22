@@ -1,17 +1,12 @@
 import ms from 'ms'
-import { useQuery } from 'react-query'
-
-import { getMostPaidFines } from '@features/fine/adapters/getMostPaidFines'
-import { queryKeys } from '@config/constants'
+import { trpc } from '@utils/trpc'
 
 export function useMostPaidFines() {
-  const { data: mostPaidFines, ...rest } = useQuery(
-    queryKeys.mostPaidFines,
-    getMostPaidFines,
-    {
-      staleTime: ms('60s'),
-    }
-  )
+  const { data, ...rest } = trpc.useQuery(['fines.most-paid'], {
+    staleTime: ms('60s'),
+  })
+
+  const mostPaidFines = data ?? []
 
   return {
     mostPaidFines,

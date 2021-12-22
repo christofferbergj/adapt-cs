@@ -4,9 +4,8 @@ import { useCallback } from 'react'
 import { InferQueryInput, trpc } from '@utils/trpc'
 import { amountOfFines } from '@config/constants'
 
-type Params = {
-  page?: number
-  take?: number
+type Params = Omit<InferQueryInput<'fines.all'>, 'skip'> & {
+  page: number
 }
 
 export function useFines({ page = 0, take = amountOfFines }: Params) {

@@ -1,5 +1,5 @@
 import api from '@application/api'
-import type { Fine } from '@features/fine'
+import type { Fine } from '@features/fine/entities'
 import type { FineAdapter } from '@application/ports'
 import type { ResponseData } from '@api/fines/[id]'
 import { getErrorMessage } from '@utils/getErrorMessage'

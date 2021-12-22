@@ -1,6 +1,6 @@
 import type Prisma from '@prisma/client'
 
-import type { Fine } from '@features/fine'
+import type { Fine } from '@features/fine/entities'
 
 type Input = (Prisma.Fine & {
   owner: Prisma.User

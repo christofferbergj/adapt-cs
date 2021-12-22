@@ -1,10 +1,9 @@
-import { useQuery } from 'react-query'
-
-import { getLeaders } from '@features/fine/adapters/getLeaders'
-import { queryKeys } from '@config/constants'
+import { trpc } from '@utils/trpc'
 
 export function useLeaders() {
-  const { data: leaders, ...rest } = useQuery(queryKeys.leaders, getLeaders)
+  const { data, ...rest } = trpc.useQuery(['fines.leaders'])
+
+  const leaders = data ?? []
 
   return {
     leaders,
