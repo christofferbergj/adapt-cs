@@ -33,7 +33,6 @@ export const createContext = async (
 
   const user = await getUserFromSession()
 
-  // for API-response caching see https://trpc.io/docs/caching
   return {
     prisma,
     req: opts?.req,
