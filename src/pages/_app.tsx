@@ -41,7 +41,11 @@ export default withTRPC<AppRouter>({
     const vercelPublicDomain = process.env.NEXT_PUBLIC_DOMAIN
     const vercelEnvPreview = process.env.VERCEL_ENV === 'preview'
 
-    // If Vercel prod deployment, then use main domain; else use temporary domain unless you're on dev
+    /**
+     * If public domain, use it.
+     * Else check vercel env, if preview, use the vercel deployment URL,
+     * otherwise use localhost
+     */
     const url = vercelPublicDomain
       ? `${vercelPublicDomain}/api/trpc`
       : vercelEnvPreview
