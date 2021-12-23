@@ -7,6 +7,12 @@ export const queryKeys = {
   leaders: 'leaders',
 }
 
+export const env = {
+  vercelPublicDomain: process.env.NEXT_PUBLIC_DOMAIN,
+  vercelEnvPreview: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',
+  vercelEnvUrl: process.env.NEXT_PUBLIC_VERCEL_URL,
+}
+
 /**
  * Amount of fines to show in the fines list
  *

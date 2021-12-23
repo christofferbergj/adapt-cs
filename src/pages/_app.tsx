@@ -9,6 +9,7 @@ import { useMount } from 'react-use'
 import { withTRPC } from '@trpc/next'
 
 import type { AppRouter } from '@server/routers/_app'
+import { env } from '@config/constants'
 import { transformer } from '@utils/trpc'
 
 Router.events.on('routeChangeStart', () => NProgress.start())
@@ -38,19 +39,15 @@ export default withTRPC<AppRouter>({
      * @link https://trpc.io/docs/ssr
      */
 
-    const vercelPublicDomain = process.env.NEXT_PUBLIC_DOMAIN
-    const vercelEnvPreview = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-    const vercelEnvUrl = process.env.NEXT_PUBLIC_VERCEL_URL
-
     /**
      * If public domain, use it.
      * Else check vercel env, if preview, use the vercel deployment URL,
      * otherwise use localhost
      */
-    const url = vercelPublicDomain
-      ? `${vercelPublicDomain}/api/trpc`
-      : vercelEnvPreview
-      ? `https://${vercelEnvUrl}/api/trpc`
+    const url = env.vercelPublicDomain
+      ? `${env.vercelPublicDomain}/api/trpc`
+      : env.vercelEnvPreview
+      ? `https://${env.vercelEnvUrl}/api/trpc`
       : 'http://localhost:3000/api/trpc'
 
     return {
