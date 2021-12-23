@@ -31,10 +31,8 @@ export const FinesOverview = () => {
 
   return (
     <Container className="relative">
-      <h2 className="text-lg font-bold">Fine overview</h2>
-
       {fines && fines.length > 0 ? (
-        <div className="relative mt-4">
+        <div className="relative mt-8">
           <MobileSteffen />
           <DesktopSteffen />
 
@@ -151,7 +149,7 @@ const MobileSteffen = () => {
       <motion.div
         className="inline-flex"
         animate={{
-          x: isWide ? -240 : -100,
+          x: isWide ? -240 : -160,
           y: generateY(6),
         }}
         transition={{

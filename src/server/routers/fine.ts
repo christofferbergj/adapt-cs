@@ -48,7 +48,7 @@ export const finesRouter = createRouter()
             _count: 'desc',
           },
         },
-        take: 3,
+        take: 6,
       })
 
       return result.map(({ id, title, _count }) => ({

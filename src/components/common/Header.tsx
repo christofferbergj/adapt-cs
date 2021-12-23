@@ -21,6 +21,10 @@ const links: Link[] = [
     title: 'Overview',
   },
   {
+    href: '/statistics',
+    title: 'Stats',
+  },
+  {
     href: '/me',
     title: 'My fines',
   },

@@ -1,4 +1,9 @@
-import type { CreateFine, Fine, FineLeader, MostPaidFine } from '@features/fine/entities'
+import type {
+  CreateFine,
+  Fine,
+  FineLeader,
+  MostPaidFine,
+} from '@features/fine/entities'
 import type { FineType } from '@features/fine-types'
 import type { User } from '@features/user'
 import { AsyncReturnType } from 'type-fest'

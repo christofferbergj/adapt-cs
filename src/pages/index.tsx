@@ -9,8 +9,6 @@ import { transformer, trpc } from '@utils/trpc'
 
 import { FinesOverview } from '@components/pages/overview/FinesOverview'
 import { Layout } from '@components/common/Layout'
-import { Leaders } from '@components/pages/overview/Leaders'
-import { MostPaidFines } from '@components/pages/overview/MostPaidFines'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -30,8 +28,6 @@ const Overview: NextPage<Props> = () => {
   return (
     <Layout>
       <Layout.Space>
-        <Leaders />
-        <MostPaidFines />
         <FinesOverview />
       </Layout.Space>
     </Layout>
@@ -45,11 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
     transformer,
   })
 
-  await Promise.all([
-    ssg.fetchQuery('fines.all', { take: amountOfFines, skip: 0 }),
-    ssg.fetchQuery('fines.leaders'),
-    ssg.fetchQuery('fines.most-paid'),
-  ])
+  await ssg.fetchQuery('fines.all', { take: amountOfFines, skip: 0 })
 
   return {
     props: {
