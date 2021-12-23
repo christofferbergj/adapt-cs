@@ -39,7 +39,8 @@ export default withTRPC<AppRouter>({
      */
 
     const vercelPublicDomain = process.env.NEXT_PUBLIC_DOMAIN
-    const vercelEnvPreview = process.env.VERCEL_ENV === 'preview'
+    const vercelEnvPreview = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+    const vercelEnvUrl = process.env.NEXT_PUBLIC_VERCEL_URL
 
     /**
      * If public domain, use it.
@@ -49,7 +50,7 @@ export default withTRPC<AppRouter>({
     const url = vercelPublicDomain
       ? `${vercelPublicDomain}/api/trpc`
       : vercelEnvPreview
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
+      ? `https://${vercelEnvUrl}/api/trpc`
       : 'http://localhost:3000/api/trpc'
 
     return {
