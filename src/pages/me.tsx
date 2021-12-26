@@ -17,7 +17,7 @@ const Me: NextPage = () => {
         <OwnFinesOverview />
       ) : (
         <Container>
-          <h2 className="border border-purple-9 px-6 py-3 inline font-semibold">
+          <h2 className="inline px-6 py-3 font-semibold border border-purple-9">
             You are not signed in.{' '}
             <span aria-label="emoji upside down face">🙃</span>
           </h2>

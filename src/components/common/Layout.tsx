@@ -18,11 +18,7 @@ export const Root = ({ children }: Props) => {
 }
 
 export const Space = ({ children }: Props) => {
-  return (
-    <div className="py-10 md:py-16 flex flex-col gap-16 md:gap-24">
-      {children}
-    </div>
-  )
+  return <div className="py-10 lg:py-16">{children}</div>
 }
 
 export const Layout = Object.assign(Root, { Space })

@@ -34,13 +34,13 @@ Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
 const App = ({ Component, pageProps }: ExtendedAppProps) => {
-  const withSpacing = Component.layoutSpacing ?? true
+  const withLayoutSpacing = Component.layoutSpacing ?? true
 
   const getLayout =
     Component.getLayout ??
     ((page) => (
       <Layout>
-        {withSpacing ? <Layout.Space>{page}</Layout.Space> : page}
+        {withLayoutSpacing ? <Layout.Space>{page}</Layout.Space> : page}
       </Layout>
     ))
 

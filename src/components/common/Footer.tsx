@@ -3,8 +3,18 @@ import { Container } from '@components/layout/Container'
 
 export const Footer = () => {
   return (
-    <Container className="text-center mt-20 py-6">
-      <span className="text-sm text-gray-11">Christoffer Berg @ Adapt</span>
+    <Container className="py-6 mt-20 text-center">
+      <span className="text-sm text-gray-11">
+        <a
+          className="transition underline decoration hover:text-purple-11"
+          href="https://github.com/christofferberg"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Christoffer Berg
+        </a>{' '}
+        @ Adapt
+      </span>
     </Container>
   )
 }

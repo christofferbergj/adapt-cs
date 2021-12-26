@@ -10,10 +10,10 @@ import { MostPaidFines } from '@components/pages/overview/MostPaidFines'
 
 export const Statistics: ExtendedNextPage = () => {
   return (
-    <>
+    <div className="flex flex-col gap-12 md:gap-20">
       <Leaders />
       <MostPaidFines />
-    </>
+    </div>
   )
 }
 

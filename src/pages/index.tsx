@@ -17,11 +17,7 @@ const Home: ExtendedNextPage = () => {
    */
   usePrefetchOwnFines()
 
-  return (
-    <>
-      <FinesOverview />
-    </>
-  )
+  return <FinesOverview />
 }
 
 export const getStaticProps: GetStaticProps = async () => {

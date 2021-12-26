@@ -12,7 +12,7 @@ export const AdminGuard: NextPage = ({ children }) => {
     return null
   }
 
-  if (isAdmin) {
+  if (!isAdmin) {
     router.replace('/')
 
     return null

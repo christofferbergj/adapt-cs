@@ -32,12 +32,12 @@ export const FinesOverview = () => {
   return (
     <Container className="relative">
       {fines && fines.length > 0 ? (
-        <div className="relative mt-8">
+        <div className="relative">
           <MobileSteffen />
           <DesktopSteffen />
 
-          <Overview className="lg:min-h-[703px]">
-            <div className="hidden items-center lg:gap-8 lg:flex p-5 bg-gray-2 border-b border-gray-6 font-bold">
+          <Overview>
+            <div className="hidden items-center p-5 font-bold border-b lg:gap-8 lg:flex bg-gray-2 border-gray-6">
               <span className="basis-52">Bødetager</span>
               <span className="basis-36">Bøde</span>
               <span className="basis-36">Dato</span>
@@ -90,7 +90,7 @@ export const FinesOverview = () => {
                   <span>{fine.isPaid ? 'Betalt' : 'Ikke betalt'}</span>
                 </Overview.Status>
 
-                <div className="flex flex-col lg:ml-auto pt-4 sm:pt-5 text-center lg:pt-0 hidden">
+                <div className="flex hidden flex-col pt-4 text-center lg:ml-auto sm:pt-5 lg:pt-0">
                   <span
                     className={clsx(
                       'border rounded px-4 py-3 font-semibold lg:py-2',
@@ -107,16 +107,16 @@ export const FinesOverview = () => {
             ))}
           </Overview>
 
-          <div className="flex w-full mt-4 gap-6 justify-end px-2 items-center text-sm">
+          <div className="flex gap-6 justify-end items-center px-2 mt-4 w-full text-sm">
             <span className="font-semibold">
               {current} - {pageTotal < count ? pageTotal : count} of {count}
             </span>
 
-            <div className="flex items-center gap-2 text-sm">
+            <div className="flex gap-2 items-center text-sm">
               <button
                 onClick={() => setPage((old) => Math.max(old - 1, 0))}
                 disabled={page === 0}
-                className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex gap-2 items-center px-2 py-1 rounded border transition-colors border-gray-7 hover:border-gray-8 hover:bg-gray-4 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ArrowLeftIcon />
               </button>
@@ -126,7 +126,7 @@ export const FinesOverview = () => {
                   !isPreviousData && hasMore && setPage((old) => old + 1)
                 }
                 disabled={isPreviousData || !hasMore || isLoading}
-                className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex gap-2 items-center px-2 py-1 rounded border transition-colors border-gray-7 hover:border-gray-8 hover:bg-gray-4 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ArrowRightIcon />
               </button>
@@ -173,7 +173,7 @@ const MobileSteffen = () => {
 const DesktopSteffen = () => {
   return (
     <motion.div
-      className="absolute z-0 left-5 top-20 hidden lg:block"
+      className="hidden absolute left-5 top-20 z-0 lg:block"
       animate={{
         x: ['0%', '-50%', '-50%', '-50%', '0%'],
         rotate: [0, -12, -15, -12, 0],
