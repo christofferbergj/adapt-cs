@@ -1,24 +1,19 @@
-import type { NextPage, InferGetStaticPropsType } from 'next'
 import { createSSGHelpers } from '@trpc/react/ssg'
 
+import type { ExtendedNextPage } from '@pages/_app'
 import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
 import { transformer } from '@utils/trpc'
 
-import { Layout } from '@components/common/Layout'
 import { Leaders } from '@components/pages/overview/Leaders'
 import { MostPaidFines } from '@components/pages/overview/MostPaidFines'
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>
-
-export const Statistics: NextPage<Props> = () => {
+export const Statistics: ExtendedNextPage = () => {
   return (
-    <Layout>
-      <Layout.Space>
-        <Leaders />
-        <MostPaidFines />
-      </Layout.Space>
-    </Layout>
+    <>
+      <Leaders />
+      <MostPaidFines />
+    </>
   )
 }
 

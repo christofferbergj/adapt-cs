@@ -3,20 +3,47 @@ import 'focus-visible'
 import NProgress from 'nprogress'
 import Router from 'next/router'
 import type { AppProps } from 'next/app'
+import type { AppRouter } from '@server/routers/_app'
+import type { NextPage } from 'next'
+import type { ReactElement, ReactNode } from 'react'
+import { Layout } from '@components/common/Layout'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { SessionProvider } from 'next-auth/react'
+import { env } from '@config/constants'
+import { transformer } from '@utils/trpc'
 import { useMount } from 'react-use'
 import { withTRPC } from '@trpc/next'
 
-import type { AppRouter } from '@server/routers/_app'
-import { env } from '@config/constants'
-import { transformer } from '@utils/trpc'
+import { AdminGuard } from '@components/common/AdminGuard'
+
+export type ExtendedNextPage<P = Record<string, unknown>, IP = P> = NextPage<
+  P,
+  IP
+> & {
+  getLayout?: (page: ReactElement) => ReactNode
+  layoutSpacing?: boolean
+  requireAdmin?: boolean
+}
+
+type ExtendedAppProps<P = Record<string, unknown>> = AppProps<P> & {
+  Component: ExtendedNextPage<P>
+}
 
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: ExtendedAppProps) => {
+  const withSpacing = Component.layoutSpacing ?? true
+
+  const getLayout =
+    Component.getLayout ??
+    ((page) => (
+      <Layout>
+        {withSpacing ? <Layout.Space>{page}</Layout.Space> : page}
+      </Layout>
+    ))
+
   useMount(() => {
     document.body.classList.remove('loading')
   })
@@ -24,7 +51,11 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
+        {Component.requireAdmin ? (
+          <AdminGuard>{getLayout(<Component {...pageProps} />)}</AdminGuard>
+        ) : (
+          getLayout(<Component {...pageProps} />)
+        )}
       </SessionProvider>
 
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
