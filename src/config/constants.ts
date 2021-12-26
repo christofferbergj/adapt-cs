@@ -16,7 +16,7 @@ export const env = {
 /**
  * Amount of fines to show in the fines list
  *
- * The value needs to be synchronised between the call in statics props
- * and react-query on the client
+ * The value needs to be synchronised between prefetching calls
+ * and calls in the client
  */
 export const amountOfFines = 8

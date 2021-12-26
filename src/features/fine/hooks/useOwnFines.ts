@@ -1,7 +1,9 @@
-import { useCallback } from 'react'
+import ms from 'ms'
+import { useCallback, useMemo } from 'react'
 
-import { InferQueryInput, trpc } from '@utils/trpc'
+import type { InferQueryInput } from '@utils/trpc'
 import { amountOfFines } from '@config/constants'
+import { trpc } from '@utils/trpc'
 
 type Params = Omit<InferQueryInput<'fines.own'>, 'skip'> & {
   page: number
@@ -15,40 +17,45 @@ export function useOwnFines({
   const skip = page * take
   const { prefetchQuery } = trpc.useContext()
 
-  const { data, ...rest } = trpc.useQuery(
-    ['fines.own', { userId, take, skip }],
-    {
-      keepPreviousData: true,
-      enabled: !!userId,
-    }
+  // Setup default query parameters for the query and the prefetch query
+  const queryParams: InferQueryInput<'fines.own'> = useMemo(
+    () => ({ skip, take, userId }),
+    [skip, take, userId]
   )
 
+  // Fetch all own fines
+  const { data, ...rest } = trpc.useQuery(['fines.own', queryParams], {
+    keepPreviousData: true,
+    enabled: !!userId,
+    staleTime: ms('10s'),
+  })
+
+  // Set default response values
   const count = data?.count ?? 0
   const fines = data?.fines ?? []
 
+  // Calculate values for pagination
   const current = page === 0 ? 1 : page + take
   const hasMore = skip + take < count
   const pageTotal = (page + 1) * take
 
+  //  Set up a fetcher for continuous prefetching of the next pagination page
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    const params: InferQueryInput<'fines.own'> = {
-      skip: skip === 0 ? take : skip + take,
-      take,
-      userId,
-    }
-
-    return prefetchQuery(['fines.own', params])
-  }, [hasMore, prefetchQuery, skip, take, userId])
+    return prefetchQuery([
+      'fines.own',
+      { ...queryParams, skip: skip === 0 ? take : skip + take },
+    ])
+  }, [hasMore, prefetchQuery, queryParams, skip, take])
 
   return {
     fines,
     prefetchNextPage,
     meta: {
-      hasMore,
       count,
       current,
+      hasMore,
       pageTotal,
     },
     ...rest,

@@ -4,8 +4,8 @@ import type {
   FineLeader,
   MostPaidFine,
 } from '@features/fine/entities'
-import type { FineType } from '@features/fine-types'
-import type { User } from '@features/user'
+import type { FineType } from '@features/fine-types/entities'
+import type { User } from '@features/user/entities'
 import { AsyncReturnType } from 'type-fest'
 
 export interface FineAdapter {

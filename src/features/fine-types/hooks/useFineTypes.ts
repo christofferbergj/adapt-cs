@@ -1,10 +1,9 @@
-import { useQuery } from 'react-query'
-
-import { useFineTypeAdapter } from '@features/fine-types/adapters'
+import { trpc } from '@utils/trpc'
 
 export function useFineTypes() {
-  const { getFineTypes } = useFineTypeAdapter()
-  const { data: fineTypes, ...rest } = useQuery('fine-types', getFineTypes)
+  const { data, ...rest } = trpc.useQuery(['fineTypes.all'])
+
+  const fineTypes = data ?? []
 
   return {
     fineTypes,

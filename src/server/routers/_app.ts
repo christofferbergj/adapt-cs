@@ -1,7 +1,9 @@
 import superjson from 'superjson'
 
 import { createRouter } from '@server/createRouter'
-import { finesRouter } from '@server/routers/fine'
+import { fineTypesRouter } from '@server/routers/fine-types'
+import { finesRouter } from '@server/routers/fines'
+import { usersRouter } from '@server/routers/users'
 
 /**
  * Create your application's root router
@@ -20,6 +22,8 @@ export const appRouter = createRouter()
    * @link https://trpc.io/docs/error-formatting
    */
   // .formatError(({ shape, error }) => { })
+  .merge('fineTypes.', fineTypesRouter)
   .merge('fines.', finesRouter)
+  .merge('users.', usersRouter)
 
 export type AppRouter = typeof appRouter

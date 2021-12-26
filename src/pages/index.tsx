@@ -1,29 +1,23 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import { createSSGHelpers } from '@trpc/react/ssg'
-import { useSession } from 'next-auth/react'
 
 import { amountOfFines } from '@config/constants'
 import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
-import { transformer, trpc } from '@utils/trpc'
+import { transformer } from '@utils/trpc'
+import { usePrefetchOwnFines } from '@features/fine/hooks/usePrefetchOwnFines'
 
 import { FinesOverview } from '@components/pages/overview/FinesOverview'
 import { Layout } from '@components/common/Layout'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-const Overview: NextPage<Props> = () => {
-  const { data: session } = useSession()
-  const { prefetchQuery } = trpc.useContext()
-
-  const userId = session?.user.id
-
+const Home: NextPage<Props> = () => {
   /**
-   * Prefetch data for "Own fines overview page"
+   * Prefetching own fines from the front page as the user lands here after login,
+   * and the list of own fines can't be statically rendered due to authentication requirements.
    */
-  if (userId) {
-    prefetchQuery(['fines.own', { userId, take: amountOfFines, skip: 0 }])
-  }
+  usePrefetchOwnFines()
 
   return (
     <Layout>
@@ -51,4 +45,4 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-export default Overview
+export default Home

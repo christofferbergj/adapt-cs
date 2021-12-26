@@ -1,9 +1,9 @@
-import { useQuery } from 'react-query'
-import { useUsersAdapter } from '@features/user/adapters'
+import { trpc } from '@utils/trpc'
 
 export function useUsers() {
-  const { getUsers } = useUsersAdapter()
-  const { data: users, ...rest } = useQuery('users', getUsers)
+  const { data, ...rest } = trpc.useQuery(['users.all'])
+
+  const users = data ?? []
 
   return {
     users,

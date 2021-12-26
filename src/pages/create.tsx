@@ -1,41 +1,20 @@
-import type { InferGetStaticPropsType, NextPage } from 'next'
-import { dehydrate, QueryClient } from 'react-query'
-import { useSession } from 'next-auth/react'
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import { createSSGHelpers } from '@trpc/react/ssg'
 
-import { getFineTypes } from '@features/fine-types/adapters/getFineTypes'
-import { getUsers } from '@features/user/adapters/getUsers'
-import { queryKeys } from '@config/constants'
+import { appRouter } from '@server/routers/_app'
+import { createContext } from '@server/context'
+import { transformer } from '@utils/trpc'
+import { useFineTypes } from '@features/fine-types/hooks/useFineTypes'
 import { useUsers } from '@features/user/hooks/useUsers'
 
 import { Container } from '@components/layout/Container'
 import { Layout } from '@components/common/Layout'
-import steffen from '/public/steffen.png'
-import Image from 'next/image'
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
-export const Create: NextPage<Props> = () => {
+const Create: NextPage<Props> = () => {
+  const { fineTypes } = useFineTypes()
   const { users } = useUsers()
-
-  const { data: session } = useSession()
-
-  if (session?.user.role === 'USER') {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <Image
-          alt="steffen"
-          src={steffen}
-          placeholder="blur"
-          width={300}
-          height={300}
-        />
-
-        <h1 className="mt-10 text-2xl font-bold border border-purple-9 px-4 py-2 bg-purple-3">
-          You are not an admin
-        </h1>
-      </div>
-    )
-  }
 
   return (
     <Layout>
@@ -56,17 +35,23 @@ export const Create: NextPage<Props> = () => {
   )
 }
 
-export const getStaticProps = async () => {
-  const queryClient = new QueryClient()
+export const getStaticProps: GetStaticProps = async () => {
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    ctx: await createContext(),
+    transformer,
+  })
 
-  await queryClient.prefetchQuery(queryKeys.fineTypes, getFineTypes)
-  await queryClient.prefetchQuery(queryKeys.users, getUsers)
+  await Promise.all([
+    ssg.fetchQuery('users.all'),
+    ssg.fetchQuery('fineTypes.all'),
+  ])
 
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
-      revalidate: 10,
+      trpcState: ssg.dehydrate(),
     },
+    revalidate: 1,
   }
 }
 
