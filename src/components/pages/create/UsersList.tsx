@@ -2,6 +2,8 @@ import type { User } from '@features/user/entities'
 import { useFuse } from '@hooks/useFuse'
 import { useUsers } from '@features/user/hooks/useUsers'
 
+import { Input } from '@components/elements/Input'
+
 export const UsersList = () => {
   const { users } = useUsers()
   const { results, onSearch } = useFuse<User>({
@@ -13,13 +15,17 @@ export const UsersList = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <input
-        name="fine-type"
-        autoComplete="off"
-        onChange={({ target: { value } }) => onSearch(value)}
-        className="px-4 py-2 w-full rounded outline-none bg-gray-4"
-        placeholder="Search users"
-      />
+      <Input.Wrapper>
+        <Input.Label htmlFor="users">Users</Input.Label>
+
+        <Input.Element
+          id="users"
+          autoComplete="off"
+          autoFocus
+          onChange={({ target: { value } }) => onSearch(value)}
+          placeholder="E.g. 'Kim Nyhuus'"
+        />
+      </Input.Wrapper>
 
       {list.length > 0 ? (
         <div className="grid grid-cols-4 gap-4">

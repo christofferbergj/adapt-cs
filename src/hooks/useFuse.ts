@@ -62,5 +62,6 @@ export function useFuse<T>({ list, options, debounce }: Params<T>) {
     onSearch,
     query,
     results,
+    setQuery,
   }
 }
