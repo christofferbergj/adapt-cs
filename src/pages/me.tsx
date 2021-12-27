@@ -1,10 +1,11 @@
-import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
+
+import type { ExtendedNextPage } from '@pages/_app'
 
 import { Container } from '@components/layout/Container'
 import { OwnFinesOverview } from '@components/pages/me/OwnFinesOverview'
 
-const Me: NextPage = () => {
+const Me: ExtendedNextPage = () => {
   const { data: session, status } = useSession()
 
   return (
@@ -26,5 +27,7 @@ const Me: NextPage = () => {
     </>
   )
 }
+
+Me.requireAuth = true
 
 export default Me

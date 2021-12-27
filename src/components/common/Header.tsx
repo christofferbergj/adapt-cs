@@ -12,6 +12,7 @@ type Link = {
   title: string
   isActive?: boolean
   isAdmin?: boolean
+  isAuth?: boolean
   isDisabled?: boolean
 }
 
@@ -27,6 +28,7 @@ const links: Link[] = [
   {
     href: '/me',
     title: 'My fines',
+    isAuth: true,
   },
   {
     href: '/create',

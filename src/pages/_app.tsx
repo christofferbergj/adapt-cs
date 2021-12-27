@@ -14,7 +14,7 @@ import { transformer } from '@utils/trpc'
 import { useMount } from 'react-use'
 import { withTRPC } from '@trpc/next'
 
-import { AdminGuard } from '@components/common/AdminGuard'
+import { AuthGuard } from '@components/common/AuthGuard'
 
 export type ExtendedNextPage<P = Record<string, unknown>, IP = P> = NextPage<
   P,
@@ -22,6 +22,7 @@ export type ExtendedNextPage<P = Record<string, unknown>, IP = P> = NextPage<
 > & {
   getLayout?: (page: ReactElement) => ReactNode
   layoutSpacing?: boolean
+  requireAuth?: boolean
   requireAdmin?: boolean
 }
 
@@ -51,8 +52,10 @@ const App = ({ Component, pageProps }: ExtendedAppProps) => {
   return (
     <>
       <SessionProvider session={pageProps.session}>
-        {Component.requireAdmin ? (
-          <AdminGuard>{getLayout(<Component {...pageProps} />)}</AdminGuard>
+        {Component.requireAuth ? (
+          <AuthGuard requireAdmin={Component.requireAdmin}>
+            {getLayout(<Component {...pageProps} />)}
+          </AuthGuard>
         ) : (
           getLayout(<Component {...pageProps} />)
         )}
