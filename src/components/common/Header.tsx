@@ -28,12 +28,10 @@ const links: Link[] = [
   {
     href: '/me',
     title: 'My fines',
-    isAuth: true,
   },
   {
     href: '/create',
     title: 'Create fine',
-    isAdmin: true,
   },
 ]
 
