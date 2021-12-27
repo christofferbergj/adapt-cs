@@ -29,6 +29,8 @@
       "@custom-types/*": ["custom-types/*"],
       "@features": ["features"],
       "@features/*": ["features/*"],
+      "@hooks": ["hooks"],
+      "@hooks/*": ["hooks/*"],
       "@lib": ["lib"],
       "@lib/*": ["lib/*"],
       "@pages": ["pages"],

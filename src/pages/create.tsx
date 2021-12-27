@@ -5,18 +5,21 @@ import type { ExtendedNextPage } from '@pages/_app'
 import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
 import { transformer } from '@utils/trpc'
-import { useFineTypes } from '@features/fine-types/hooks/useFineTypes'
 import { useUsers } from '@features/user/hooks/useUsers'
 
 import { Container } from '@components/layout/Container'
+import { FineTypesList } from '@components/pages/create/FineTypesList'
+import { UsersList } from '@components/pages/create/UsersList'
 
 const Create: ExtendedNextPage = () => {
-  const { fineTypes } = useFineTypes()
   const { users } = useUsers()
 
   return (
     <Container>
-      <h2>hello world</h2>
+      <div className="flex flex-col gap-16">
+        <UsersList />
+        <FineTypesList />
+      </div>
     </Container>
   )
 }
