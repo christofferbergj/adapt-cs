@@ -17,7 +17,6 @@ export const UsersList = () => {
     useSearchableUserList()
 
   const handleSelectUser = (id: User['id']) => {
-    resetInput()
     dispatch(setSelectedUser(id))
   }
 
@@ -42,7 +41,7 @@ export const UsersList = () => {
             <button
               key={id}
               className={clsx(
-                'p-5 rounded border transition-colors outline-none font-semibold text-sm',
+                'p-5 rounded border transition-colors outline-none font-semibold text-sm min-h-[100px]',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedUser !== id,

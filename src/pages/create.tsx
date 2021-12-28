@@ -16,6 +16,7 @@ import {
 import { Container } from '@components/layout/Container'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
+import clsx from 'clsx'
 
 const Create: ExtendedNextPage = () => {
   const dispatch = useAppDispatch()
@@ -48,9 +49,12 @@ const Create: ExtendedNextPage = () => {
         <FineTypesList />
 
         <button
-          onClick={handleCreateFine}
+          // onClick={handleCreateFine}
           disabled={!canCreateFine || mutation.isLoading}
-          className="px-3 py-1 max-w-min whitespace-nowrap rounded border transition-colors duration-100 border-purple-7 hover:bg-purple-5 disabled:opacity-40 disabled:cursor-not-allowed"
+          className={clsx(
+            'px-4 py-4 md:max-w-min whitespace-nowrap rounded-lg transition-colors duration-100 disabled:opacity-40 disabled:cursor-not-allowed bg-purple-4 hover:bg-purple-5 active:bg-purple-6 text-purple-11 font-bold border border-purple-7 hover:border-purple-8 min-w-[180px]',
+            {}
+          )}
         >
           Create fine
         </button>

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import type { FineType } from '@domain/fine-type'
 import {
@@ -11,11 +11,13 @@ import { useAppDispatch } from '@redux/hooks'
 import { useSearchableFineTypeList } from '@features/create-fine/hooks/useSearchableFineTypeList'
 
 import { Input } from '@components/elements/Input'
+import { scrollToWithOffset } from '@utils/scrollToWithOffset'
 
 export const FineTypesList = () => {
   const dispatch = useAppDispatch()
   const selectedFineType = useSelectedFineType()
   const selectedUser = useSelectedUser()
+  const listRef = useRef<HTMLDivElement>(null)
   const { list, inputRef, inputValue, handleInputChange, resetInput } =
     useSearchableFineTypeList()
 
@@ -26,17 +28,20 @@ export const FineTypesList = () => {
    * @param id - The id of the fine type
    */
   const handleSelectFineType = (id: FineType['id']) => {
-    resetInput()
     dispatch(setSelectedFineType(id))
   }
 
   // Focus the fine types input when a user has been selected
   useEffect(() => {
-    if (selectedUser) inputRef.current?.focus()
+    const element = listRef.current
+
+    if (selectedUser && element) {
+      scrollToWithOffset(element, 30)
+    }
   }, [inputRef, selectedUser])
 
   return (
-    <div className="flex flex-col gap-4">
+    <div ref={listRef} className="flex flex-col gap-4">
       <Input.Wrapper>
         <Input.Label htmlFor="fine-type">Fine types</Input.Label>
 
@@ -56,7 +61,7 @@ export const FineTypesList = () => {
             <button
               key={id}
               className={clsx(
-                'p-5 rounded border transition-colors outline-none font-semibold text-sm',
+                'p-5 rounded border transition-colors outline-none font-semibold text-sm min-h-[100px]',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedFineType !== id,

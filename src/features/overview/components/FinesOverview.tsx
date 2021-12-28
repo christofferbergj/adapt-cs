@@ -30,7 +30,7 @@ export const FinesOverview = () => {
   }, [hasMore, isFetching, prefetchNextPage])
 
   return (
-    <Container className="relative">
+    <Container className="relative mt-8">
       {fines && fines.length > 0 ? (
         <div className="relative">
           <MobileSteffen />
