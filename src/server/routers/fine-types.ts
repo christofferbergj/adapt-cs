@@ -1,4 +1,4 @@
-import type { FineType } from '@domain/fine-type/entities'
+import type { FineType } from '@domain/fine-type'
 import { createRouter } from '@server/createRouter'
 
 export const fineTypesRouter = createRouter().query('all', {

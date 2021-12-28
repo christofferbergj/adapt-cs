@@ -1,12 +1,12 @@
-import { type FineType } from '@domain/fine-type/entities'
-import { type User } from '@domain/user/entities'
+import type { User } from '@domain/user'
 
 export type Fine = {
   id: string
   createdAt: string
   updatedAt: string
   owner: User
-  fineType: FineType
+  title: string
+  price: number
   isPaid: boolean
 }
 

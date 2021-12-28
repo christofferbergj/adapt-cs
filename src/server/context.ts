@@ -1,22 +1,8 @@
 import * as trpc from '@trpc/server'
 import * as trpcNext from '@trpc/server/adapters/next'
-import { PrismaClient } from '@prisma/client'
 import { getSession } from 'next-auth/react'
 
-declare global {
-  var prisma: PrismaClient | undefined
-}
-
-const prisma =
-  global.prisma ||
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === 'development'
-        ? ['query', 'error', 'warn']
-        : ['error'],
-  })
-
-if (process.env.NODE_ENV !== 'production') global.prisma = prisma
+import { prisma } from '@lib/prisma'
 
 /**
  * Creates context for an incoming request

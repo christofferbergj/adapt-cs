@@ -1,9 +1,19 @@
+import type { User } from '@domain/user'
+import { setSelectedUser } from '@features/create-fine/createFineSlice'
+import { useAppDispatch } from '@redux/hooks'
 import { useSearchableUserList } from '@features/create-fine/hooks/useSearchableUserList'
 
 import { Input } from '@components/elements/Input'
 
 export const UsersList = () => {
-  const { list, inputRef, inputValue, handleInputChange } = useSearchableUserList()
+  const dispatch = useAppDispatch()
+  const { list, inputRef, inputValue, handleInputChange, resetInput } =
+    useSearchableUserList()
+
+  const handleSelectUser = (id: User['id']) => {
+    resetInput()
+    dispatch(setSelectedUser(id))
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -23,10 +33,14 @@ export const UsersList = () => {
 
       {list.length > 0 ? (
         <div className="grid grid-cols-4 gap-4">
-          {list.map((item) => (
-            <div key={item.id} className="px-4 py-3 rounded bg-gray-3">
-              <span>{item.name}</span>
-            </div>
+          {list.map(({ id, name }) => (
+            <button
+              key={id}
+              className="px-4 py-3 rounded bg-gray-3"
+              onClick={() => handleSelectUser(id)}
+            >
+              <span>{name}</span>
+            </button>
           ))}
         </div>
       ) : null}

@@ -1,5 +1,5 @@
 import Prisma from '@prisma/client'
-import { type User, UserRole } from '@domain/user/entities'
+import { type User, UserRole } from '@domain/user'
 
 /**
  * Transform an input with user data to our own User entity

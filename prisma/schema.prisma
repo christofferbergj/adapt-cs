@@ -68,19 +68,17 @@ model FineType {
   id    String @id @default(cuid())
   title String @unique
   price Int    @default(10)
-  fines Fine[]
 }
 
 model Fine {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
-  owner      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  ownerId    String
-  fineType   FineType @relation(fields: [fineTypeId], references: [id])
-  fineTypeId String
-  paid       Boolean  @default(false)
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId   String
+  title     String   @default("Missing title")
+  price     Int      @default(10)
+  paid      Boolean  @default(false)
 
-  @@index([fineTypeId])
   @@index([ownerId])
 }

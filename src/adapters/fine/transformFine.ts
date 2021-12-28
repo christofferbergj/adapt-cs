@@ -1,11 +1,10 @@
 import type Prisma from '@prisma/client'
 
-import type { Fine } from '@domain/fine/entities'
-import { UserRole } from '@domain/user/entities'
+import type { Fine } from '@domain/fine'
+import { UserRole } from '@domain/user'
 
 type Input = Prisma.Fine & {
   owner: Prisma.User
-  fineType: Prisma.FineType
 }
 
 /**
@@ -18,18 +17,15 @@ type Input = Prisma.Fine & {
  * @see {Fine} Our fine entity
  */
 export const transformFine = (input: Input): Fine => {
-  const { createdAt, fineType, id, owner, paid, updatedAt } = input
+  const { createdAt, id, owner, paid, updatedAt, price, title } = input
 
   return {
     id,
     createdAt: createdAt.toString(),
     updatedAt: updatedAt.toString(),
     isPaid: paid,
-    fineType: {
-      id: fineType.id,
-      price: fineType.price,
-      title: fineType.title,
-    },
+    title,
+    price,
     owner: {
       id: owner.id,
       name: owner.name ?? 'No owner',

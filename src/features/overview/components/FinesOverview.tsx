@@ -66,7 +66,7 @@ export const FinesOverview = () => {
                 </Overview.Name>
 
                 <Overview.Fee>
-                  <span>{fine.fineType.title}</span>
+                  <span>{fine.title}</span>
                 </Overview.Fee>
 
                 <Overview.Date>
@@ -76,7 +76,7 @@ export const FinesOverview = () => {
                 </Overview.Date>
 
                 <Overview.Price>
-                  <span>{fine.fineType.price} kr.</span>
+                  <span>{fine.price} kr.</span>
                 </Overview.Price>
 
                 <Overview.Status>

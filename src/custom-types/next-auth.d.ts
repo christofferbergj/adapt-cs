@@ -1,4 +1,4 @@
-import { type User } from '@domain/user/entities'
+import { type User } from '@domain/user'
 
 declare module 'next-auth' {
   /**

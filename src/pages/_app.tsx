@@ -3,18 +3,21 @@ import 'focus-visible'
 import NProgress from 'nprogress'
 import Router from 'next/router'
 import type { AppProps } from 'next/app'
-import type { AppRouter } from '@server/routers/_app'
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
-import { Layout } from '@components/common/Layout'
+import { Provider } from 'react-redux'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { SessionProvider } from 'next-auth/react'
-import { env } from '@config/constants'
-import { transformer } from '@utils/trpc'
 import { useMount } from 'react-use'
 import { withTRPC } from '@trpc/next'
 
+import type { AppRouter } from '@server/routers/_app'
+import { env } from '@config/constants'
+import { store } from '@redux/store'
+import { transformer } from '@utils/trpc'
+
 import { AuthGuard } from '@components/common/AuthGuard'
+import { Layout } from '@components/common/Layout'
 
 export type ExtendedNextPage<P = Record<string, unknown>, IP = P> = NextPage<
   P,
@@ -52,13 +55,15 @@ const App = ({ Component, pageProps }: ExtendedAppProps) => {
   return (
     <>
       <SessionProvider session={pageProps.session}>
-        {Component.requireAuth ? (
-          <AuthGuard requireAdmin={Component.requireAdmin}>
-            {getLayout(<Component {...pageProps} />)}
-          </AuthGuard>
-        ) : (
-          getLayout(<Component {...pageProps} />)
-        )}
+        <Provider store={store}>
+          {Component.requireAuth ? (
+            <AuthGuard requireAdmin={Component.requireAdmin}>
+              {getLayout(<Component {...pageProps} />)}
+            </AuthGuard>
+          ) : (
+            getLayout(<Component {...pageProps} />)
+          )}
+        </Provider>
       </SessionProvider>
 
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
