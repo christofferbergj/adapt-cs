@@ -5,10 +5,10 @@ import { amountOfFines } from '@config/constants'
 import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
 import { transformer } from '@utils/trpc'
-import { usePrefetchOwnFines } from '@features/fine/hooks/usePrefetchOwnFines'
+import { usePrefetchOwnFines } from '@features/../adapters/fine/hooks/usePrefetchOwnFines'
 
 import { ExtendedNextPage } from '@pages/_app'
-import { FinesOverview } from '@components/pages/overview/FinesOverview'
+import { FinesOverview } from '@features/overview/components/FinesOverview'
 
 const Home: ExtendedNextPage = () => {
   /**

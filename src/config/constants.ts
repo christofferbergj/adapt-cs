@@ -1,12 +1,3 @@
-export const queryKeys = {
-  fineTypes: 'fine-types',
-  fines: 'fines',
-  ownFines: 'own-fines',
-  mostPaidFines: 'most-paid-fines',
-  users: 'users',
-  leaders: 'leaders',
-}
-
 export const env = {
   vercelPublicDomain: process.env.NEXT_PUBLIC_DOMAIN,
   vercelEnvPreview: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview',

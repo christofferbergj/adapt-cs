@@ -1,11 +1,11 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { FineLeader, FineList, MostPaidFine } from '@features/fine/entities'
+import { FineLeader, FineList, MostPaidFine } from '@domain/fine/entities'
 import { amountOfFines } from '@config/constants'
 import { createRouter } from 'server/createRouter'
 import { prisma } from '@lib/prisma'
-import { transformFine } from '@features/fine/transformers/fines-list'
+import { transformFine } from '@adapters/fine/transformFine'
 
 export const finesRouter = createRouter()
   .query('all', {

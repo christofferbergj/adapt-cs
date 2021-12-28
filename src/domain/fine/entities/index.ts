@@ -1,5 +1,5 @@
-import type { FineType } from '@features/fine-types/entities'
-import type { User } from '@features/user/entities'
+import { type FineType } from '@domain/fine-type/entities'
+import { type User } from '@domain/user/entities'
 
 export type Fine = {
   id: string
@@ -13,11 +13,6 @@ export type Fine = {
 export type FineList = {
   fines: Fine[]
   count: number
-}
-
-export type CreateFine = {
-  ownerId: Fine['owner']['id']
-  fineTypeId: Fine['fineType']['id']
 }
 
 export type MostPaidFine = {

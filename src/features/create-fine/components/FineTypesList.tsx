@@ -1,29 +1,24 @@
 import clsx from 'clsx'
-import { useEffect, useRef, useState } from 'react'
 
-import type { FineType } from '@features/fine-types/entities'
-import { useFineTypes } from '@features/fine-types/hooks/useFineTypes'
-import { useFuse } from '@hooks/useFuse'
+import type { FineType } from '@domain/fine-type/entities'
+import { useSearchableFineTypeList } from '@features/create-fine/hooks/useSearchableFineTypeList'
+import { useSelectFineType } from '@features/create-fine/hooks/useSelectFineType'
 
 import { Input } from '@components/elements/Input'
 
 export const FineTypesList = () => {
-  const [selected, setSelected] = useState<FineType['id'] | null>(null)
-  const [value, setValue] = useState<string>('')
-  const inputRef = useRef<HTMLInputElement>(null)
-  const { fineTypes } = useFineTypes()
-  const { results, onSearch } = useFuse<FineType>({
-    list: fineTypes,
-    options: { keys: ['title'], threshold: 0.3 },
-  })
+  const [selected, setSelected] = useSelectFineType()
+  const { list, inputRef, inputValue, handleInputChange, resetInput } =
+    useSearchableFineTypeList()
 
-  useEffect(() => onSearch(value), [onSearch, value])
-
-  const list = results.length > 0 ? results : fineTypes
-
-  const handleSelect = (id: FineType['id']) => {
-    value && inputRef.current?.focus()
-    setValue('')
+  /**
+   * Handle selecting a fine type
+   * and de-select if the same fine type is selected.
+   *
+   * @param id - The id of the fine type
+   */
+  const handleSelectFineType = (id: FineType['id']) => {
+    resetInput()
 
     if (selected === id) {
       return setSelected(null)
@@ -41,8 +36,8 @@ export const FineTypesList = () => {
           ref={inputRef}
           id="fine-type"
           autoComplete="off"
-          value={value}
-          onChange={({ target: { value } }) => setValue(value)}
+          value={inputValue}
+          onChange={handleInputChange}
           placeholder="E.g. 'Møde for sent'"
         />
       </Input.Wrapper>
@@ -61,7 +56,7 @@ export const FineTypesList = () => {
                     selected === item.id,
                 }
               )}
-              onClick={() => handleSelect(item.id)}
+              onClick={() => handleSelectFineType(item.id)}
             >
               <span>{item.title}</span>
             </button>

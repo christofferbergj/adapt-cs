@@ -1,17 +1,9 @@
-import type { User } from '@features/user/entities'
-import { useFuse } from '@hooks/useFuse'
-import { useUsers } from '@features/user/hooks/useUsers'
+import { useSearchableUserList } from '@features/create-fine/hooks/useSearchableUserList'
 
 import { Input } from '@components/elements/Input'
 
 export const UsersList = () => {
-  const { users } = useUsers()
-  const { results, onSearch } = useFuse<User>({
-    list: users,
-    options: { keys: ['name'], threshold: 0.3 },
-  })
-
-  const list = results.length > 0 ? results : users
+  const { list, inputRef, inputValue, handleInputChange } = useSearchableUserList()
 
   return (
     <div className="flex flex-col gap-4">
@@ -22,8 +14,10 @@ export const UsersList = () => {
           id="users"
           autoComplete="off"
           autoFocus
-          onChange={({ target: { value } }) => onSearch(value)}
+          onChange={handleInputChange}
           placeholder="E.g. 'Kim Nyhuus'"
+          ref={inputRef}
+          value={inputValue}
         />
       </Input.Wrapper>
 

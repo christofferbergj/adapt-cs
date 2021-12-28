@@ -5,15 +5,12 @@ import type { ExtendedNextPage } from '@pages/_app'
 import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
 import { transformer } from '@utils/trpc'
-import { useUsers } from '@features/user/hooks/useUsers'
 
 import { Container } from '@components/layout/Container'
-import { FineTypesList } from '@components/pages/create/FineTypesList'
-import { UsersList } from '@components/pages/create/UsersList'
+import { FineTypesList } from '@features/create-fine/components/FineTypesList'
+import { UsersList } from '@features/create-fine/components/UsersList'
 
 const Create: ExtendedNextPage = () => {
-  const { users } = useUsers()
-
   return (
     <Container>
       <div className="flex flex-col gap-16">

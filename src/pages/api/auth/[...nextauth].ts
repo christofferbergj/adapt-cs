@@ -6,6 +6,7 @@ import NextAuth from 'next-auth'
 import type { NextAuthOptions } from 'next-auth'
 
 import { prisma } from '@lib/prisma'
+import { transformUser } from '@adapters/user/transformUser'
 
 const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -25,14 +26,14 @@ const options: NextAuthOptions = {
       return true
     },
     async session({ session, user }) {
-      const savedUser = await prisma.user.findUnique({
+      const dbUser = await prisma.user.findUnique({
         where: {
           id: user.id,
         },
       })
 
-      invariant(savedUser, 'User does not exist')
-      session.user = savedUser
+      invariant(dbUser, 'User does not exist')
+      session.user = transformUser(dbUser)
 
       return session
     },

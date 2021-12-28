@@ -3,9 +3,9 @@ import { useSession } from 'next-auth/react'
 import type { ExtendedNextPage } from '@pages/_app'
 
 import { Container } from '@components/layout/Container'
-import { OwnFinesOverview } from '@components/pages/me/OwnFinesOverview'
+import { OwnFinesOverview } from '@features/my-fines/components/OwnFinesOverview'
 
-const Me: ExtendedNextPage = () => {
+const MyFines: ExtendedNextPage = () => {
   const { data: session, status } = useSession()
 
   return (
@@ -28,6 +28,6 @@ const Me: ExtendedNextPage = () => {
   )
 }
 
-Me.requireAuth = true
+MyFines.requireAuth = true
 
-export default Me
+export default MyFines

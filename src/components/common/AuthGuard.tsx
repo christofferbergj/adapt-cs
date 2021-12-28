@@ -3,6 +3,8 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 
+import { hasAdminRole } from '@domain/user/hasAdminRole'
+
 import steffen from '/public/steffen.png'
 
 type Props = {
@@ -13,13 +15,14 @@ export const AuthGuard: NextPage<Props> = ({ requireAdmin, children }) => {
   const router = useRouter()
   const { data: session, status } = useSession()
 
-  const isAdmin = session?.user.role === 'ADMIN'
+  const user = session?.user
+  const userHasAdminRole = user && hasAdminRole(user)
 
   if (status === 'loading') {
     return null
   }
 
-  if (requireAdmin && !isAdmin) {
+  if (requireAdmin && !userHasAdminRole) {
     router.replace('/')
 
     return null

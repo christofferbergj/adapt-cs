@@ -6,13 +6,12 @@ import { useRouter } from 'next/router'
 import { useSession, signIn } from 'next-auth/react'
 
 import { Container } from '@components/layout/Container'
+import { hasAdminRole } from '@domain/user/hasAdminRole'
 
 type Link = {
   href: string
   title: string
   isActive?: boolean
-  isAdmin?: boolean
-  isAuth?: boolean
   isDisabled?: boolean
 }
 
@@ -64,12 +63,12 @@ export const Header = () => {
             >
               <circle cx="50%" cy="50%" r="18" />
             </ContentLoader>
-          ) : session?.user?.image ? (
+          ) : session?.user?.avatar ? (
             <div className="w-[36px] h-[36px] rounded-full overflow-hidden">
               <Image
                 width={36}
                 height={36}
-                src={session?.user?.image}
+                src={session?.user?.avatar}
                 alt="avatar"
               />
             </div>
@@ -85,9 +84,7 @@ export const Header = () => {
 
         <div className="flex items-center justify-between -mb-px text-sm">
           <div className="flex">
-            {links.map(({ href, title, isAdmin, isDisabled }, i) => {
-              if (isAdmin && session?.user.role !== 'ADMIN') return null
-
+            {links.map(({ href, title, isDisabled }, i) => {
               return (
                 <Link href={href} key={i}>
                   <a
