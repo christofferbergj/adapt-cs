@@ -29,7 +29,6 @@ export const UsersList = () => {
         <Input.Element
           id="users"
           autoComplete="off"
-          autoFocus
           onChange={handleInputChange}
           placeholder="E.g. 'Kim Nyhuus'"
           ref={inputRef}
