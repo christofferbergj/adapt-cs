@@ -1,9 +1,11 @@
 import clsx from 'clsx'
+import { useEffect } from 'react'
 
 import type { FineType } from '@domain/fine-type'
 import {
   setSelectedFineType,
   useSelectedFineType,
+  useSelectedUser,
 } from '@features/create-fine/createFineSlice'
 import { useAppDispatch } from '@redux/hooks'
 import { useSearchableFineTypeList } from '@features/create-fine/hooks/useSearchableFineTypeList'
@@ -13,6 +15,7 @@ import { Input } from '@components/elements/Input'
 export const FineTypesList = () => {
   const dispatch = useAppDispatch()
   const selectedFineType = useSelectedFineType()
+  const selectedUser = useSelectedUser()
   const { list, inputRef, inputValue, handleInputChange, resetInput } =
     useSearchableFineTypeList()
 
@@ -26,6 +29,11 @@ export const FineTypesList = () => {
     resetInput()
     dispatch(setSelectedFineType(id))
   }
+
+  // Focus the fine types input when a user has been selected
+  useEffect(() => {
+    if (selectedUser) inputRef.current?.focus()
+  }, [inputRef, selectedUser])
 
   return (
     <div className="flex flex-col gap-4">
@@ -43,7 +51,7 @@ export const FineTypesList = () => {
       </Input.Wrapper>
 
       {list.length > 0 ? (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
           {list.map(({ id, title }) => (
             <button
               key={id}

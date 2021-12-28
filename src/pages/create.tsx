@@ -16,14 +16,12 @@ import {
 import { Container } from '@components/layout/Container'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
-import { amountOfFines } from '@config/constants'
 
 const Create: ExtendedNextPage = () => {
   const dispatch = useAppDispatch()
   const mutation = trpc.useMutation('fines.create')
   const selectedFineType = useSelectedFineType()
   const selectedUser = useSelectedUser()
-  const { prefetchQuery } = trpc.useContext()
 
   const canCreateFine = selectedFineType && selectedUser
 
@@ -38,7 +36,6 @@ const Create: ExtendedNextPage = () => {
 
       dispatch(setSelectedFineType(null))
       dispatch(setSelectedUser(null))
-      prefetchQuery(['fines.all', { skip: 0, take: amountOfFines }])
     } catch (e) {
       console.error(e)
     }
