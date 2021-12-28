@@ -3,6 +3,7 @@ import 'focus-visible'
 import NProgress from 'nprogress'
 import Router from 'next/router'
 import type { AppProps } from 'next/app'
+import smoothscroll from 'smoothscroll-polyfill'
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
@@ -39,6 +40,10 @@ Router.events.on('routeChangeError', () => NProgress.done())
 
 const App = ({ Component, pageProps }: ExtendedAppProps) => {
   const withLayoutSpacing = Component.layoutSpacing ?? true
+
+  useMount(() => {
+    smoothscroll.polyfill()
+  })
 
   const getLayout =
     Component.getLayout ??

@@ -18,7 +18,7 @@ export const FineTypesList = () => {
   const selectedFineType = useSelectedFineType()
   const selectedUser = useSelectedUser()
   const listRef = useRef<HTMLDivElement>(null)
-  const { list, inputRef, inputValue, handleInputChange, resetInput } =
+  const { list, inputRef, inputValue, handleInputChange } =
     useSearchableFineTypeList()
 
   /**
@@ -35,10 +35,10 @@ export const FineTypesList = () => {
   useEffect(() => {
     const element = listRef.current
 
-    if (selectedUser && element) {
+    if (!selectedFineType && selectedUser && element) {
       scrollToWithOffset(element, 30)
     }
-  }, [inputRef, selectedUser])
+  }, [inputRef, selectedFineType, selectedUser])
 
   return (
     <div ref={listRef} className="flex flex-col gap-4">
