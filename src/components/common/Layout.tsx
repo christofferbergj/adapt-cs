@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Footer } from '@components/common/Footer'
 import { Header } from '@components/common/Header'
-import { Notifications } from '@components/common/Notifications/Notifications'
+import { Notifications } from '@features/notifications/components/Notifications'
 
 type Props = {
   children: ReactNode

@@ -33,7 +33,7 @@ const Create: ExtendedNextPage = () => {
             dispatch(addNotification({ message: 'A great notification' }))
           }
         >
-          Add noti
+          Add test notification
         </button>
       </div>
     </Container>
