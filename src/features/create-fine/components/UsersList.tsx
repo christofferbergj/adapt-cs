@@ -17,6 +17,7 @@ export const UsersList = () => {
     useSearchableUserList()
 
   const handleSelectUser = (id: User['id']) => {
+    resetInput()
     dispatch(setSelectedUser(id))
   }
 

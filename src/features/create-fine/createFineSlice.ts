@@ -33,12 +33,13 @@ const createFineSlice = createSlice({
       const userIsEqual = state.selectedUser === payload
       state.selectedUser = userIsEqual ? null : payload
     },
+    resetState: () => initialState,
   },
 })
 
 const { actions, reducer } = createFineSlice
 
-export const { setSelectedFineType, setSelectedUser } = actions
+export const { setSelectedFineType, setSelectedUser, resetState } = actions
 
 // Selectors
 const selectCreateFineState = (state: RootState) => state.createFine

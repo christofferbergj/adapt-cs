@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
 import {
   setSelectedFineType,
@@ -15,8 +16,10 @@ export const CreateFine = () => {
   const mutation = trpc.useMutation('fines.create')
   const selectedFineType = useSelectedFineType()
   const selectedUser = useSelectedUser()
+  const submitRef = useRef<HTMLButtonElement>(null)
 
   const canCreateFine = selectedFineType && selectedUser
+
   const handleCreateFine = async () => {
     if (!canCreateFine) return
 
@@ -34,6 +37,11 @@ export const CreateFine = () => {
       console.error(e)
     }
   }
+
+  useEffect(() => {
+    canCreateFine && submitRef.current?.focus()
+  }, [canCreateFine])
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -43,9 +51,10 @@ export const CreateFine = () => {
       <motion.div
         initial={{ y: 0 }}
         animate={canCreateFine ? { y: -20 } : undefined}
-        className="flex fixed right-0 bottom-0 left-0 justify-center shadow"
+        className="flex fixed right-0 bottom-0 md:bottom-20 lg:bottom-40 left-0 justify-center shadow"
       >
         <button
+          ref={submitRef}
           onClick={handleCreateFine}
           disabled={!canCreateFine || mutation.isLoading}
           className={clsx(

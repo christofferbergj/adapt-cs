@@ -42,6 +42,7 @@ const App = ({ Component, pageProps }: ExtendedAppProps) => {
   const withLayoutSpacing = Component.layoutSpacing ?? true
 
   useMount(() => {
+    document.body.classList.remove('loading')
     smoothscroll.polyfill()
   })
 
@@ -53,15 +54,11 @@ const App = ({ Component, pageProps }: ExtendedAppProps) => {
       </Layout>
     ))
 
-  useMount(() => {
-    document.body.classList.remove('loading')
-  })
-
   return (
     <>
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
-          {Component.requireAuth ? (
+          {Component.requireAuth || Component.requireAdmin ? (
             <AuthGuard requireAdmin={Component.requireAdmin}>
               {getLayout(<Component {...pageProps} />)}
             </AuthGuard>

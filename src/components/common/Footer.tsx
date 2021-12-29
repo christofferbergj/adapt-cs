@@ -3,7 +3,7 @@ import { Container } from '@components/layout/Container'
 
 export const Footer = () => {
   return (
-    <Container className="py-6 mt-20 text-center">
+    <Container className="py-6 mt-32 text-center">
       <span className="text-sm text-gray-11">
         <a
           className="transition underline decoration hover:text-purple-11"

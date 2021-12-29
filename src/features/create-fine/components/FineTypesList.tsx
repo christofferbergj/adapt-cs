@@ -18,7 +18,7 @@ export const FineTypesList = () => {
   const selectedFineType = useSelectedFineType()
   const selectedUser = useSelectedUser()
   const listRef = useRef<HTMLDivElement>(null)
-  const { list, inputRef, inputValue, handleInputChange } =
+  const { list, inputRef, inputValue, handleInputChange, resetInput } =
     useSearchableFineTypeList()
 
   /**
@@ -28,6 +28,7 @@ export const FineTypesList = () => {
    * @param id - The id of the fine type
    */
   const handleSelectFineType = (id: FineType['id']) => {
+    resetInput()
     dispatch(setSelectedFineType(id))
   }
 
@@ -39,6 +40,10 @@ export const FineTypesList = () => {
       scrollToWithOffset(element, 30)
     }
   }, [inputRef, selectedFineType, selectedUser])
+
+  useEffect(() => {
+    selectedUser && inputRef.current?.focus()
+  }, [inputRef, selectedUser])
 
   return (
     <div ref={listRef} className="flex flex-col gap-4">
