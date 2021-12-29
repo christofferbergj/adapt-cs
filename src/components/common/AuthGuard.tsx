@@ -34,7 +34,7 @@ export const AuthGuard: NextPage<Props> = ({ requireAdmin, children }) => {
             />
 
             <h1 className="mt-10 -ml-4 font-bold border border-purple-9 px-8 py-3 bg-purple-3">
-              {!isAdmin ? 'Not an admin' : 'Not authenticated'}
+              Not authenticated
             </h1>
           </div>
         </Layout.Space>

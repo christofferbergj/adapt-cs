@@ -3,6 +3,12 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 const sizes = {
+  sm: 'w-[30px] h-[30px] text-xs',
+  md: 'w-[36px] h-[36px] text-xs',
+  lg: 'w-[44px] h-[44px] text-xs',
+}
+
+const sizeNumber = {
   sm: 30,
   md: 36,
   lg: 44,
@@ -17,13 +23,6 @@ type Props = {
 export const Avatar = ({ imageUrl, name, size = 'md' }: Props) => {
   const [isError, setIsError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-
-  const sizeNumber = sizes[size]
-  const sizeClass = clsx([`w-[${sizeNumber}px] h-[${sizeNumber}px]`], {
-    'text-xs': size === 'sm',
-    'text-sm': size === 'md',
-    'text-base': size === 'lg',
-  })
 
   const getInitials = (name: string) => {
     const [firstName, lastName] = name.split(' ')
@@ -43,7 +42,7 @@ export const Avatar = ({ imageUrl, name, size = 'md' }: Props) => {
     <div
       className={clsx(
         'rounded-full overflow-hidden relative leading-none',
-        sizeClass,
+        sizes[size],
         {
           'border bg-purple-3 border-purple-6': showInitials,
         }
@@ -57,8 +56,8 @@ export const Avatar = ({ imageUrl, name, size = 'md' }: Props) => {
 
       {imageUrl && !isError && (
         <Image
-          width={sizeNumber}
-          height={sizeNumber}
+          width={sizeNumber[size]}
+          height={sizeNumber[size]}
           src={imageUrl}
           alt="avatar"
           onLoadingComplete={() => setIsLoaded(true)}

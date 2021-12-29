@@ -60,6 +60,4 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-Create.requireAdmin = true
-
 export default Create

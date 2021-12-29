@@ -35,6 +35,9 @@ export const CreateFine = () => {
       window.scroll({ behavior: 'smooth', top: 0 })
     } catch (e) {
       console.error(e)
+      dispatch(
+        addNotification({ message: 'You are not an admin', type: 'error' })
+      )
     }
   }
 
