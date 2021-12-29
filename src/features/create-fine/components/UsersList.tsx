@@ -9,6 +9,7 @@ import { useAppDispatch } from '@redux/hooks'
 import { useSearchableUserList } from '@features/create-fine/hooks/useSearchableUserList'
 
 import { Input } from '@components/elements/Input'
+import { Avatar } from '@components/elements/Avatar'
 
 export const UsersList = () => {
   const dispatch = useAppDispatch()
@@ -30,19 +31,19 @@ export const UsersList = () => {
           id="users"
           autoComplete="off"
           onChange={handleInputChange}
-          placeholder="E.g. 'Kim Nyhuus'"
+          placeholder="Search users"
           ref={inputRef}
           value={inputValue}
         />
       </Input.Wrapper>
 
       {list.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-          {list.map(({ id, name }) => (
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
+          {list.map(({ id, name, avatar }) => (
             <button
               key={id}
               className={clsx(
-                'p-5 rounded border transition-colors outline-none font-semibold text-sm min-h-[100px]',
+                'p-5 rounded border transition-colors outline-none font-semibold min-h-[100px] flex flex-col items-center gap-3',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedUser !== id,
@@ -52,6 +53,7 @@ export const UsersList = () => {
               )}
               onClick={() => handleSelectUser(id)}
             >
+              <Avatar name={name} imageUrl={avatar} />
               <span>{name}</span>
             </button>
           ))}

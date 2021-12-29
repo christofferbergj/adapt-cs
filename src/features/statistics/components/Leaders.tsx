@@ -1,9 +1,9 @@
-import Image from 'next/image'
-
 import { useLeaders } from '@adapters/fine/hooks/useLeaders'
 
+import { Avatar } from '@components/elements/Avatar'
 import { Container } from '@components/layout/Container'
 import { SnapBox } from '@components/elements/SnapBox'
+import { formatCurrency } from '@utils/formatCurrency'
 
 export const Leaders = () => {
   const { leaders } = useLeaders()
@@ -19,24 +19,12 @@ export const Leaders = () => {
           {leaders.map((leader) => (
             <SnapBox.Item key={leader.id}>
               <div className="flex gap-4 items-center w-full justify-center">
-                {leader.avatar && (
-                  <div className="w-[24px] h-[24px] rounded-full overflow-hidden">
-                    <Image
-                      width={24}
-                      height={24}
-                      src={leader.avatar}
-                      alt="avatar"
-                    />
-                  </div>
-                )}
+                <Avatar name={leader.name} imageUrl={leader.avatar} />
                 <SnapBox.Title>{leader.name}</SnapBox.Title>
               </div>
 
               <span className="mt-8 text-4xl font-bold">
-                {new Intl.NumberFormat('da-DK', {
-                  style: 'currency',
-                  currency: 'DKK',
-                }).format(leader.totalPaid)}
+                {formatCurrency(leader.totalPaid)}
               </span>
             </SnapBox.Item>
           ))}

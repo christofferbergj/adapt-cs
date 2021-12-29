@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Footer } from '@components/common/Footer'
 import { Header } from '@components/common/Header'
+import { Notifications } from '@components/common/Notifications/Notifications'
 
 type Props = {
   children: ReactNode
@@ -13,6 +14,8 @@ export const Root = ({ children }: Props) => {
       <Header />
       <main className="relative z-10 flex-1 w-full">{children}</main>
       <Footer />
+
+      <Notifications />
     </div>
   )
 }

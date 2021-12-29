@@ -19,6 +19,7 @@ export type MostPaidFine = {
   id: string
   title: string
   paidTimes: number
+  sum: number
 }
 
 export type FineLeader = {

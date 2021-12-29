@@ -8,7 +8,7 @@ import { transformer } from '@utils/trpc'
 import { usePrefetchOwnFines } from '@features/../adapters/fine/hooks/usePrefetchOwnFines'
 
 import { ExtendedNextPage } from '@pages/_app'
-import { FinesOverview } from '@features/overview/components/FinesOverview'
+import { LatestFines } from '@features/latest/components/LatestFines'
 
 const Home: ExtendedNextPage = () => {
   /**
@@ -17,7 +17,7 @@ const Home: ExtendedNextPage = () => {
    */
   usePrefetchOwnFines()
 
-  return <FinesOverview />
+  return <LatestFines />
 }
 
 export const getStaticProps: GetStaticProps = async () => {

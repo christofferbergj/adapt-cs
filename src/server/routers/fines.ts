@@ -1,14 +1,13 @@
 import invariant from 'tiny-invariant'
 import { TRPCError } from '@trpc/server'
+import { nanoid } from 'nanoid'
 import { z } from 'zod'
 
 import type { Fine, FineLeader, FineList, MostPaidFine } from '@domain/fine'
 import { amountOfFines } from '@config/constants'
 import { createRouter } from 'server/createRouter'
-import { transformFine } from '@adapters/fine/transformFine'
-import { nanoid } from 'nanoid'
-import { getSession } from 'next-auth/react'
 import { hasAdminRole } from '@domain/user/hasAdminRole'
+import { transformFine } from '@adapters/fine/transformFine'
 
 export const finesRouter = createRouter()
   .query('all', {
@@ -44,16 +43,17 @@ export const finesRouter = createRouter()
           price: true,
         },
         orderBy: {
-          _count: {
-            title: 'desc',
+          _sum: {
+            price: 'desc',
           },
         },
       })
 
-      return result.map(({ title, _count }) => ({
+      return result.map(({ title, _count, _sum }) => ({
         id: nanoid(),
         title,
         paidTimes: _count,
+        sum: _sum.price ?? 0,
       }))
     },
   })
@@ -110,21 +110,24 @@ export const finesRouter = createRouter()
             },
           },
         },
-        orderBy: {
-          fines: {
-            _count: 'desc',
-          },
-        },
         take: 6,
       })
 
-      return result.map(({ _count, fines, id, image, name }) => ({
-        id,
-        name: name ?? 'No name',
-        totalPaid: fines.reduce((total, fine) => total + fine.price, 0),
-        totalFines: _count.fines,
-        avatar: image,
-      }))
+      const transformed: FineLeader[] = result.map(
+        ({ _count, fines, id, image, name }) => ({
+          id,
+          name: name ?? 'No name',
+          totalPaid: fines.reduce((total, fine) => total + fine.price, 0),
+          totalFines: _count.fines,
+          avatar: image,
+        })
+      )
+
+      const sortedByTotalPaid = transformed.sort(
+        (a, b) => b.totalPaid - a.totalPaid
+      )
+
+      return sortedByTotalPaid
     },
   })
   .mutation('create', {

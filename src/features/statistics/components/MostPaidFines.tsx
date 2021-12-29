@@ -1,3 +1,4 @@
+import { formatCurrency } from '@utils/formatCurrency'
 import { useMostPaidFines } from '@adapters/fine/hooks/useMostPaidFines'
 
 import { Container } from '@components/layout/Container'
@@ -16,8 +17,14 @@ export const MostPaidFines = () => {
         <SnapBox>
           {mostPaidFines.map((fine) => (
             <SnapBox.Item key={fine.id}>
-              <SnapBox.Title>{fine.title}</SnapBox.Title>
-              <span className="mt-8 text-5xl font-bold">{fine.paidTimes}</span>
+              <SnapBox.Title>
+                {fine.title}{' '}
+                <span className="text-xs text-gray-11">({fine.paidTimes})</span>
+              </SnapBox.Title>
+
+              <span className="mt-6 text-xl font-bold">
+                {formatCurrency(fine.sum)}
+              </span>
             </SnapBox.Item>
           ))}
         </SnapBox>

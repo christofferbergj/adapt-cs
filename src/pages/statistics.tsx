@@ -5,8 +5,8 @@ import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
 import { transformer } from '@utils/trpc'
 
-import { Leaders } from '@features/overview/components/Leaders'
-import { MostPaidFines } from '@features/overview/components/MostPaidFines'
+import { Leaders } from '@features/statistics/components/Leaders'
+import { MostPaidFines } from '@features/statistics/components/MostPaidFines'
 
 export const Statistics: ExtendedNextPage = () => {
   return (

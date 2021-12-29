@@ -3,13 +3,13 @@ import { motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 import {
-  setSelectedFineType,
-  setSelectedUser,
+  resetState,
   useSelectedFineType,
   useSelectedUser,
 } from '@features/create-fine/createFineSlice'
 import { trpc } from '@utils/trpc'
 import { useAppDispatch } from '@redux/hooks'
+import { addNotification } from '@features/notifications/notification.slice'
 
 export const CreateFine = () => {
   const dispatch = useAppDispatch()
@@ -29,8 +29,8 @@ export const CreateFine = () => {
         fineTypeId: selectedFineType,
       })
 
-      dispatch(setSelectedFineType(null))
-      dispatch(setSelectedUser(null))
+      dispatch(resetState())
+      dispatch(addNotification({ message: 'Fine created', type: 'success' }))
 
       window.scroll({ behavior: 'smooth', top: 0 })
     } catch (e) {

@@ -1,11 +1,11 @@
 import ContentLoader from 'react-content-loader'
-import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useSession, signIn } from 'next-auth/react'
 
 import { Container } from '@components/layout/Container'
+import { Avatar } from '@components/elements/Avatar'
 
 type Link = {
   href: string
@@ -17,7 +17,7 @@ type Link = {
 const links: Link[] = [
   {
     href: '/',
-    title: 'Overview',
+    title: 'Latest',
   },
   {
     href: '/statistics',
@@ -62,15 +62,6 @@ export const Header = () => {
             >
               <circle cx="50%" cy="50%" r="18" />
             </ContentLoader>
-          ) : session?.user?.avatar ? (
-            <div className="w-[36px] h-[36px] rounded-full overflow-hidden">
-              <Image
-                width={36}
-                height={36}
-                src={session?.user?.avatar}
-                alt="avatar"
-              />
-            </div>
           ) : status === 'unauthenticated' ? (
             <button
               className="px-3 py-1 text-sm font-semibold hover:bg-gray-4 border border-gray-7 hover:border-gray-8 rounded transition-colors"
@@ -78,6 +69,8 @@ export const Header = () => {
             >
               Sign in
             </button>
+          ) : session?.user ? (
+            <Avatar name={session.user.name} imageUrl={session.user.avatar} />
           ) : null}
         </div>
 

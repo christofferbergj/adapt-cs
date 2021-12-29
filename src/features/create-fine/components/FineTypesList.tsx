@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 
 import type { FineType } from '@domain/fine-type'
+import { formatCurrency } from '@utils/formatCurrency'
+import { scrollToWithOffset } from '@utils/scrollToWithOffset'
 import {
   setSelectedFineType,
   useSelectedFineType,
@@ -11,7 +13,6 @@ import { useAppDispatch } from '@redux/hooks'
 import { useSearchableFineTypeList } from '@features/create-fine/hooks/useSearchableFineTypeList'
 
 import { Input } from '@components/elements/Input'
-import { scrollToWithOffset } from '@utils/scrollToWithOffset'
 
 export const FineTypesList = () => {
   const dispatch = useAppDispatch()
@@ -41,10 +42,6 @@ export const FineTypesList = () => {
     }
   }, [inputRef, selectedFineType, selectedUser])
 
-  useEffect(() => {
-    selectedUser && inputRef.current?.focus()
-  }, [inputRef, selectedUser])
-
   return (
     <div ref={listRef} className="flex flex-col gap-4">
       <Input.Wrapper>
@@ -56,17 +53,17 @@ export const FineTypesList = () => {
           autoComplete="off"
           value={inputValue}
           onChange={handleInputChange}
-          placeholder="E.g. 'Møde for sent'"
+          placeholder="Search fine types"
         />
       </Input.Wrapper>
 
       {list.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-          {list.map(({ id, title }) => (
+          {list.map(({ id, title, price }) => (
             <button
               key={id}
               className={clsx(
-                'p-5 rounded border transition-colors outline-none font-semibold text-sm min-h-[100px]',
+                'flex flex-col gap-3 items-center justify-center p-5 rounded border transition-colors outline-none font-semibold min-h-[100px]',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedFineType !== id,
@@ -77,6 +74,7 @@ export const FineTypesList = () => {
               onClick={() => handleSelectFineType(id)}
             >
               <span>{title}</span>
+              <span className="text-sm">{formatCurrency(price)}</span>
             </button>
           ))}
         </div>

@@ -13,6 +13,7 @@ import { Container } from '@components/layout/Container'
 import { CreateFine } from '@features/create-fine/components/CreateFine'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
+import { addNotification } from '@features/notifications/notification.slice'
 
 const Create: ExtendedNextPage = () => {
   const dispatch = useAppDispatch()
@@ -26,6 +27,14 @@ const Create: ExtendedNextPage = () => {
         <UsersList />
         <FineTypesList />
         <CreateFine />
+
+        <button
+          onClick={() =>
+            dispatch(addNotification({ message: 'A great notification' }))
+          }
+        >
+          Add noti
+        </button>
       </div>
     </Container>
   )

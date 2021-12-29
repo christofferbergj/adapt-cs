@@ -9,6 +9,7 @@ import { useOwnFines } from '@adapters/fine/hooks/useOwnFines'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import { Container } from '@components/layout/Container'
 import { Overview } from '@components/elements/Overview'
+import { Avatar } from '@components/elements/Avatar'
 
 export const OwnFinesOverview = () => {
   const [page, setPage] = useState(0)
@@ -47,17 +48,7 @@ export const OwnFinesOverview = () => {
                 className="items-center lg:gap-8 lg:flex p-5 border-b border-gray-6 min-h-[80px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none"
               >
                 <Overview.Name>
-                  {fine.owner.avatar ? (
-                    <div className="w-[24px] h-[24px] rounded-full overflow-hidden">
-                      <Image
-                        width={24}
-                        height={24}
-                        src={fine.owner.avatar}
-                        alt="avatar"
-                      />
-                    </div>
-                  ) : null}
-
+                  <Avatar name={fine.owner.name} imageUrl={fine.owner.avatar} size="sm" />
                   <span>{fine.owner.name}</span>
                 </Overview.Name>
 
