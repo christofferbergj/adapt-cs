@@ -45,10 +45,14 @@ export const OwnFinesOverview = () => {
             {fines.map((fine) => (
               <div
                 key={fine.id}
-                className="items-center lg:gap-8 lg:flex p-5 border-b border-gray-6 min-h-[80px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none"
+                className="items-center lg:gap-8 lg:flex p-5 border-b border-gray-6 min-h-[81px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none"
               >
                 <Overview.Name>
-                  <Avatar name={fine.owner.name} imageUrl={fine.owner.avatar} size="sm" />
+                  <Avatar
+                    name={fine.owner.name}
+                    imageUrl={fine.owner.avatar}
+                    size="sm"
+                  />
                   <span>{fine.owner.name}</span>
                 </Overview.Name>
 

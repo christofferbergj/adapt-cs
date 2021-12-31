@@ -43,8 +43,8 @@ export const finesRouter = createRouter()
           price: true,
         },
         orderBy: {
-          _sum: {
-            price: 'desc',
+          _count: {
+            ownerId: 'desc',
           },
         },
       })
