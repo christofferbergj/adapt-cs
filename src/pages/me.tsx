@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import type { ExtendedNextPage } from '@pages/_app'
 
 import { Container } from '@components/layout/Container'
-import { OwnFinesOverview } from '@features/my-fines/components/OwnFinesOverview'
+import { OwnFines } from '@features/my-fines/components/OwnFines'
 
 const MyFines: ExtendedNextPage = () => {
   const { data: session, status } = useSession()
@@ -15,7 +15,7 @@ const MyFines: ExtendedNextPage = () => {
           <span>Loading...</span>
         </Container>
       ) : session ? (
-        <OwnFinesOverview />
+        <OwnFines />
       ) : (
         <Container>
           <h2 className="inline px-6 py-3 font-semibold border border-purple-9">

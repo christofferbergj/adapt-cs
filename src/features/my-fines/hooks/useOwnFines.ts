@@ -35,7 +35,7 @@ export function useOwnFines({
   const fines = data?.fines ?? []
 
   // Calculate values for pagination
-  const current = page === 0 ? 1 : page + take
+  const current = page === 0 ? 1 : page * take
   const hasMore = skip + take < count
   const pageTotal = (page + 1) * take
 

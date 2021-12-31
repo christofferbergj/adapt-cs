@@ -20,7 +20,7 @@ export function useFines({ page = 0, take = amountOfFines }: Params) {
   const count = data?.count ?? 0
   const fines = data?.fines ?? []
 
-  const current = page === 0 ? 1 : page + take
+  const current = page === 0 ? 1 : page * take
   const hasMore = skip + take < count
   const pageTotal = (page + 1) * take
 

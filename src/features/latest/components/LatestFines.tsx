@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useMedia } from 'react-use'
 
@@ -38,19 +38,16 @@ export const LatestFines = () => {
           <DesktopSteffen />
 
           <Overview>
-            <div className="hidden items-center p-5 font-bold border-b lg:gap-8 lg:flex bg-gray-2 border-gray-6">
+            <Overview.Header>
               <span className="basis-52">Bødetager</span>
               <span className="basis-36">Bøde</span>
               <span className="basis-36">Dato</span>
               <span className="flex-1">Pris</span>
               <span className="flex-1">Status</span>
-            </div>
+            </Overview.Header>
 
             {fines.map((fine) => (
-              <div
-                key={fine.id}
-                className="items-center lg:gap-8 lg:flex p-5 border-b border-gray-6 min-h-[80px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none"
-              >
+              <Overview.Row key={fine.id}>
                 <Overview.Name>
                   <Avatar
                     name={fine.owner.name}
@@ -98,7 +95,7 @@ export const LatestFines = () => {
                     {fine.isPaid ? 'Betalt' : 'Ikke betalt'}
                   </span>
                 </div>
-              </div>
+              </Overview.Row>
             ))}
           </Overview>
 

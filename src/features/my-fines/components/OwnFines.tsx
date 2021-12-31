@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -11,7 +10,7 @@ import { Container } from '@components/layout/Container'
 import { Overview } from '@components/elements/Overview'
 import { Avatar } from '@components/elements/Avatar'
 
-export const OwnFinesOverview = () => {
+export const OwnFines = () => {
   const [page, setPage] = useState(0)
   const { data: session } = useSession()
   const userId = session?.user.id
@@ -34,19 +33,16 @@ export const OwnFinesOverview = () => {
       {fines && fines.length > 0 ? (
         <div>
           <Overview>
-            <div className="hidden items-center lg:gap-8 lg:flex p-5 bg-gray-2 border-b border-gray-6 font-bold">
+            <Overview.Header>
               <span className="basis-52">Bødetager</span>
               <span className="basis-36">Bøde</span>
               <span className="basis-36">Dato</span>
               <span className="flex-1">Pris</span>
               <span className="flex-1">Status</span>
-            </div>
+            </Overview.Header>
 
             {fines.map((fine) => (
-              <div
-                key={fine.id}
-                className="items-center lg:gap-8 lg:flex p-5 border-b border-gray-6 min-h-[81px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none"
-              >
+              <Overview.Row key={fine.id}>
                 <Overview.Name>
                   <Avatar
                     name={fine.owner.name}
@@ -94,7 +90,7 @@ export const OwnFinesOverview = () => {
                     {fine.isPaid ? 'Betalt' : 'Ikke betalt'}
                   </span>
                 </div>
-              </div>
+              </Overview.Row>
             ))}
           </Overview>
 

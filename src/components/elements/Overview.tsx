@@ -19,6 +19,22 @@ const Root = ({ children, className }: Props) => {
   )
 }
 
+const Header = ({ children }: Props) => {
+  return (
+    <div className="hidden items-center lg:gap-8 lg:flex p-5 bg-gray-2 border-b border-gray-6 font-bold">
+      {children}
+    </div>
+  )
+}
+
+const Row = ({ children }: Props) => {
+  return (
+    <div className="items-center lg:gap-8 lg:flex p-5 border-b border-gray-6 min-h-[81px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none">
+      {children}
+    </div>
+  )
+}
+
 const Name = ({ children }: Props) => {
   return (
     <div className="flex pb-2 sm:pb-3 lg:pb-0 items-center gap-3 basis-52 text-lg lg:text-sm">
@@ -48,9 +64,11 @@ const Status = ({ children }: Props) => {
 }
 
 export const Overview = Object.assign(Root, {
-  Name,
-  Fee,
   Date,
+  Fee,
+  Header,
+  Name,
   Price,
+  Row,
   Status,
 })
