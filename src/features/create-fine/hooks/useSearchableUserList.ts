@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react'
 import type { User } from '@domain/user'
 import { useFuse } from '@hooks/useFuse'
 import { useInput } from '@hooks/useInput'
-import { useUsers } from '@adapters/user/hooks/useUsers'
+import { useUsers } from '@features/create-fine/hooks/useUsers'
 
 /**
  * Searchable users list

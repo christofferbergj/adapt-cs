@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 
 import type { FineType } from '@domain/fine-type'
-import { useFineTypes } from '@adapters/fine-type/hooks/useFineTypes'
+import { useFineTypes } from '@features/create-fine/hooks/useFineTypes'
 import { useFuse } from '@hooks/useFuse'
 import { useInput } from '@hooks/useInput'
 

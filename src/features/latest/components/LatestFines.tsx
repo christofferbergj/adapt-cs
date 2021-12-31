@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useMedia } from 'react-use'
 
 import { amountOfFines } from '@config/constants'
-import { useFines } from '@adapters/fine/hooks/useFines'
+import { useFines } from '@features/latest/hooks/useFines'
 
 import steffen from '/public/steffen.png'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'

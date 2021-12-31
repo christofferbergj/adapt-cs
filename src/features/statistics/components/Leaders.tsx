@@ -1,4 +1,4 @@
-import { useLeaders } from '@adapters/fine/hooks/useLeaders'
+import { useLeaders } from '@features/statistics/hooks/useLeaders'
 
 import { Avatar } from '@components/elements/Avatar'
 import { Container } from '@components/layout/Container'

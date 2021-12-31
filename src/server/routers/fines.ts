@@ -7,7 +7,7 @@ import type { Fine, FineLeader, FineList, MostPaidFine } from '@domain/fine'
 import { amountOfFines } from '@config/constants'
 import { createRouter } from 'server/createRouter'
 import { hasAdminRole } from '@domain/user/hasAdminRole'
-import { transformFine } from '@adapters/fine/transformFine'
+import { transformFine } from '@server/transformers/transformFine'
 
 export const finesRouter = createRouter()
   .query('all', {

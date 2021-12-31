@@ -1,6 +1,6 @@
 # Hobby project - work in progress
 
-This is just a project I use as a playground 🏡 trying to see how valid Fullstack development feels like with a modern Next.js based stack.
+This is a project I use as a technical playground 🏡 trying to see how valid Fullstack development feels like with a modern Next.js based stack.
 
 Not everything will be beautifully implemented, so take everything with a pinch of salt.
 

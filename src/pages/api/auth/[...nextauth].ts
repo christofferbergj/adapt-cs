@@ -6,7 +6,7 @@ import NextAuth from 'next-auth'
 import type { NextAuthOptions } from 'next-auth'
 
 import { prisma } from '@lib/prisma'
-import { transformUser } from '@adapters/user/transformUser'
+import { transformUser } from '@server/transformers/transformUser'
 
 const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
