@@ -18,6 +18,9 @@ export const CreateFine = () => {
   const selectedUser = useSelectedUser()
   const submitRef = useRef<HTMLButtonElement>(null)
 
+
+
+
   const canCreateFine = selectedFineType && selectedUser
 
   const handleCreateFine = async () => {
