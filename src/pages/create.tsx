@@ -1,8 +1,10 @@
 import type { GetStaticProps } from 'next'
+import { batch } from 'react-redux'
 import { createSSGHelpers } from '@trpc/react/ssg'
 import { useUnmount } from 'react-use'
 
 import type { ExtendedNextPage } from '@pages/_app'
+import { addNotification } from '@features/notifications/notification.slice'
 import { appRouter } from '@server/routers/_app'
 import { createContext } from '@server/context'
 import { resetState } from '@features/create-fine/createFineSlice'
@@ -13,13 +15,50 @@ import { Container } from '@components/layout/Container'
 import { CreateFine } from '@features/create-fine/components/CreateFine'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
-import { addNotification } from '@features/notifications/notification.slice'
 
 const Create: ExtendedNextPage = () => {
   const dispatch = useAppDispatch()
 
   // Reset createFineState when the create page unmounts
   useUnmount(() => dispatch(resetState()))
+
+  const addTestNotification = () => {
+    dispatch(
+      addNotification({
+        message: 'A great notification with very long text that sohuld break in separate lines',
+        type: 'info',
+      })
+    )
+  }
+
+  const addTestNotifications = () => {
+    batch(() => {
+      dispatch(
+        addNotification({
+          message: 'A great notification',
+          type: 'info',
+        })
+      )
+      dispatch(
+        addNotification({
+          message: 'A great notification',
+          type: 'success',
+        })
+      )
+      dispatch(
+        addNotification({
+          message: 'A great notification',
+          type: 'error',
+        })
+      )
+      dispatch(
+        addNotification({
+          message: 'A great notification',
+          type: 'warning',
+        })
+      )
+    })
+  }
 
   return (
     <Container>
@@ -28,13 +67,8 @@ const Create: ExtendedNextPage = () => {
         <FineTypesList />
         <CreateFine />
 
-        <button
-          onClick={() =>
-            dispatch(addNotification({ message: 'A great notification' }))
-          }
-        >
-          Add test notification
-        </button>
+        <button onClick={addTestNotifications}>Add test notifications</button>
+        <button onClick={addTestNotification}>Add test notification</button>
       </div>
     </Container>
   )

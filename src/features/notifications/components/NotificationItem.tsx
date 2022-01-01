@@ -1,15 +1,51 @@
+import clsx from 'clsx'
 import { motion, useIsPresent, type Variants } from 'framer-motion'
 import { useTimeoutFn, useUpdateEffect } from 'react-use'
 
-import type { Notification } from '@features/notifications/notification.slice'
 import { dismissNotification } from '@features/notifications/notification.slice'
 import { useAppDispatch } from '@redux/hooks'
+import { ReactNode } from 'react'
+import { Cross1Icon, Cross2Icon } from '@radix-ui/react-icons'
+
+export type Notification = {
+  /**
+   * The notification id.
+   */
+  id: string
+
+  /**
+   * The message of the notification
+   */
+  message: string
+
+  /**
+   * An optional dismiss duration time
+   *
+   * @default 6000
+   */
+  autoHideDuration?: number
+
+  /**
+   * The type of notification to show.
+   */
+  type?: 'success' | 'error' | 'warning' | 'info'
+
+  /**
+   * Optional callback function to run side effects after the notification has closed.
+   */
+  onClose?: () => void
+
+  /**
+   * Optionally add an action to the notification through a ReactNode
+   */
+  action?: ReactNode
+}
 
 type Props = {
   notification: Notification
 }
 
-const variants: Variants = {
+const motionVariants: Variants = {
   initial: {
     opacity: 0,
     x: 24,
@@ -34,8 +70,34 @@ const variants: Variants = {
   },
 }
 
+const notificationStyleVariants: Record<
+  NonNullable<Notification['type']>,
+  string
+> = {
+  success: 'bg-green-3 border-green-6',
+  error: 'bg-red-3 border-red-6',
+  info: 'bg-purple-3 border-purple-6',
+  warning: 'bg-yellow-3 border-yellow-6',
+}
+
+const closeButtonStyleVariants: Record<
+  NonNullable<Notification['type']>,
+  string
+> = {
+  success: 'hover:bg-green-5 active:bg-green-6',
+  error: 'hover:bg-red-5 active:bg-red-6',
+  info: 'hover:bg-purple-5 active:bg-purple-6',
+  warning: 'hover:bg-yellow-5 active:bg-yellow-6',
+}
+
 export const NotificationItem = ({
-  notification: { duration = 6000, id, onDismissComplete },
+  notification: {
+    id,
+    autoHideDuration = 6000,
+    message,
+    onClose,
+    type = 'info',
+  },
 }: Props) => {
   const dispatch = useAppDispatch()
   const isPresent = useIsPresent()
@@ -48,7 +110,7 @@ export const NotificationItem = ({
   }
 
   // Call the dismiss function after a certain timeout
-  const [, cancel, reset] = useTimeoutFn(handleDismiss, duration)
+  const [, cancel, reset] = useTimeoutFn(handleDismiss, autoHideDuration)
 
   // Reset or cancel dismiss timeout based on mouse interactions
   const onMouseEnter = () => cancel()
@@ -57,23 +119,37 @@ export const NotificationItem = ({
   // Call `onDismissComplete` when notification unmounts if present
   useUpdateEffect(() => {
     if (!isPresent) {
-      onDismissComplete?.()
+      onClose?.()
     }
   }, [isPresent])
 
   return (
     <motion.li
-      className="px-4 py-2 rounded border transition-colors duration-100 bg-green-3 border-green-6 hover:border-green-6 hover:bg-green-4 hover:bg-purple-5"
+      className={clsx(
+        'flex items-center shadow px-4 py-3 rounded border transition-colors duration-100 min-w-[260px] text-sm',
+        notificationStyleVariants[type]
+      )}
       initial="initial"
       animate="animate"
       exit="exit"
       layout="position"
-      variants={variants}
+      variants={motionVariants}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <button onClick={handleDismiss}>Dismiss</button>
-      <h2>Hello from NotificationItem</h2>
+      <span className="font-medium max-w-sm">{message}</span>
+
+      <div className="pl-4 ml-auto">
+        <button
+          onClick={handleDismiss}
+          className={clsx(
+            'p-1 rounded transition-colors duration-100',
+            closeButtonStyleVariants[type]
+          )}
+        >
+          <Cross2Icon />
+        </button>
+      </div>
     </motion.li>
   )
 }

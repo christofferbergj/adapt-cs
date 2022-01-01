@@ -12,6 +12,7 @@
 @import '@radix-ui/colors/greenDark.css';
 @import '@radix-ui/colors/purpleDark.css';
 @import '@radix-ui/colors/redDark.css';
+@import '@radix-ui/colors/yellowDark.css';
 
 html {
   -moz-osx-font-smoothing: grayscale;
@@ -73,11 +74,8 @@ a {
     right: 0;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 10px var(--brand), 0 0 5px var(--brand);
+    box-shadow: 0 0 10px var(--purple9), 0 0 5px var(--purple9);
     opacity: 1;
-
-    -webkit-transform: rotate(3deg) translate(0px, -4px);
-    -ms-transform: rotate(3deg) translate(0px, -4px);
     transform: rotate(3deg) translate(0px, -4px);
   }
 }

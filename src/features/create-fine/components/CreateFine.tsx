@@ -7,9 +7,9 @@ import {
   useSelectedFineType,
   useSelectedUser,
 } from '@features/create-fine/createFineSlice'
+import { addNotification } from '@features/notifications/notification.slice'
 import { trpc } from '@utils/trpc'
 import { useAppDispatch } from '@redux/hooks'
-import { addNotification } from '@features/notifications/notification.slice'
 
 export const CreateFine = () => {
   const dispatch = useAppDispatch()
@@ -17,9 +17,6 @@ export const CreateFine = () => {
   const selectedFineType = useSelectedFineType()
   const selectedUser = useSelectedUser()
   const submitRef = useRef<HTMLButtonElement>(null)
-
-
-
 
   const canCreateFine = selectedFineType && selectedUser
 

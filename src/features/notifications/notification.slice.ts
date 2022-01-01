@@ -1,36 +1,9 @@
-import { RootState } from '@redux/store'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { nanoid } from 'nanoid'
+
+import type { Notification } from '@features/notifications/components/NotificationItem'
+import { RootState } from '@redux/store'
 import { useAppSelector } from '@redux/hooks'
-
-export type Notification = {
-  /**
-   * The notification id.
-   */
-  id: string
-
-  /**
-   * The message of the notification
-   */
-  message: string
-
-  /**
-   * An optional dismiss duration time
-   *
-   * @default 6000
-   */
-  duration?: number
-
-  /**
-   * The type of notification to show.
-   */
-  type?: 'success' | 'error' | 'warning' | 'info'
-
-  /**
-   * Optional callback function to run side effects after the notification has closed.
-   */
-  onDismissComplete?: () => void
-}
 
 type NotificationsState = {
   notifications: Notification[]
