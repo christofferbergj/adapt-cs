@@ -1,9 +1,8 @@
 import ms from 'ms'
 import { useCallback, useMemo } from 'react'
 
-import type { InferQueryInput } from '@utils/trpc'
-import { amountOfFines } from '@config/constants'
-import { trpc } from '@utils/trpc'
+import { type InferQueryInput, trpc } from '@server/types'
+import { ITEMS_PER_PAGE } from '@config/constants'
 
 type Params = Omit<InferQueryInput<'fines.own'>, 'skip'> & {
   page: number
@@ -11,7 +10,7 @@ type Params = Omit<InferQueryInput<'fines.own'>, 'skip'> & {
 
 export function useOwnFines({
   page = 0,
-  take = amountOfFines,
+  take = ITEMS_PER_PAGE,
   userId,
 }: Params) {
   const skip = page * take

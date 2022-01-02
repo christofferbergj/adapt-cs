@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 
 import type { ExtendedNextPage } from '@pages/_app'
 
-import { Container } from '@components/layout/Container'
+import { Container } from '@app/core/components/layout/Container'
 import { OwnFines } from '@features/my-fines/components/OwnFines'
 
 const MyFines: ExtendedNextPage = () => {

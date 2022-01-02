@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react'
 
-import type { FineType } from '@domain/fine-type'
+import type { FineType } from '@app/fine-types'
 import { useFineTypes } from '@features/create-fine/hooks/useFineTypes'
-import { useFuse } from '@hooks/useFuse'
-import { useInput } from '@hooks/useInput'
+import { useFuse } from '@app/core/hooks/useFuse'
+import { useInput } from '@app/core/hooks/useInput'
 
 /**
  * Searchable fine types list

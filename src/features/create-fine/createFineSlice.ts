@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import type { FineType } from '@domain/fine-type'
+import type { FineType } from '@app/fine-types'
 import type { RootState } from '@redux/store'
-import type { User } from '@domain/user'
+import type { User } from '@app/users'
 import { useAppSelector } from '@redux/hooks'
 
 type CreateFineState = {

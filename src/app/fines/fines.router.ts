@@ -3,11 +3,11 @@ import { TRPCError } from '@trpc/server'
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
 
-import type { Fine, FineLeader, FineList, MostPaidFine } from '@domain/fine'
-import { amountOfFines } from '@config/constants'
-import { createRouter } from 'server/createRouter'
-import { hasAdminRole } from '@domain/user/hasAdminRole'
-import { transformFine } from '@server/transformers/transformFine'
+import type { Fine, FineLeader, FineList, MostPaidFine } from '@app/fines/index'
+import { ITEMS_PER_PAGE } from '@config/constants'
+import { createRouter } from '@server/createRouter'
+import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
+import { fineTransformer } from '@app/fines/transformers/fine.transformer'
 
 export const finesRouter = createRouter()
   .query('all', {
@@ -19,7 +19,7 @@ export const finesRouter = createRouter()
       const [count, fines] = await ctx.prisma.$transaction([
         ctx.prisma.fine.count(),
         ctx.prisma.fine.findMany({
-          take: input?.take ?? amountOfFines,
+          take: input?.take ?? ITEMS_PER_PAGE,
           skip: input?.skip ?? 0,
           include: {
             owner: true,
@@ -30,7 +30,7 @@ export const finesRouter = createRouter()
 
       return {
         count,
-        fines: fines.map(transformFine),
+        fines: fines.map(fineTransformer),
       }
     },
   })
@@ -90,7 +90,7 @@ export const finesRouter = createRouter()
       ])
 
       return {
-        fines: fines.map(transformFine),
+        fines: fines.map(fineTransformer),
         count,
       }
     },
@@ -175,6 +175,6 @@ export const finesRouter = createRouter()
         },
       })
 
-      return transformFine(result)
+      return fineTransformer(result)
     },
   })

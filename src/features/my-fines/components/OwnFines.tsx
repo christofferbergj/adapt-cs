@@ -6,9 +6,9 @@ import { useSession } from 'next-auth/react'
 import { useOwnFines } from '@features/my-fines/hooks/useOwnFines'
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
-import { Container } from '@components/layout/Container'
-import { Overview } from '@components/elements/Overview'
-import { Avatar } from '@components/elements/Avatar'
+import { Container } from '@app/core/components/layout/Container'
+import { Overview } from '@app/core/components/elements/Overview'
+import { Avatar } from '@app/core/components/elements/Avatar'
 
 export const OwnFines = () => {
   const [page, setPage] = useState(0)

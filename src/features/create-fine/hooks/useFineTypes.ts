@@ -1,4 +1,4 @@
-import { trpc } from '@utils/trpc'
+import { trpc } from '@server/types'
 
 export function useFineTypes() {
   const { data, ...rest } = trpc.useQuery(['fineTypes.all'])

@@ -1,10 +1,10 @@
 import type { GetStaticProps } from 'next'
 import { createSSGHelpers } from '@trpc/react/ssg'
 
-import { amountOfFines } from '@config/constants'
-import { appRouter } from '@server/routers/_app'
+import { ITEMS_PER_PAGE } from '@config/constants'
+import { appRouter } from '@server/appRouter'
 import { createContext } from '@server/context'
-import { transformer } from '@utils/trpc'
+import { transformer } from '@server/types'
 import { usePrefetchOwnFines } from '@features/my-fines/hooks/usePrefetchOwnFines'
 
 import { ExtendedNextPage } from '@pages/_app'
@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async () => {
     transformer,
   })
 
-  await ssg.fetchQuery('fines.all', { take: amountOfFines, skip: 0 })
+  await ssg.fetchQuery('fines.all', { take: ITEMS_PER_PAGE, skip: 0 })
 
   return {
     props: {

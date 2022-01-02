@@ -1,18 +1,23 @@
 import Image from 'next/image'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useMedia } from 'react-use'
 
-import { amountOfFines } from '@config/constants'
+import { ITEMS_PER_PAGE } from '@config/constants'
 import { useFines } from '@features/latest/hooks/useFines'
 
 import steffen from '/public/steffen.png'
-import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
-import { Container } from '@components/layout/Container'
-import { Overview } from '@components/elements/Overview'
-import { Avatar } from '@components/elements/Avatar'
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  DotsVerticalIcon,
+  DropdownMenuIcon,
+} from '@radix-ui/react-icons'
+import { Container } from '@app/core/components/layout/Container'
+import { Overview } from '@app/core/components/elements/Overview'
+import { Avatar } from '@app/core/components/elements/Avatar'
 
 export const LatestFines = () => {
   const [page, setPage] = useState(0)
@@ -24,7 +29,7 @@ export const LatestFines = () => {
     isFetching,
     prefetchNextPage,
     meta: { count, current, hasMore, pageTotal },
-  } = useFines({ page, take: amountOfFines })
+  } = useFines({ page, take: ITEMS_PER_PAGE })
 
   useEffect(() => {
     if (!isFetching && hasMore) prefetchNextPage()
@@ -39,11 +44,11 @@ export const LatestFines = () => {
 
           <Overview>
             <Overview.Header>
-              <span className="basis-52">Bødetager</span>
-              <span className="basis-36">Bøde</span>
-              <span className="basis-36">Dato</span>
-              <span className="flex-1">Pris</span>
-              <span className="flex-1">Status</span>
+              <span>Bødetager</span>
+              <span>Bøde</span>
+              <span>Dato</span>
+              <span>Pris</span>
+              <span>Status</span>
             </Overview.Header>
 
             {fines.map((fine) => (
@@ -54,6 +59,7 @@ export const LatestFines = () => {
                     imageUrl={fine.owner.avatar}
                     size="sm"
                   />
+
                   <span>{fine.owner.name}</span>
                 </Overview.Name>
 

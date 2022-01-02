@@ -1,11 +1,11 @@
 import clsx from 'clsx'
+import { Cross2Icon } from '@radix-ui/react-icons'
+import { ReactNode } from 'react'
 import { motion, useIsPresent, type Variants } from 'framer-motion'
 import { useTimeoutFn, useUpdateEffect } from 'react-use'
 
 import { dismissNotification } from '@features/notifications/notification.slice'
 import { useAppDispatch } from '@redux/hooks'
-import { ReactNode } from 'react'
-import { Cross1Icon, Cross2Icon } from '@radix-ui/react-icons'
 
 export type Notification = {
   /**

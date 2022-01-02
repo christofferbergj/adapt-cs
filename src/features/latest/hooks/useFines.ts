@@ -1,14 +1,14 @@
 import ms from 'ms'
 import { useCallback } from 'react'
 
-import { InferQueryInput, trpc } from '@utils/trpc'
-import { amountOfFines } from '@config/constants'
+import { InferQueryInput, trpc } from '@server/types'
+import { ITEMS_PER_PAGE } from '@config/constants'
 
 type Params = Omit<InferQueryInput<'fines.all'>, 'skip'> & {
   page: number
 }
 
-export function useFines({ page = 0, take = amountOfFines }: Params) {
+export function useFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
   const skip = page * take
   const { prefetchQuery } = trpc.useContext()
 

@@ -1,5 +1,5 @@
 import Prisma from '@prisma/client'
-import { type User, UserRole } from '@domain/user'
+import { type User, UserRole } from '@app/users/index'
 
 /**
  * Transform an input with user data to our own User entity
@@ -10,7 +10,7 @@ import { type User, UserRole } from '@domain/user'
  *
  * @returns A user matching our defined user entity
  */
-export function transformUser(input: Prisma.User): User {
+export function userTransformer(input: Prisma.User): User {
   const { id, name, image, email, role } = input
 
   return {

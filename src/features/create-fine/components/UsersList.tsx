@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import type { User } from '@domain/user'
+import type { User } from '@app/users'
 import {
   setSelectedUser,
   useSelectedUser,
@@ -8,8 +8,8 @@ import {
 import { useAppDispatch } from '@redux/hooks'
 import { useSearchableUserList } from '@features/create-fine/hooks/useSearchableUserList'
 
-import { Input } from '@components/elements/Input'
-import { Avatar } from '@components/elements/Avatar'
+import { Input } from '@app/core/components/elements/Input'
+import { Avatar } from '@app/core/components/elements/Avatar'
 
 export const UsersList = () => {
   const dispatch = useAppDispatch()
@@ -38,12 +38,12 @@ export const UsersList = () => {
       </Input.Wrapper>
 
       {list.length > 0 ? (
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4">
           {list.map(({ id, name, avatar }) => (
             <button
               key={id}
               className={clsx(
-                'p-5 rounded border transition-colors outline-none font-semibold min-h-[100px] flex flex-col items-center gap-3',
+                'flex flex-col gap-3 items-center justify-center p-5 rounded border transition-colors outline-none font-semibold min-h-[100px] lg:min-h-[140px]',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedUser !== id,

@@ -1,18 +1,18 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import '../../../../node_modules/tailwindcss/base.css';
+@import '../../../../node_modules/tailwindcss/components.css';
+@import '../../../../node_modules/tailwindcss/utilities.css';
 
-@import '@radix-ui/colors/blackA.css';
-@import '@radix-ui/colors/whiteA.css';
+@import '../../../../node_modules/@radix-ui/colors/blackA.css';
+@import '../../../../node_modules/@radix-ui/colors/whiteA.css';
 
-@import '@radix-ui/colors/mauveDark.css';
-@import '@radix-ui/colors/mauveDarkA.css';
+@import '../../../../node_modules/@radix-ui/colors/mauveDark.css';
+@import '../../../../node_modules/@radix-ui/colors/mauveDarkA.css';
 
-@import '@radix-ui/colors/blueDark.css';
-@import '@radix-ui/colors/greenDark.css';
-@import '@radix-ui/colors/purpleDark.css';
-@import '@radix-ui/colors/redDark.css';
-@import '@radix-ui/colors/yellowDark.css';
+@import '../../../../node_modules/@radix-ui/colors/blueDark.css';
+@import '../../../../node_modules/@radix-ui/colors/greenDark.css';
+@import '../../../../node_modules/@radix-ui/colors/purpleDark.css';
+@import '../../../../node_modules/@radix-ui/colors/redDark.css';
+@import '../../../../node_modules/@radix-ui/colors/yellowDark.css';
 
 html {
   -moz-osx-font-smoothing: grayscale;

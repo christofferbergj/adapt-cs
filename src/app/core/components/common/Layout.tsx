@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import { Footer } from '@components/common/Footer'
-import { Header } from '@components/common/Header'
+import { Footer } from '@app/core/components/common/Footer'
+import { Header } from '@app/core/components/common/Header'
 import { Notifications } from '@features/notifications/components/Notifications'
 
 type Props = {

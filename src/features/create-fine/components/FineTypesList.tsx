@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 
-import type { FineType } from '@domain/fine-type'
+import type { FineType } from '@app/fine-types'
 import { formatCurrency } from '@utils/formatCurrency'
 import { scrollToWithOffset } from '@utils/scrollToWithOffset'
 import {
@@ -12,7 +12,7 @@ import {
 import { useAppDispatch } from '@redux/hooks'
 import { useSearchableFineTypeList } from '@features/create-fine/hooks/useSearchableFineTypeList'
 
-import { Input } from '@components/elements/Input'
+import { Input } from '@app/core/components/elements/Input'
 
 export const FineTypesList = () => {
   const dispatch = useAppDispatch()
@@ -58,12 +58,12 @@ export const FineTypesList = () => {
       </Input.Wrapper>
 
       {list.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4">
           {list.map(({ id, title, price }) => (
             <button
               key={id}
               className={clsx(
-                'flex flex-col gap-3 items-center justify-center p-5 rounded border transition-colors outline-none font-semibold min-h-[100px]',
+                'flex flex-col gap-3 items-center justify-center p-5 rounded border transition-colors outline-none font-semibold min-h-[100px] lg:min-h-[140px]',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedFineType !== id,

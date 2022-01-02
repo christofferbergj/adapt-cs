@@ -10,4 +10,4 @@ export const env = {
  * The value needs to be synchronised between prefetching calls
  * and calls in the client
  */
-export const amountOfFines = 8
+export const ITEMS_PER_PAGE = 8

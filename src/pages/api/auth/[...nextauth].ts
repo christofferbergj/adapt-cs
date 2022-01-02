@@ -6,7 +6,7 @@ import NextAuth from 'next-auth'
 import type { NextAuthOptions } from 'next-auth'
 
 import { prisma } from '@lib/prisma'
-import { transformUser } from '@server/transformers/transformUser'
+import { userTransformer } from '@app/users/user.transformer'
 
 const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -33,7 +33,7 @@ const options: NextAuthOptions = {
       })
 
       invariant(dbUser, 'User does not exist')
-      session.user = transformUser(dbUser)
+      session.user = userTransformer(dbUser)
 
       return session
     },

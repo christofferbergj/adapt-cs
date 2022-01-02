@@ -2,10 +2,10 @@ import Image from 'next/image'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 
-import { hasAdminRole } from '@domain/user/hasAdminRole'
+import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
 
 import steffen from '/public/steffen.png'
-import { Layout } from '@components/common/Layout'
+import { Layout } from '@app/core/components/common/Layout'
 
 type Props = {
   requireAdmin?: boolean

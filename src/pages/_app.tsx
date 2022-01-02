@@ -1,9 +1,9 @@
-import '@styles/globals.css'
+import '@app/core/styles/globals.css'
 import 'focus-visible'
 import NProgress from 'nprogress'
 import Router from 'next/router'
-import type { AppProps } from 'next/app'
 import smoothscroll from 'smoothscroll-polyfill'
+import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
@@ -12,13 +12,13 @@ import { SessionProvider } from 'next-auth/react'
 import { useMount } from 'react-use'
 import { withTRPC } from '@trpc/next'
 
-import type { AppRouter } from '@server/routers/_app'
+import type { AppRouter } from '@server/appRouter'
 import { env } from '@config/constants'
 import { store } from '@redux/store'
-import { transformer } from '@utils/trpc'
+import { transformer } from '@server/types'
 
-import { AuthGuard } from '@components/common/AuthGuard'
-import { Layout } from '@components/common/Layout'
+import { AuthGuard } from '@app/core/components/common/AuthGuard'
+import { Layout } from '@app/core/components/common/Layout'
 
 export type ExtendedNextPage<P = Record<string, unknown>, IP = P> = NextPage<
   P,

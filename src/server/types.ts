@@ -7,7 +7,7 @@ import type {
   inferSubscriptionOutput,
 } from '@trpc/server'
 
-import type { AppRouter } from '@server/routers/_app'
+import type { AppRouter } from './appRouter'
 
 // Create react query hooks for trpc
 export const trpc = createReactQueryHooks<AppRouter>()

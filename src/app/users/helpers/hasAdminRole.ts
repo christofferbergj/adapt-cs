@@ -1,4 +1,4 @@
-import { type User, UserRole } from '@domain/user/index'
+import { type User, UserRole } from '@app/users'
 
 /**
  * Check if the user has an admin role

@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react'
 
-import type { User } from '@domain/user'
-import { useFuse } from '@hooks/useFuse'
-import { useInput } from '@hooks/useInput'
+import type { User } from '@app/users'
+import { useFuse } from '@app/core/hooks/useFuse'
+import { useInput } from '@app/core/hooks/useInput'
 import { useUsers } from '@features/create-fine/hooks/useUsers'
 
 /**

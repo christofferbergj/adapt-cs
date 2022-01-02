@@ -1,4 +1,4 @@
-import { trpc } from '@utils/trpc'
+import { trpc } from '@server/types'
 
 export function useLeaders() {
   const { data, ...rest } = trpc.useQuery(['fines.leaders'])

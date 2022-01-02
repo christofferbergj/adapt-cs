@@ -1,5 +1,5 @@
 import ms from 'ms'
-import { trpc } from '@utils/trpc'
+import { trpc } from '@server/types'
 
 export function useMostPaidFines() {
   const { data, ...rest } = trpc.useQuery(['fines.most-paid'], {

@@ -5,13 +5,13 @@ import { useUnmount } from 'react-use'
 
 import type { ExtendedNextPage } from '@pages/_app'
 import { addNotification } from '@features/notifications/notification.slice'
-import { appRouter } from '@server/routers/_app'
+import { appRouter } from '@server/appRouter'
 import { createContext } from '@server/context'
 import { resetState } from '@features/create-fine/createFineSlice'
-import { transformer } from '@utils/trpc'
+import { transformer } from '@server/types'
 import { useAppDispatch } from '@redux/hooks'
 
-import { Container } from '@components/layout/Container'
+import { Container } from '@app/core/components/layout/Container'
 import { CreateFine } from '@features/create-fine/components/CreateFine'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
@@ -25,7 +25,8 @@ const Create: ExtendedNextPage = () => {
   const addTestNotification = () => {
     dispatch(
       addNotification({
-        message: 'A great notification with very long text that sohuld break in separate lines',
+        message:
+          'A great notification with very long text that sohuld break in separate lines',
         type: 'info',
       })
     )

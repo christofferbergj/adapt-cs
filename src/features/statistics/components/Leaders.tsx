@@ -1,8 +1,8 @@
 import { useLeaders } from '@features/statistics/hooks/useLeaders'
 
-import { Avatar } from '@components/elements/Avatar'
-import { Container } from '@components/layout/Container'
-import { SnapBox } from '@components/elements/SnapBox'
+import { Avatar } from '@app/core/components/elements/Avatar'
+import { Container } from '@app/core/components/layout/Container'
+import { SnapBox } from '@app/core/components/elements/SnapBox'
 import { formatCurrency } from '@utils/formatCurrency'
 
 export const Leaders = () => {

@@ -12,7 +12,7 @@ export const NotificationList = ({ children }: Props) => {
       <AnimateSharedLayout>
         <ul
           aria-live="assertive"
-          className="flex flex-col fixed z-50 bottom-0 right-0 m-4 gap-4"
+          className="flex fixed top-0 right-0 z-50 flex-col gap-4 m-4 lg:m-8"
         >
           <AnimatePresence initial={false}>{children}</AnimatePresence>
         </ul>

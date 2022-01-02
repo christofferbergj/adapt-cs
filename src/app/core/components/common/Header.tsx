@@ -4,8 +4,8 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useSession, signIn } from 'next-auth/react'
 
-import { Container } from '@components/layout/Container'
-import { Avatar } from '@components/elements/Avatar'
+import { Avatar } from '@app/core/components/elements/Avatar'
+import { Container } from '@app/core/components/layout/Container'
 
 type Link = {
   href: string
@@ -81,7 +81,7 @@ export const Header = () => {
                 <Link href={href} key={i}>
                   <a
                     className={clsx(
-                      'font-sm px-3 py-5 whitespace-nowrap leading-none border-b transition-colors',
+                      'font-medium px-3 py-5 whitespace-nowrap leading-none border-b transition-colors',
                       {
                         'opacity-40 pointer-events-none': isDisabled,
                         'hover:border-gray-8 border-transparent':

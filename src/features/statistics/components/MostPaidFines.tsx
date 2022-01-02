@@ -1,8 +1,8 @@
 import { formatCurrency } from '@utils/formatCurrency'
 import { useMostPaidFines } from '@features/statistics/hooks/useMostPaidFines'
 
-import { Container } from '@components/layout/Container'
-import { SnapBox } from '@components/elements/SnapBox'
+import { Container } from '@app/core/components/layout/Container'
+import { SnapBox } from '@app/core/components/elements/SnapBox'
 
 export const MostPaidFines = () => {
   const { mostPaidFines } = useMostPaidFines()

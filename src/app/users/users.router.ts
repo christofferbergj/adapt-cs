@@ -1,4 +1,4 @@
-import { type User, UserRole } from '@domain/user'
+import { type User, UserRole } from '@app/users/index'
 import { createRouter } from '@server/createRouter'
 
 export const usersRouter = createRouter().query('all', {

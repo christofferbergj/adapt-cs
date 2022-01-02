@@ -1,4 +1,4 @@
-import { type Fine } from '@domain/fine/index'
+import { type Fine } from '@app/fines'
 
 /**
  * Check if a fine is paid

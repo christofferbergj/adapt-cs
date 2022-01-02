@@ -1,9 +1,9 @@
 import superjson from 'superjson'
 
-import { createRouter } from '@server/createRouter'
-import { fineTypesRouter } from '@server/routers/fine-types'
-import { finesRouter } from '@server/routers/fines'
-import { usersRouter } from '@server/routers/users'
+import { createRouter } from './createRouter'
+import { fineTypesRouter } from '@app/fine-types/fine-types.router'
+import { finesRouter } from '@app/fines/fines.router'
+import { usersRouter } from '@app/users/users.router'
 
 /**
  * Create your application's root router
