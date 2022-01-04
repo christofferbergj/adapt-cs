@@ -4,14 +4,16 @@ import { useCallback } from 'react'
 import { InferQueryInput } from '@server/types'
 import { ITEMS_PER_PAGE } from '@config/constants'
 import { trpc } from '@utils/trpc'
+import { pagination } from '@utils/pagination'
 
 type Params = Omit<InferQueryInput<'fines.unpaid'>, 'skip'> & {
   page: number
 }
 
 export function useUnpaidFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
-  const skip = page * take
   const { prefetchQuery } = trpc.useContext()
+
+  const skip = pagination.getSkip({ page, take })
 
   const { data, ...rest } = trpc.useQuery(['fines.unpaid', { take, skip }], {
     keepPreviousData: true,
@@ -21,9 +23,12 @@ export function useUnpaidFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
   const count = data?.count ?? 0
   const fines = data?.fines ?? []
 
-  const current = page === 0 ? 1 : page * take
-  const hasMore = skip + take < count
-  const pageTotal = (page + 1) * take
+  const { current, hasMore, pageTotal } = pagination.getMeta({
+    count,
+    page,
+    take,
+    skip,
+  })
 
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
