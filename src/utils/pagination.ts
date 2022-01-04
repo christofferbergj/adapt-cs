@@ -1,3 +1,8 @@
+/**
+ *
+ * @param page
+ * @param take
+ */
 export function getPaginationSkip({
   page,
   take,
@@ -8,6 +13,15 @@ export function getPaginationSkip({
   return page * take
 }
 
+/**
+ * Get pagination metadata from a skip/take API query
+ * Used to build ui pagination
+ *
+ * @param count - Length of the data to paginate
+ * @param page - Current paginated page
+ * @param take - Amount of items to take from
+ * @param skip - Current skip
+ */
 export function getPaginationMeta({
   count,
   page,
