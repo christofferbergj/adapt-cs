@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
@@ -9,6 +8,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import { Container } from '@app/core/components/layout/Container'
 import { Overview } from '@app/core/components/elements/Overview'
 import { Avatar } from '@app/core/components/elements/Avatar'
+import { FineStatus } from '@app/fines/components/FineStatus'
 
 export const OwnFines = () => {
   const [page, setPage] = useState(0)
@@ -67,29 +67,8 @@ export const OwnFines = () => {
                 </Overview.Price>
 
                 <Overview.Status>
-                  <span
-                    className={clsx('w-[10px] h-[10px] rounded-full', {
-                      'bg-green-9': fine.isPaid,
-                      'bg-red-9': !fine.isPaid,
-                    })}
-                  />
-
-                  <span>{fine.isPaid ? 'Betalt' : 'Ikke betalt'}</span>
+                  <FineStatus status={fine.status} />
                 </Overview.Status>
-
-                <div className="flex flex-col lg:ml-auto pt-4 sm:pt-5 text-center lg:pt-0 hidden">
-                  <span
-                    className={clsx(
-                      'border rounded px-4 py-3 font-semibold lg:py-2',
-                      {
-                        'border-green-6 text-green-11 bg-green-3': fine.isPaid,
-                        'border-red-6 text-red-11 bg-red-3': !fine.isPaid,
-                      }
-                    )}
-                  >
-                    {fine.isPaid ? 'Betalt' : 'Ikke betalt'}
-                  </span>
-                </div>
               </Overview.Row>
             ))}
           </Overview>

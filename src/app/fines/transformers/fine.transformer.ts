@@ -1,6 +1,6 @@
 import type Prisma from '@prisma/client'
 
-import type { Fine } from '@app/fines'
+import type { Fine, FineStatus } from '@app/fines'
 import { UserRole } from '@app/users'
 
 type Input = Prisma.Fine & {
@@ -17,19 +17,34 @@ type Input = Prisma.Fine & {
  * @see {Fine} Our fine entity
  */
 export const fineTransformer = (input: Input): Fine => {
-  const { createdAt, id, owner, paid, updatedAt, price, title } = input
+  const { createdAt, id, owner, paid, updatedAt, price, title, status } = input
+
+  const getStatus = (status: typeof input['status']): FineStatus => {
+    switch (status) {
+      case 'PENDING':
+        return 'pending'
+      case 'PAID':
+        return 'paid'
+      case 'UNPAID':
+        return 'unpaid'
+
+      default:
+        throw new Error('Not implemented')
+    }
+  }
 
   return {
     id,
     createdAt: createdAt.toString(),
     updatedAt: updatedAt.toString(),
     isPaid: paid,
+    status: getStatus(status),
     title,
     price,
     owner: {
       id: owner.id,
-      name: owner.name ?? 'No owner',
-      email: owner.email ?? 'No email',
+      name: owner.name,
+      email: owner.email,
       role: owner.role === 'ADMIN' ? UserRole.Admin : UserRole.User,
       avatar: owner.image,
     },

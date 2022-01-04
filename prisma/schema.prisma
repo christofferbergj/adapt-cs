@@ -15,6 +15,12 @@ enum Role {
   ADMIN
 }
 
+enum FineStatus {
+  PENDING
+  PAID
+  UNPAID
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -71,14 +77,15 @@ model FineType {
 }
 
 model Fine {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  owner     User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId   String
-  title     String   @default("Missing title")
-  price     Int      @default(10)
-  paid      Boolean  @default(false)
+  title     String     @default("Missing title")
+  price     Int        @default(10)
+  paid      Boolean    @default(false)
+  status    FineStatus @default(UNPAID)
 
   @@index([ownerId])
 }

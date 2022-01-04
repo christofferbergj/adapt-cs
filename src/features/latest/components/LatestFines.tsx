@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -9,15 +8,11 @@ import { ITEMS_PER_PAGE } from '@config/constants'
 import { useFines } from '@features/latest/hooks/useFines'
 
 import steffen from '/public/steffen.png'
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  DotsVerticalIcon,
-  DropdownMenuIcon,
-} from '@radix-ui/react-icons'
-import { Container } from '@app/core/components/layout/Container'
-import { Overview } from '@app/core/components/elements/Overview'
+import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import { Avatar } from '@app/core/components/elements/Avatar'
+import { Container } from '@app/core/components/layout/Container'
+import { FineStatus } from '@app/fines/components/FineStatus'
+import { Overview } from '@app/core/components/elements/Overview'
 
 export const LatestFines = () => {
   const [page, setPage] = useState(0)
@@ -51,58 +46,39 @@ export const LatestFines = () => {
               <span>Status</span>
             </Overview.Header>
 
-            {fines.map((fine) => (
-              <Overview.Row key={fine.id}>
-                <Overview.Name>
-                  <Avatar
-                    name={fine.owner.name}
-                    imageUrl={fine.owner.avatar}
-                    size="sm"
-                  />
+            {fines.map((fine) => {
+              return (
+                <Overview.Row key={fine.id}>
+                  <Overview.Name>
+                    <Avatar
+                      name={fine.owner.name}
+                      imageUrl={fine.owner.avatar}
+                      size="sm"
+                    />
 
-                  <span>{fine.owner.name}</span>
-                </Overview.Name>
+                    <span>{fine.owner.name}</span>
+                  </Overview.Name>
 
-                <Overview.Fee>
-                  <span>{fine.title}</span>
-                </Overview.Fee>
+                  <Overview.Fee>
+                    <span>{fine.title}</span>
+                  </Overview.Fee>
 
-                <Overview.Date>
-                  <span>
-                    {dayjs(fine.createdAt).format('DD.MM.YYYY - HH:mm')}
-                  </span>
-                </Overview.Date>
+                  <Overview.Date>
+                    <span>
+                      {dayjs(fine.createdAt).format('DD.MM.YYYY - HH:mm')}
+                    </span>
+                  </Overview.Date>
 
-                <Overview.Price>
-                  <span>{fine.price} kr.</span>
-                </Overview.Price>
+                  <Overview.Price>
+                    <span>{fine.price} kr.</span>
+                  </Overview.Price>
 
-                <Overview.Status>
-                  <span
-                    className={clsx('w-[10px] h-[10px] rounded-full', {
-                      'bg-green-9': fine.isPaid,
-                      'bg-red-9': !fine.isPaid,
-                    })}
-                  />
-
-                  <span>{fine.isPaid ? 'Betalt' : 'Ikke betalt'}</span>
-                </Overview.Status>
-
-                <div className="flex hidden flex-col pt-4 text-center lg:ml-auto sm:pt-5 lg:pt-0">
-                  <span
-                    className={clsx(
-                      'border rounded px-4 py-3 font-semibold lg:py-2',
-                      {
-                        'border-green-6 text-green-11 bg-green-3': fine.isPaid,
-                        'border-red-6 text-red-11 bg-red-3': !fine.isPaid,
-                      }
-                    )}
-                  >
-                    {fine.isPaid ? 'Betalt' : 'Ikke betalt'}
-                  </span>
-                </div>
-              </Overview.Row>
-            ))}
+                  <Overview.Status>
+                    <FineStatus status={fine.status} />
+                  </Overview.Status>
+                </Overview.Row>
+              )
+            })}
           </Overview>
 
           <div className="flex gap-6 justify-end items-center px-2 mt-4 w-full text-sm">

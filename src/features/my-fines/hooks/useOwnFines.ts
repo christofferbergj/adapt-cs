@@ -1,8 +1,9 @@
 import ms from 'ms'
 import { useCallback, useMemo } from 'react'
 
-import { type InferQueryInput, trpc } from '@server/types'
+import type { InferQueryInput } from '@server/types'
 import { ITEMS_PER_PAGE } from '@config/constants'
+import { trpc } from '@utils/trpc'
 
 type Params = Omit<InferQueryInput<'fines.own'>, 'skip'> & {
   page: number

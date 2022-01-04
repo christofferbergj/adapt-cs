@@ -5,15 +5,15 @@ import { InferQueryInput } from '@server/types'
 import { ITEMS_PER_PAGE } from '@config/constants'
 import { trpc } from '@utils/trpc'
 
-type Params = Omit<InferQueryInput<'fines.all'>, 'skip'> & {
+type Params = Omit<InferQueryInput<'fines.unpaid'>, 'skip'> & {
   page: number
 }
 
-export function useFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
+export function useUnpaidFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
   const skip = page * take
   const { prefetchQuery } = trpc.useContext()
 
-  const { data, ...rest } = trpc.useQuery(['fines.all', { take, skip }], {
+  const { data, ...rest } = trpc.useQuery(['fines.unpaid', { take, skip }], {
     keepPreviousData: true,
     staleTime: ms('10s'),
   })
@@ -28,12 +28,12 @@ export function useFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    const params: InferQueryInput<'fines.all'> = {
+    const params: InferQueryInput<'fines.unpaid'> = {
       skip: skip === 0 ? take : skip + take,
       take,
     }
 
-    return prefetchQuery(['fines.all', params], {
+    return prefetchQuery(['fines.unpaid', params], {
       staleTime: ms('10s'),
     })
   }, [hasMore, prefetchQuery, skip, take])

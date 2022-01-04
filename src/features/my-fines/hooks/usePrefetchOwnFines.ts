@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 
 import { ITEMS_PER_PAGE } from '@config/constants'
-import { trpc } from '@server/types'
+import { trpc } from '@utils/trpc'
 
 /**
  * Prefetch a list of the logged-in users fines

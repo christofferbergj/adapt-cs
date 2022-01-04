@@ -8,7 +8,7 @@ import {
   useSelectedUser,
 } from '@features/create-fine/createFineSlice'
 import { addNotification } from '@features/notifications/notification.slice'
-import { trpc } from '@server/types'
+import { trpc } from '@utils/trpc'
 import { useAppDispatch } from '@redux/hooks'
 
 export const CreateFine = () => {

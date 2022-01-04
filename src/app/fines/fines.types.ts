@@ -1,5 +1,7 @@
 import type { User } from '@app/users'
 
+export type FineStatus = 'pending' | 'paid' | 'unpaid'
+
 export type Fine = {
   id: string
   createdAt: string
@@ -8,6 +10,7 @@ export type Fine = {
   title: string
   price: number
   isPaid: boolean
+  status: FineStatus
 }
 
 export type FineList = {

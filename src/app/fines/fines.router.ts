@@ -8,13 +8,11 @@ import { ITEMS_PER_PAGE } from '@config/constants'
 import { createRouter } from '@server/createRouter'
 import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
 import { fineTransformer } from '@app/fines/transformers/fine.transformer'
+import { GetOwnInput, SkipTakeInput } from '@app/fines/validations'
 
 export const finesRouter = createRouter()
   .query('all', {
-    input: z.object({
-      take: z.number().min(1).optional(),
-      skip: z.number().min(0).optional(),
-    }),
+    input: SkipTakeInput,
     async resolve({ ctx, input }): Promise<FineList> {
       const [count, fines] = await ctx.prisma.$transaction([
         ctx.prisma.fine.count(),
@@ -58,11 +56,7 @@ export const finesRouter = createRouter()
     },
   })
   .query('own', {
-    input: z.object({
-      skip: z.number().min(0).optional(),
-      take: z.number().min(1).optional(),
-      userId: z.string().optional(),
-    }),
+    input: GetOwnInput,
     async resolve({ ctx, input }): Promise<FineList> {
       const { userId, skip, take } = input
 
@@ -176,5 +170,33 @@ export const finesRouter = createRouter()
       })
 
       return fineTransformer(result)
+    },
+  })
+  .query('unpaid', {
+    input: SkipTakeInput,
+    resolve: async ({ ctx, input }) => {
+      const [count, fines] = await ctx.prisma.$transaction([
+        ctx.prisma.fine.count({
+          where: {
+            status: 'UNPAID',
+          },
+        }),
+        ctx.prisma.fine.findMany({
+          where: {
+            status: 'UNPAID',
+          },
+          take: input?.take ?? ITEMS_PER_PAGE,
+          skip: input?.skip ?? 0,
+          include: {
+            owner: true,
+          },
+          orderBy: [{ createdAt: 'desc' }],
+        }),
+      ])
+
+      return {
+        count,
+        fines: fines.map(fineTransformer),
+      }
     },
   })
