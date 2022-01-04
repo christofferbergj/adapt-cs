@@ -24,7 +24,7 @@ export const LatestFines = () => {
     isFetching,
     prefetchNextPage,
     meta: { count, current, hasMore, pageTotal },
-  } = useFines({ page, take: ITEMS_PER_PAGE })
+  } = useFines({ page, perPage: ITEMS_PER_PAGE })
 
   useEffect(() => {
     if (!isFetching && hasMore) prefetchNextPage()

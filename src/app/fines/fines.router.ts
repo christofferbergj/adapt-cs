@@ -8,17 +8,27 @@ import { ITEMS_PER_PAGE } from '@config/constants'
 import { createRouter } from '@server/createRouter'
 import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
 import { fineTransformer } from '@app/fines/transformers/fine.transformer'
-import { GetOwnInput, SkipTakeInput } from '@app/fines/validations'
+import {
+  GetOwnInput,
+  PaginationInput,
+  SkipTakeInput,
+} from '@app/fines/validations'
+import { pagination } from '@utils/pagination'
 
 export const finesRouter = createRouter()
   .query('all', {
-    input: SkipTakeInput,
+    input: PaginationInput,
     async resolve({ ctx, input }): Promise<FineList> {
+      const { skip, take } = pagination.getSkipTake({
+        page: input.page ?? 0,
+        perPage: input.perPage ?? ITEMS_PER_PAGE,
+      })
+
       const [count, fines] = await ctx.prisma.$transaction([
         ctx.prisma.fine.count(),
         ctx.prisma.fine.findMany({
-          take: input?.take ?? ITEMS_PER_PAGE,
-          skip: input?.skip ?? 0,
+          take: take,
+          skip: skip,
           include: {
             owner: true,
           },

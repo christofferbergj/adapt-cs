@@ -1,43 +1,35 @@
-/**
- *
- * @param page
- * @param take
- */
 export function getPaginationSkip({
   page,
-  take,
+  perPage,
 }: {
   page: number
-  take: number
-}): number {
-  return page * take
+  perPage: number
+}): { skip: number; take: number; nextSkip: number } {
+  return {
+    skip: page * perPage,
+    take: perPage,
+    nextSkip: (page + 1) * perPage,
+  }
 }
 
-/**
- * Get pagination metadata from a skip/take API query
- * Used to build ui pagination
- *
- * @param count - Length of the data to paginate
- * @param page - Current paginated page
- * @param take - Amount of items to take from
- * @param skip - Current skip
- */
+/** */
 export function getPaginationMeta({
   count,
   page,
-  take,
-  skip,
+  perPage,
 }: {
   count: number
   page: number
-  take: number
-  skip: number
+  perPage: number
 }): {
   current: number
   hasMore: boolean
   pageTotal: number
 } {
-  const current = page === 0 ? 1 : page * take
+  const take = perPage
+  const { skip } = getPaginationSkip({ page, perPage })
+
+  const current = page === 0 ? 1 : skip
   const hasMore = skip + take < count
   const pageTotal = (page + 1) * take
 
@@ -49,6 +41,19 @@ export function getPaginationMeta({
 }
 
 export const pagination = {
-  getSkip: getPaginationSkip,
+  getSkipTake: getPaginationSkip,
   getMeta: getPaginationMeta,
 }
+
+// TODO: Make unit tests
+
+// const page = 0
+// const perPage = 10
+
+// const defaultSkipTake = pagination.getSkipTake({ page, perPage }) // { skip: 0, take: 10, nextSkip: 10 }
+// const nextSkipTake = pagination.getSkipTake({ page: page + 1, perPage }) // { skip: 10, take: 10, nextSkip: 20 }
+
+// // const nextPage = skip === 0 ? page : skip + page
+
+// console.log(defaultSkipTake)
+// console.log(nextSkipTake)

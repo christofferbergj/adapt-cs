@@ -6,14 +6,15 @@ import { ITEMS_PER_PAGE } from '@config/constants'
 import { trpc } from '@utils/trpc'
 import { pagination } from '@utils/pagination'
 
-type Params = Omit<InferQueryInput<'fines.unpaid'>, 'skip'> & {
+type Params = {
+  perPage: number
   page: number
 }
 
-export function useUnpaidFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
+export function useUnpaidFines({ page = 0, perPage = ITEMS_PER_PAGE }: Params) {
   const { prefetchQuery } = trpc.useContext()
 
-  const skip = pagination.getSkip({ page, take })
+  const { skip, take, nextSkip } = pagination.getSkipTake({ page, perPage })
 
   const { data, ...rest } = trpc.useQuery(['fines.unpaid', { take, skip }], {
     keepPreviousData: true,
@@ -26,22 +27,16 @@ export function useUnpaidFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
   const { current, hasMore, pageTotal } = pagination.getMeta({
     count,
     page,
-    take,
-    skip,
+    perPage,
   })
 
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    const params: InferQueryInput<'fines.unpaid'> = {
-      skip: skip === 0 ? take : skip + take,
-      take,
-    }
-
-    return prefetchQuery(['fines.unpaid', params], {
+    return prefetchQuery(['fines.unpaid', { take, skip: nextSkip }], {
       staleTime: ms('10s'),
     })
-  }, [hasMore, prefetchQuery, skip, take])
+  }, [hasMore, nextSkip, prefetchQuery, take])
 
   return {
     fines,

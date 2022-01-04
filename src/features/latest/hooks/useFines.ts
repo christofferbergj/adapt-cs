@@ -1,19 +1,19 @@
 import ms from 'ms'
 import { useCallback } from 'react'
 
-import { InferQueryInput } from '@server/types'
 import { ITEMS_PER_PAGE } from '@config/constants'
 import { trpc } from '@utils/trpc'
+import { pagination } from '@utils/pagination'
 
-type Params = Omit<InferQueryInput<'fines.all'>, 'skip'> & {
+type Params = {
+  perPage: number
   page: number
 }
 
-export function useFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
-  const skip = page * take
+export function useFines({ page = 0, perPage = ITEMS_PER_PAGE }: Params) {
   const { prefetchQuery } = trpc.useContext()
 
-  const { data, ...rest } = trpc.useQuery(['fines.all', { take, skip }], {
+  const { data, ...rest } = trpc.useQuery(['fines.all', { page, perPage }], {
     keepPreviousData: true,
     staleTime: ms('10s'),
   })
@@ -21,22 +21,19 @@ export function useFines({ page = 0, take = ITEMS_PER_PAGE }: Params) {
   const count = data?.count ?? 0
   const fines = data?.fines ?? []
 
-  const current = page === 0 ? 1 : page * take
-  const hasMore = skip + take < count
-  const pageTotal = (page + 1) * take
+  const { current, hasMore, pageTotal } = pagination.getMeta({
+    count,
+    page,
+    perPage,
+  })
 
   const prefetchNextPage = useCallback(() => {
     if (!hasMore) return
 
-    const params: InferQueryInput<'fines.all'> = {
-      skip: skip === 0 ? take : skip + take,
-      take,
-    }
-
-    return prefetchQuery(['fines.all', params], {
+    return prefetchQuery(['fines.all', { page: page + 1, perPage }], {
       staleTime: ms('10s'),
     })
-  }, [hasMore, prefetchQuery, skip, take])
+  }, [hasMore, page, perPage, prefetchQuery])
 
   return {
     fines,
