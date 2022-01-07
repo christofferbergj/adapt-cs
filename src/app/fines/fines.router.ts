@@ -182,6 +182,112 @@ export const finesRouter = createRouter()
       return fineTransformer(result)
     },
   })
+  .mutation('pay', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }): Promise<Fine> {
+      const fine = await ctx.prisma.fine.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+
+      invariant(fine, 'No fine was found')
+
+      const isOwner = ctx.user?.id === fine.ownerId
+
+      // Throw error if the user is not an admin
+      if (!isOwner) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'You are not the owner of this fine',
+        })
+      }
+
+      if (fine.status === 'PENDING') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'This fine is already pending',
+        })
+      }
+
+      if (fine.status === 'PAID') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'This fine is already paid',
+        })
+      }
+
+      // Update the fine and return it with the owner
+      const result = await ctx.prisma.fine.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: 'PENDING',
+        },
+        include: {
+          owner: true,
+        },
+      })
+
+      return fineTransformer(result)
+    },
+  })
+  .mutation('unpay', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }): Promise<Fine> {
+      const fine = await ctx.prisma.fine.findUnique({
+        where: {
+          id: input.id,
+        },
+      })
+
+      invariant(fine, 'No fine was found')
+
+      const isOwner = ctx.user?.id === fine.ownerId
+
+      // Throw error if the user is not an admin
+      if (!isOwner) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'You are not the owner of this fine',
+        })
+      }
+
+      if (fine.status === 'UNPAID') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'This fine is not paid',
+        })
+      }
+
+      if (fine.status === 'PAID') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'This fine is already paid',
+        })
+      }
+
+      // Update the fine and return it with the owner
+      const result = await ctx.prisma.fine.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status: 'UNPAID',
+        },
+        include: {
+          owner: true,
+        },
+      })
+
+      return fineTransformer(result)
+    },
+  })
   .query('unpaid', {
     input: SkipTakeInput,
     resolve: async ({ ctx, input }) => {

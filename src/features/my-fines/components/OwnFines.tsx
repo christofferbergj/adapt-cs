@@ -9,6 +9,7 @@ import { Container } from '@app/core/components/layout/Container'
 import { Overview } from '@app/core/components/elements/Overview'
 import { Avatar } from '@app/core/components/elements/Avatar'
 import { FineStatus } from '@app/fines/components/FineStatus'
+import { FineActions } from '@features/my-fines/components/FineActions'
 
 export const OwnFines = () => {
   const [page, setPage] = useState(0)
@@ -39,6 +40,7 @@ export const OwnFines = () => {
               <span className="basis-36">Dato</span>
               <span className="flex-1">Pris</span>
               <span className="flex-1">Status</span>
+              <span className="flex-1">Handlinger</span>
             </Overview.Header>
 
             {fines.map((fine) => (
@@ -69,6 +71,10 @@ export const OwnFines = () => {
                 <Overview.Status>
                   <FineStatus status={fine.status} />
                 </Overview.Status>
+
+                <Overview.Actions>
+                  <FineActions fine={fine} />
+                </Overview.Actions>
               </Overview.Row>
             ))}
           </Overview>
