@@ -17,6 +17,6 @@ export const getStatusText = (status: Fine['status']) => {
       return 'Ikke betalt'
 
     default:
-      throw new Error('Not implemented')
+      null
   }
 }

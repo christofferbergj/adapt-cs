@@ -8,7 +8,7 @@ import { GetStaticProps } from 'next'
 import { transformer } from '@server/types'
 
 const AdminFines: ExtendedNextPage = () => {
-  const { fines } = useUnpaidFines({ page: 0, take: ITEMS_PER_PAGE })
+  const { fines } = useUnpaidFines({ page: 0, perPage: ITEMS_PER_PAGE })
 
   console.log(fines)
 

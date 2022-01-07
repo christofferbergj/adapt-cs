@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async () => {
     transformer,
   })
 
-  await ssg.fetchQuery('fines.all', { take: ITEMS_PER_PAGE, skip: 0 })
+  await ssg.fetchQuery('fines.all', { page: 0, perPage: ITEMS_PER_PAGE })
 
   return {
     props: {
