@@ -10,3 +10,7 @@ export function getErrorMessage(error: unknown) {
 
   return String(error)
 }
+
+export function isError(error: unknown) {
+  return error instanceof Error
+}
