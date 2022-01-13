@@ -3,17 +3,17 @@ import { TRPCError } from '@trpc/server'
 import { nanoid } from 'nanoid'
 import { z } from 'zod'
 
-import type { Fine, FineLeader, FineList, MostPaidFine } from '@app/fines/index'
+import type { Fine, FineLeader, FineList, MostPaidFine } from '@app/fines'
 import { ITEMS_PER_PAGE } from '@config/constants'
 import { createRouter } from '@server/createRouter'
-import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
 import { fineTransformer } from '@app/fines/transformers/fine.transformer'
+import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
+import { pagination } from '@utils/pagination'
 import {
   GetOwnInput,
   PaginationInput,
   SkipTakeInput,
 } from '@app/fines/validations'
-import { pagination } from '@utils/pagination'
 
 export const finesRouter = createRouter()
   .query('all', {

@@ -1,6 +1,6 @@
 import superjson from 'superjson'
 
-import { createRouter } from './createRouter'
+import { createRouter } from '@server/createRouter'
 import { fineTypesRouter } from '@app/fine-types/fine-types.router'
 import { finesRouter } from '@app/fines/fines.router'
 import { usersRouter } from '@app/users/users.router'
@@ -17,6 +17,7 @@ export const appRouter = createRouter()
    * @link https://trpc.io/docs/data-transformers
    */
   .transformer(superjson)
+
   /**
    * Optionally do custom error (type safe!) formatting
    * @link https://trpc.io/docs/error-formatting
