@@ -4,6 +4,7 @@ import { useSession, signIn } from 'next-auth/react'
 import { Avatar } from '@app/core/components/elements/Avatar'
 import { Container } from '@app/core/components/layout/Container'
 import { Menu } from '@app/core/components/common/Menu'
+import Link from 'next/link'
 
 export const Header = () => {
   const { data: session, status } = useSession()
@@ -32,7 +33,14 @@ export const Header = () => {
               Sign in
             </button>
           ) : session?.user ? (
-            <Avatar name={session.user.name} imageUrl={session.user.avatar} />
+            <Link href="/" passHref>
+              <div>
+                <Avatar
+                  name={session.user.name}
+                  imageUrl={session.user.avatar}
+                />
+              </div>
+            </Link>
           ) : null}
 
           <Menu />
