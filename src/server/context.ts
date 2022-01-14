@@ -2,6 +2,7 @@ import * as trpc from '@trpc/server'
 import * as trpcNext from '@trpc/server/adapters/next'
 import { getSession } from 'next-auth/react'
 
+import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
 import { prisma } from '@lib/prisma'
 
 /**
@@ -19,12 +20,14 @@ export const createContext = async (
   }
 
   const user = await getUserFromSession()
+  const isAdmin = user && hasAdminRole(user)
 
   return {
     prisma,
     req: opts?.req,
     res: opts?.res,
     user,
+    isAdmin,
   }
 }
 
