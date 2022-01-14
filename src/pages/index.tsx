@@ -7,6 +7,7 @@ import { createContext } from '@server/context'
 import { transformer } from '@server/types'
 import { usePrefetchOwnFines } from '@features/my-fines/hooks/usePrefetchOwnFines'
 
+import { Container } from '@app/core/components/layout/Container'
 import { LatestFines } from '@features/latest/components/LatestFines'
 import { Layout } from '@app/core/components/common/Layout'
 
@@ -19,6 +20,10 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
+      <Container>
+        <p>Graph view</p>
+      </Container>
+
       <LatestFines />
     </Layout>
   )
