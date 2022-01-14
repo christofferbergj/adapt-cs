@@ -94,8 +94,8 @@ export const FineActions = ({ fine }: Props) => {
 
       case 'paid':
         return (
-          <Dropdown.Item>
-            <span>Paid</span>
+          <Dropdown.Item textValue="Already paid" disabled>
+            <span>Already paid</span>
           </Dropdown.Item>
         )
 
@@ -106,7 +106,7 @@ export const FineActions = ({ fine }: Props) => {
 
   return (
     <Dropdown open={isOpen} onOpenChange={toggleIsOpen}>
-      <Dropdown.Trigger>
+      <Dropdown.Trigger asChild>
         <IconButton aria-label="Options">
           <HamburgerMenuIcon />
         </IconButton>

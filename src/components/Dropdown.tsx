@@ -1,5 +1,5 @@
 import { styled, keyframes } from '@stitches/react'
-import { violet, mauve } from '@radix-ui/colors'
+import { purple, mauve } from '@radix-ui/colors'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 
 const slideUpAndFade = keyframes({
@@ -45,7 +45,7 @@ const StyledContent = styled(DropdownMenuPrimitive.Content, {
 const itemStyles = {
   fontSize: 13,
   lineHeight: 1,
-  color: violet.violet11,
+  color: purple.purple11,
   borderRadius: 3,
   display: 'flex',
   alignItems: 'center',
@@ -61,8 +61,8 @@ const itemStyles = {
   },
 
   '&:focus': {
-    backgroundColor: violet.violet9,
-    color: violet.violet1,
+    backgroundColor: purple.purple9,
+    color: purple.purple1,
   },
 }
 
@@ -75,8 +75,8 @@ const StyledRadioItem = styled(DropdownMenuPrimitive.RadioItem, {
 })
 const StyledTriggerItem = styled(DropdownMenuPrimitive.TriggerItem, {
   '&[data-state="open"]': {
-    backgroundColor: violet.violet4,
-    color: violet.violet11,
+    backgroundColor: purple.purple4,
+    color: purple.purple11,
   },
   ...itemStyles,
 })
@@ -90,7 +90,7 @@ const StyledLabel = styled(DropdownMenuPrimitive.Label, {
 
 const StyledSeparator = styled(DropdownMenuPrimitive.Separator, {
   height: 1,
-  backgroundColor: violet.violet6,
+  backgroundColor: purple.purple6,
   margin: 5,
 })
 

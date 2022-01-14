@@ -17,17 +17,15 @@ type Props = {
 
 export const FineActions = ({ fine }: Props) => {
   const dispatch = useAppDispatch()
-  const paidMutation = trpc.useMutation('fines.pay')
+  const payMutation = trpc.useMutation('fines.pay')
   const utils = trpc.useContext()
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleIsOpen = () => setIsOpen(!isOpen)
 
   const handlePaid = async () => {
-    console.log('handlePaid', fine.id)
-
     try {
-      await paidMutation.mutateAsync({
+      await payMutation.mutateAsync({
         id: fine.id,
       })
 

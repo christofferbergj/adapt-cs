@@ -9,7 +9,7 @@ export const Header = () => {
   const { data: session, status } = useSession()
 
   return (
-    <header className="mb-14">
+    <header>
       <Container>
         <div className="flex items-center justify-between py-6">
           {status === 'loading' ? (
