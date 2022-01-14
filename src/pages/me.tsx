@@ -10,20 +10,22 @@ const MyFines: NextPage = () => {
 
   return (
     <Layout>
-      {status === 'loading' ? (
-        <Container>
-          <span>Loading...</span>
-        </Container>
-      ) : session ? (
-        <OwnFines />
-      ) : (
-        <Container>
-          <h2 className="inline px-6 py-3 font-semibold border border-purple-9">
-            You are not signed in.{' '}
-            <span aria-label="emoji upside down face">🙃</span>
-          </h2>
-        </Container>
-      )}
+      <Layout.Space>
+        {status === 'loading' ? (
+          <Container>
+            <span>Loading...</span>
+          </Container>
+        ) : session ? (
+          <OwnFines />
+        ) : (
+          <Container>
+            <h2 className="inline px-6 py-3 font-semibold border border-purple-9">
+              You are not signed in.{' '}
+              <span aria-label="emoji upside down face">🙃</span>
+            </h2>
+          </Container>
+        )}
+      </Layout.Space>
     </Layout>
   )
 }

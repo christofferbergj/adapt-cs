@@ -18,24 +18,25 @@ type Props = {
 export const FineActions = ({ fine }: Props) => {
   const dispatch = useAppDispatch()
   const paidMutation = trpc.useMutation('fines.pay')
-  const unpayMutation = trpc.useMutation('fines.unpay')
   const utils = trpc.useContext()
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleIsOpen = () => setIsOpen(!isOpen)
 
   const handlePaid = async () => {
+    console.log('handlePaid', fine.id)
+
     try {
       await paidMutation.mutateAsync({
         id: fine.id,
       })
 
-      await utils.invalidateQueries('fines.own')
+      await utils.invalidateQueries('fines.pending')
 
       dispatch(
         addNotification({
           type: 'success',
-          message: 'Fine pending validation',
+          message: 'Fine paid',
         })
       )
     } catch (error) {
@@ -47,60 +48,6 @@ export const FineActions = ({ fine }: Props) => {
           message: message,
         })
       )
-    }
-  }
-
-  const handleUnpay = async () => {
-    try {
-      await unpayMutation.mutateAsync({
-        id: fine.id,
-      })
-
-      await utils.invalidateQueries('fines.own')
-
-      dispatch(
-        addNotification({
-          type: 'success',
-          message: 'Fine unpaid',
-        })
-      )
-    } catch (error) {
-      const message = getErrorMessage(error)
-
-      dispatch(
-        addNotification({
-          type: 'error',
-          message: message,
-        })
-      )
-    }
-  }
-
-  const payButton = (status: Fine['status']) => {
-    switch (status) {
-      case 'unpaid':
-        return (
-          <Dropdown.Item textValue="Pay" onSelect={handlePaid}>
-            <span>Pay</span>
-          </Dropdown.Item>
-        )
-
-      case 'pending':
-        return (
-          <Dropdown.Item textValue="Unpay" onSelect={handleUnpay}>
-            <span>Unpay</span>
-          </Dropdown.Item>
-        )
-
-      case 'paid':
-        return (
-          <Dropdown.Item>
-            <span>Paid</span>
-          </Dropdown.Item>
-        )
-
-      default:
-        return null
     }
   }
 
@@ -113,7 +60,9 @@ export const FineActions = ({ fine }: Props) => {
       </Dropdown.Trigger>
 
       <Dropdown.Content>
-        {payButton(fine.status)}
+        <Dropdown.Item textValue="Paid" onSelect={handlePaid}>
+          <span>Paid</span>
+        </Dropdown.Item>
 
         <Dropdown.Arrow className="-translate-x-3 lg:translate-x-0" />
       </Dropdown.Content>

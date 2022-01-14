@@ -195,28 +195,33 @@ export const finesRouter = createRouter()
 
       invariant(fine, 'No fine was found')
 
-      const isOwner = ctx.user?.id === fine.ownerId
+      /**
+       * If the user is not an admin, we can assume the pay action is valid
+       */
+      if (!ctx.isAdmin) {
+        const isOwner = ctx.user?.id === fine.ownerId
 
-      // Throw error if the user is not an admin
-      if (!isOwner) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'You are not the owner of this fine',
-        })
-      }
+        // Throw error if the user is not an admin
+        if (!isOwner) {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'You are not the owner of this fine',
+          })
+        }
 
-      if (fine.status === 'PENDING') {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'This fine is already pending',
-        })
-      }
+        if (fine.status === 'PENDING') {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'This fine is already pending',
+          })
+        }
 
-      if (fine.status === 'PAID') {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'This fine is already paid',
-        })
+        if (fine.status === 'PAID') {
+          throw new TRPCError({
+            code: 'FORBIDDEN',
+            message: 'This fine is already paid',
+          })
+        }
       }
 
       // Update the fine and return it with the owner
@@ -225,7 +230,7 @@ export const finesRouter = createRouter()
           id: input.id,
         },
         data: {
-          status: 'PENDING',
+          status: ctx.isAdmin ? 'PAID' : 'PENDING',
         },
         include: {
           owner: true,
@@ -288,25 +293,29 @@ export const finesRouter = createRouter()
       return fineTransformer(result)
     },
   })
-  .query('unpaid', {
-    input: SkipTakeInput,
-    resolve: async ({ ctx, input }) => {
+  .query('pending', {
+    resolve: async ({ ctx }) => {
+      // if (!ctx.isAdmin) {
+      //   throw new TRPCError({
+      //     code: 'FORBIDDEN',
+      //     message: 'Admin privileges is required',
+      //   })
+      // }
+
       const [count, fines] = await ctx.prisma.$transaction([
         ctx.prisma.fine.count({
           where: {
-            status: 'UNPAID',
+            status: 'PENDING',
           },
         }),
         ctx.prisma.fine.findMany({
           where: {
-            status: 'UNPAID',
+            status: 'PENDING',
           },
-          take: input?.take ?? ITEMS_PER_PAGE,
-          skip: input?.skip ?? 0,
           include: {
             owner: true,
           },
-          orderBy: [{ createdAt: 'desc' }],
+          orderBy: [{ createdAt: 'asc' }],
         }),
       ])
 
