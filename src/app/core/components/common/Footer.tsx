@@ -1,4 +1,3 @@
-import React from 'react'
 import { Container } from '@app/core/components/layout/Container'
 
 export const Footer = () => {

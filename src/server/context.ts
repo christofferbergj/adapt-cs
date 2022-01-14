@@ -20,7 +20,7 @@ export const createContext = async (
   }
 
   const user = await getUserFromSession()
-  const isAdmin = user && hasAdminRole(user)
+  const isAdmin = !!user && hasAdminRole(user)
 
   return {
     prisma,
