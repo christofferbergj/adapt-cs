@@ -1,37 +1,9 @@
 import ContentLoader from 'react-content-loader'
-import Link from 'next/link'
-import clsx from 'clsx'
-import { useRouter } from 'next/router'
 import { useSession, signIn } from 'next-auth/react'
 
 import { Avatar } from '@app/core/components/elements/Avatar'
 import { Container } from '@app/core/components/layout/Container'
-
-type Link = {
-  href: string
-  title: string
-  isActive?: boolean
-  isDisabled?: boolean
-}
-
-const links: Link[] = [
-  {
-    href: '/',
-    title: 'Latest',
-  },
-  {
-    href: '/statistics',
-    title: 'Stats',
-  },
-  {
-    href: '/me',
-    title: 'My fines',
-  },
-  {
-    href: '/create',
-    title: 'Create fine',
-  },
-]
+import { Menu } from '@app/core/components/common/Menu'
 
 export const Header = () => {
   const { data: session, status } = useSession()
@@ -62,6 +34,8 @@ export const Header = () => {
           ) : session?.user ? (
             <Avatar name={session.user.name} imageUrl={session.user.avatar} />
           ) : null}
+
+          <Menu />
         </div>
       </Container>
     </header>
