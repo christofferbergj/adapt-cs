@@ -1,9 +1,8 @@
-import type { GetStaticProps } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import { batch } from 'react-redux'
 import { createSSGHelpers } from '@trpc/react/ssg'
 import { useUnmount } from 'react-use'
 
-import type { ExtendedNextPage } from '@pages/_app'
 import { addNotification } from '@features/notifications/notification.slice'
 import { appRouter } from '@server/appRouter'
 import { createContext } from '@server/context'
@@ -16,7 +15,7 @@ import { CreateFine } from '@features/create-fine/components/CreateFine'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
 
-const Create: ExtendedNextPage = () => {
+const Create: NextPage = () => {
   const dispatch = useAppDispatch()
 
   // Reset createFineState when the create page unmounts

@@ -4,8 +4,6 @@ import NProgress from 'nprogress'
 import Router from 'next/router'
 import smoothscroll from 'smoothscroll-polyfill'
 import type { AppProps } from 'next/app'
-import type { NextPage } from 'next'
-import type { ReactElement, ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { SessionProvider } from 'next-auth/react'
@@ -17,54 +15,21 @@ import { env } from '@config/constants'
 import { store } from '@redux/store'
 import { transformer } from '@server/types'
 
-import { AuthGuard } from '@app/core/components/common/AuthGuard'
-import { Layout } from '@app/core/components/common/Layout'
-
-export type ExtendedNextPage<P = Record<string, unknown>, IP = P> = NextPage<
-  P,
-  IP
-> & {
-  getLayout?: (page: ReactElement) => ReactNode
-  layoutSpacing?: boolean
-  requireAuth?: boolean
-  requireAdmin?: boolean
-}
-
-type ExtendedAppProps<P = Record<string, unknown>> = AppProps<P> & {
-  Component: ExtendedNextPage<P>
-}
-
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-const App = ({ Component, pageProps }: ExtendedAppProps) => {
-  const withLayoutSpacing = Component.layoutSpacing ?? true
-
+const App = ({ Component, pageProps }: AppProps) => {
   useMount(() => {
     document.body.classList.remove('loading')
     smoothscroll.polyfill()
   })
 
-  const getLayout =
-    Component.getLayout ??
-    ((page) => (
-      <Layout>
-        {withLayoutSpacing ? <Layout.Space>{page}</Layout.Space> : page}
-      </Layout>
-    ))
-
   return (
     <>
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
-          {Component.requireAuth || Component.requireAdmin ? (
-            <AuthGuard requireAdmin={Component.requireAdmin}>
-              {getLayout(<Component {...pageProps} />)}
-            </AuthGuard>
-          ) : (
-            getLayout(<Component {...pageProps} />)
-          )}
+          <Component {...pageProps} />
         </Provider>
       </SessionProvider>
 
