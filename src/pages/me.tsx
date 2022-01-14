@@ -2,13 +2,14 @@ import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 
 import { Container } from '@app/core/components/layout/Container'
+import { Layout } from '@app/core/components/common/Layout'
 import { OwnFines } from '@features/my-fines/components/OwnFines'
 
 const MyFines: NextPage = () => {
   const { data: session, status } = useSession()
 
   return (
-    <>
+    <Layout>
       {status === 'loading' ? (
         <Container>
           <span>Loading...</span>
@@ -23,7 +24,7 @@ const MyFines: NextPage = () => {
           </h2>
         </Container>
       )}
-    </>
+    </Layout>
   )
 }
 

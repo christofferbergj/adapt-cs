@@ -14,6 +14,7 @@ import { Container } from '@app/core/components/layout/Container'
 import { CreateFine } from '@features/create-fine/components/CreateFine'
 import { FineTypesList } from '@features/create-fine/components/FineTypesList'
 import { UsersList } from '@features/create-fine/components/UsersList'
+import { Layout } from '@app/core/components/common/Layout'
 
 const Create: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -61,16 +62,18 @@ const Create: NextPage = () => {
   }
 
   return (
-    <Container>
-      <div className="flex flex-col gap-16">
-        <UsersList />
-        <FineTypesList />
-        <CreateFine />
+    <Layout>
+      <Container>
+        <div className="flex flex-col gap-16">
+          <UsersList />
+          <FineTypesList />
+          <CreateFine />
 
-        <button onClick={addTestNotifications}>Add test notifications</button>
-        <button onClick={addTestNotification}>Add test notification</button>
-      </div>
-    </Container>
+          <button onClick={addTestNotifications}>Add test notifications</button>
+          <button onClick={addTestNotification}>Add test notification</button>
+        </div>
+      </Container>
+    </Layout>
   )
 }
 

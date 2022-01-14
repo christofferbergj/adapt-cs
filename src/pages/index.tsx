@@ -8,6 +8,7 @@ import { transformer } from '@server/types'
 import { usePrefetchOwnFines } from '@features/my-fines/hooks/usePrefetchOwnFines'
 
 import { LatestFines } from '@features/latest/components/LatestFines'
+import { Layout } from '@app/core/components/common/Layout'
 
 const Home: NextPage = () => {
   /**
@@ -17,9 +18,9 @@ const Home: NextPage = () => {
   usePrefetchOwnFines()
 
   return (
-    <>
+    <Layout>
       <LatestFines />
-    </>
+    </Layout>
   )
 }
 

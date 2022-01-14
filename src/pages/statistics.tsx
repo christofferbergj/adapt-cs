@@ -5,15 +5,18 @@ import { appRouter } from '@server/appRouter'
 import { createContext } from '@server/context'
 import { transformer } from '@server/types'
 
+import { Layout } from '@app/core/components/common/Layout'
 import { Leaders } from '@features/statistics/components/Leaders'
 import { MostPaidFines } from '@features/statistics/components/MostPaidFines'
 
 export const Statistics: NextPage = () => {
   return (
-    <div className="flex flex-col gap-12 md:gap-20">
-      <Leaders />
-      <MostPaidFines />
-    </div>
+    <Layout>
+      <div className="flex flex-col gap-12 md:gap-20">
+        <Leaders />
+        <MostPaidFines />
+      </div>
+    </Layout>
   )
 }
 
