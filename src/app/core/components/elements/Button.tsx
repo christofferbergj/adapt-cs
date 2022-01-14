@@ -1,9 +1,7 @@
-import { ReactNode } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
-type Props = {
-  children: ReactNode
-}
+type Props = ComponentPropsWithoutRef<'button'>
 
-export const Button = ({ children }: Props) => {
-  return <button>{children}</button>
+export const Button = ({ children, ...rest }: Props) => {
+  return <button {...rest}>{children}</button>
 }
