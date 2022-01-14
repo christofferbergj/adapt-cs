@@ -1,18 +1,20 @@
 import ContentLoader from 'react-content-loader'
+import Link from 'next/link'
 import { useSession, signIn } from 'next-auth/react'
 
 import { Avatar } from '@app/core/components/elements/Avatar'
 import { Container } from '@app/core/components/layout/Container'
 import { Menu } from '@app/core/components/common/Menu'
-import Link from 'next/link'
 
 export const Header = () => {
   const { data: session, status } = useSession()
 
+  const user = session?.user
+
   return (
     <header>
       <Container>
-        <div className="flex items-center justify-between py-6">
+        <div className="flex justify-between items-center py-6">
           {status === 'loading' ? (
             <ContentLoader
               id="avatar-loader"
@@ -27,18 +29,16 @@ export const Header = () => {
             </ContentLoader>
           ) : status === 'unauthenticated' ? (
             <button
-              className="px-3 py-1 text-sm font-semibold hover:bg-gray-4 border border-gray-7 hover:border-gray-8 rounded transition-colors"
+              className="px-3 py-1 text-sm font-semibold rounded border transition-colors hover:bg-gray-4 border-gray-7 hover:border-gray-8"
               onClick={() => signIn('google')}
             >
               Sign in
             </button>
-          ) : session?.user ? (
+          ) : user ? (
             <Link href="/" passHref>
-              <div>
-                <Avatar
-                  name={session.user.name}
-                  imageUrl={session.user.avatar}
-                />
+              <div className="flex gap-3 items-center">
+                <Avatar name={user.name} imageUrl={user.avatar} />
+                <span className="text-sm font-semibold mt-1">{user.name}</span>
               </div>
             </Link>
           ) : null}

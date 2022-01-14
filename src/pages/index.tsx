@@ -20,11 +20,13 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <Container>
-        <p>Graph view</p>
-      </Container>
+      <Layout.Space>
+        <Container>
+          <p>Graph view</p>
+        </Container>
 
-      <LatestFines />
+        <LatestFines />
+      </Layout.Space>
     </Layout>
   )
 }
