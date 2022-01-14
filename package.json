@@ -23,8 +23,6 @@
     ]
   },
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
     "@next-auth/prisma-adapter": "^1.0.1",
     "@prisma/client": "^3.8.1",
     "@radix-ui/colors": "^0.1.8",
