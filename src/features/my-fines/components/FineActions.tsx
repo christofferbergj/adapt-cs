@@ -78,31 +78,12 @@ export const FineActions = ({ fine }: Props) => {
     }
   }
 
-  useKeyPressEvent(
-    'b',
-    (e) => {
-      e.preventDefault()
-
-      if (!e.metaKey) return
-      if (!isOpen) return
-
-      switch (fine.status) {
-        case 'unpaid':
-          handlePaid()
-        case 'pending':
-          handleUnpay()
-      }
-    },
-    null
-  )
-
   const payButton = (status: Fine['status']) => {
     switch (status) {
       case 'unpaid':
         return (
           <Dropdown.Item textValue="Pay" onSelect={handlePaid}>
             <span>Pay</span>
-            <Dropdown.RightSlot>⌘+B</Dropdown.RightSlot>
           </Dropdown.Item>
         )
 
@@ -110,7 +91,6 @@ export const FineActions = ({ fine }: Props) => {
         return (
           <Dropdown.Item textValue="Unpay" onSelect={handleUnpay}>
             <span>Unpay</span>
-            <Dropdown.RightSlot>⌘+B</Dropdown.RightSlot>
           </Dropdown.Item>
         )
 
@@ -118,7 +98,6 @@ export const FineActions = ({ fine }: Props) => {
         return (
           <Dropdown.Item>
             <span>Paid</span>
-            <Dropdown.RightSlot>⌘+B</Dropdown.RightSlot>
           </Dropdown.Item>
         )
 
@@ -138,7 +117,7 @@ export const FineActions = ({ fine }: Props) => {
       <Dropdown.Content>
         {payButton(fine.status)}
 
-        <Dropdown.Arrow />
+        <Dropdown.Arrow className="-translate-x-3 lg:translate-x-0" />
       </Dropdown.Content>
     </Dropdown>
   )

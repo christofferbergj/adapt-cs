@@ -56,11 +56,7 @@ const Price = ({ children }: Props) => {
 }
 
 const Status = ({ children }: Props) => {
-  return (
-    <div className="flex flex-1 gap-2 items-center pt-4 lg:pt-0">
-      {children}
-    </div>
-  )
+  return <div className="py-2 sm:py-3 lg:py-0">{children}</div>
 }
 
 const Actions = ({ children }: Props) => {
