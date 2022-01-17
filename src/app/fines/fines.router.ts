@@ -9,11 +9,7 @@ import { createRouter } from '@server/createRouter'
 import { fineTransformer } from '@app/fines/transformers/fine.transformer'
 import { hasAdminRole } from '@app/users/helpers/hasAdminRole'
 import { pagination } from '@utils/pagination'
-import {
-  GetOwnInput,
-  PaginationInput,
-  SkipTakeInput,
-} from '@app/fines/validations'
+import { GetOwnInput, PaginationInput } from '@app/fines/validations'
 
 export const finesRouter = createRouter()
   .query('all', {
