@@ -1,15 +1,12 @@
 import type { GetStaticProps, NextPage } from 'next'
-import { createSSGHelpers } from '@trpc/react/ssg'
 
 import { ITEMS_PER_PAGE } from '@config/constants'
-import { appRouter } from '@server/appRouter'
-import { createContext } from '@server/context'
-import { transformer } from '@server/types'
 import { usePrefetchOwnFines } from '@features/my-fines/hooks/usePrefetchOwnFines'
 
 import { Container } from '@app/core/components/layout/Container'
 import { LatestFines } from '@features/latest/components/LatestFines'
 import { Layout } from '@app/core/components/common/Layout'
+import { getSSGHelpers } from '@server/ssg'
 
 const Home: NextPage = () => {
   /**
@@ -32,11 +29,7 @@ const Home: NextPage = () => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const ssg = createSSGHelpers({
-    router: appRouter,
-    ctx: await createContext(),
-    transformer,
-  })
+  const ssg = await getSSGHelpers()
 
   await ssg.fetchQuery('fines.all', { page: 0, perPage: ITEMS_PER_PAGE })
 
