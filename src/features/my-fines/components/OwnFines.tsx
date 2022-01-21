@@ -60,7 +60,7 @@ export const OwnFines = () => {
 
                 <Overview.Date>
                   <span>
-                    {dayjs(fine.createdAt).format('DD.MM.YYYY - HH:mm')}
+                    {dayjs(fine.updatedAt).format('DD.MM.YYYY - HH:mm')}
                   </span>
                 </Overview.Date>
 
