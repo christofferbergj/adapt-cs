@@ -18,7 +18,8 @@ export const FineStatus = ({ status }: Props) => {
         })}
       />
 
-      <span>{getStatusText(status)}</span>
+      {/* flex-1 prevents the status circle from shrinking */}
+      <span className="flex-1">{getStatusText(status)}</span>
     </div>
   )
 }
