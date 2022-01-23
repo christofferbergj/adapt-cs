@@ -111,6 +111,11 @@ export const finesRouter = createRouter()
           },
         },
         take: 6,
+        orderBy: {
+          fines: {
+            _count: 'desc',
+          },
+        },
       })
 
       const transformed: FineLeader[] = result.map(
