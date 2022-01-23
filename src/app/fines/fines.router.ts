@@ -110,12 +110,6 @@ export const finesRouter = createRouter()
             },
           },
         },
-        take: 6,
-        orderBy: {
-          fines: {
-            _count: 'desc',
-          },
-        },
       })
 
       const transformed: FineLeader[] = result.map(
@@ -132,7 +126,7 @@ export const finesRouter = createRouter()
         (a, b) => b.totalPaid - a.totalPaid
       )
 
-      return sortedByTotalPaid
+      return sortedByTotalPaid.slice(0, 6)
     },
   })
   .mutation('create', {
