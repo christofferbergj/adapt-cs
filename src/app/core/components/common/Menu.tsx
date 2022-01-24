@@ -51,19 +51,21 @@ export const Menu = () => {
   const userIsAdmin = !!session?.user && hasAdminRole(session.user)
 
   return (
-    <Dialog.Root open={open} onOpenChange={() => setOpen(!open)}>
-      <button onClick={() => setOpen(true)}>
-        <HamburgerMenuIcon />
-      </button>
+    <Dialog.Root open={open} onOpenChange={() => setOpen(!open)} modal={false}>
+      <Dialog.Trigger>
+        <button className='relative z-30'>
+          {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
+        </button>
+      </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Content className="fixed inset-0 z-40 bg-purple-3">
-          <button
+        <Dialog.Content className="fixed inset-0 z-20 bg-purple-3">
+          {/* <button
             className="absolute top-[2.20rem] right-0 mr-5 md:mr-10 xl:mr-5"
             onClick={() => setOpen(false)}
           >
             <Cross2Icon />
-          </button>
+          </button> */}
 
           <ul className="flex flex-col gap-6 justify-center items-center h-full">
             {links.map(({ href, title, isDisabled, isAdmin }, i) => {
