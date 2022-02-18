@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <header>
       <Container>
-        <div className="flex justify-between items-center py-6">
+        <div className="flex items-center justify-between py-6">
           {status === 'loading' ? (
             <ContentLoader
               id="avatar-loader"
@@ -29,16 +29,16 @@ export const Header = () => {
             </ContentLoader>
           ) : status === 'unauthenticated' ? (
             <button
-              className="px-3 py-1 text-sm font-semibold rounded border transition-colors hover:bg-gray-4 border-gray-7 hover:border-gray-8"
+              className="rounded border border-gray-7 px-3 py-1 text-sm font-semibold transition-colors hover:border-gray-8 hover:bg-gray-4"
               onClick={() => signIn('google')}
             >
               Sign in
             </button>
           ) : user ? (
             <Link href="/" passHref>
-              <div className="flex gap-3 items-center">
+              <div className="flex items-center gap-3">
                 <Avatar name={user.name} imageUrl={user.avatar} />
-                <span className="text-sm font-semibold mt-1">{user.name}</span>
+                <span className="mt-1 text-sm font-semibold">{user.name}</span>
               </div>
             </Link>
           ) : null}

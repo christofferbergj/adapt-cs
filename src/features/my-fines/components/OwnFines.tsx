@@ -79,7 +79,7 @@ export const OwnFines = () => {
             ))}
           </Overview>
 
-          <div className="flex w-full mt-4 gap-6 justify-end px-2 items-center text-sm">
+          <div className="mt-4 flex w-full items-center justify-end gap-6 px-2 text-sm">
             <span className="font-semibold">
               {current} - {pageTotal < count ? pageTotal : count} of {count}
             </span>
@@ -88,7 +88,7 @@ export const OwnFines = () => {
               <button
                 onClick={() => setPage((old) => Math.max(old - 1, 0))}
                 disabled={page === 0}
-                className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 rounded border border-gray-7 px-2 py-1 transition-colors hover:border-gray-8 hover:bg-gray-4 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <ArrowLeftIcon />
               </button>
@@ -98,7 +98,7 @@ export const OwnFines = () => {
                   !isPreviousData && hasMore && setPage((old) => old + 1)
                 }
                 disabled={isPreviousData || !hasMore || isLoading}
-                className="flex gap-2 items-center px-2 py-1 rounded border border-gray-7 hover:border-gray-8 hover:bg-gray-4 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 rounded border border-gray-7 px-2 py-1 transition-colors hover:border-gray-8 hover:bg-gray-4 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <ArrowRightIcon />
               </button>

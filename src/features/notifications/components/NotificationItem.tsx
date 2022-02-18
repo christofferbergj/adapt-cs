@@ -126,7 +126,7 @@ export const NotificationItem = ({
   return (
     <motion.li
       className={clsx(
-        'flex items-center shadow px-4 py-3 rounded border transition-colors duration-100 min-w-[260px] text-sm',
+        'flex min-w-[260px] items-center rounded border px-4 py-3 text-sm shadow transition-colors duration-100',
         notificationStyleVariants[type]
       )}
       initial="initial"
@@ -137,13 +137,13 @@ export const NotificationItem = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <span className="font-medium max-w-sm">{message}</span>
+      <span className="max-w-sm font-medium">{message}</span>
 
-      <div className="pl-4 ml-auto">
+      <div className="ml-auto pl-4">
         <button
           onClick={handleDismiss}
           className={clsx(
-            'p-1 rounded transition-colors duration-100',
+            'rounded p-1 transition-colors duration-100',
             closeButtonStyleVariants[type]
           )}
         >

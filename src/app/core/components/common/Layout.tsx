@@ -10,9 +10,9 @@ type Props = {
 
 export const Root = ({ children }: Props) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="relative z-10 flex-1 w-full">{children}</main>
+      <main className="relative z-10 w-full flex-1">{children}</main>
       <Footer />
 
       <Notifications />

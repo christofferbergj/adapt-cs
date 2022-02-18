@@ -26,7 +26,7 @@ const Element = forwardRef<HTMLInputElement, Props>(({ ...rest }, ref) => {
   return (
     <input
       ref={ref}
-      className="px-4 py-2 w-full font-medium rounded border outline-none bg-gray-3 hover:bg-gray-4 focus:bg-gray-5 border-gray-7 focus:gray-8 placeholder:text-sm placeholder:text-gray-9"
+      className="focus:gray-8 w-full rounded border border-gray-7 bg-gray-3 px-4 py-2 font-medium outline-none placeholder:text-sm placeholder:text-gray-9 hover:bg-gray-4 focus:bg-gray-5"
       {...rest}
     />
   )

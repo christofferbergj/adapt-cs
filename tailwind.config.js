@@ -146,6 +146,10 @@ module.exports = {
           11: 'var(--yellow11)',
           12: 'var(--yellow12)',
         },
+
+        bronze: {
+          DEFAULT: '#CD7F32',
+        },
       },
     },
   },

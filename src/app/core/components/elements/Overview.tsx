@@ -10,7 +10,7 @@ const Root = ({ children, className }: Props) => {
   return (
     <div
       className={clsx(
-        'relative flex flex-col text-sm border border-gray-6 rounded-lg overflow-hidden bg-gray-1',
+        'relative flex flex-col overflow-hidden rounded-lg border border-gray-6 bg-gray-1 text-sm',
         className
       )}
     >
@@ -21,7 +21,7 @@ const Root = ({ children, className }: Props) => {
 
 const Header = ({ children }: Props) => {
   return (
-    <div className="hidden grid-cols-[1.5fr,1.5fr,1fr,1fr,1fr,1fr] items-center p-5 font-bold border-b lg:gap-8 lg:grid bg-gray-2 border-gray-6">
+    <div className="hidden grid-cols-[1.5fr,1.5fr,1fr,1fr,1fr,1fr] items-center border-b border-gray-6 bg-gray-2 p-5 font-bold lg:grid lg:gap-8">
       {children}
     </div>
   )
@@ -29,7 +29,7 @@ const Header = ({ children }: Props) => {
 
 const Row = ({ children }: Props) => {
   return (
-    <div className="items-center lg:gap-8 lg:grid grid-cols-[1.5fr,1.5fr,1fr,1fr,1fr,1fr] p-5 border-b border-gray-6 min-h-[81px] font-medium divide-y divide-dashed divide-gray-6 lg:divide-none">
+    <div className="min-h-[81px] grid-cols-[1.5fr,1.5fr,1fr,1fr,1fr,1fr] items-center divide-y divide-dashed divide-gray-6 border-b border-gray-6 p-5 font-medium lg:grid lg:gap-8 lg:divide-none">
       {children}
     </div>
   )
@@ -37,7 +37,7 @@ const Row = ({ children }: Props) => {
 
 const Name = ({ children }: Props) => {
   return (
-    <div className="flex gap-3 items-center pb-2 text-lg sm:pb-3 lg:pb-0 lg:text-sm">
+    <div className="flex items-center gap-3 pb-2 text-lg sm:pb-3 lg:pb-0 lg:text-sm">
       {children}
     </div>
   )

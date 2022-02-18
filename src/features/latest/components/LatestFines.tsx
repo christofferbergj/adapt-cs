@@ -49,14 +49,14 @@ export const LatestFines = () => {
         value={activeTab}
         onValueChange={(value) => setActiveTab(value as Tabs)}
       >
-        <div className="flex flex-col items-center px-4 mt-6">
-          <Tabs.List className="flex p-[6px] w-full rounded-full bg-gray-4">
+        <div className="mt-6 flex flex-col items-center px-4">
+          <Tabs.List className="flex w-full rounded-full bg-gray-4 p-[6px]">
             <AnimateSharedLayout>
               {triggers.map(({ title, type }, i) => (
                 <Tabs.Trigger
                   key={i}
                   value={type}
-                  className="relative flex-1 px-4 py-2 text-sm font-semibold text-center rounded-full"
+                  className="relative flex-1 rounded-full px-4 py-2 text-center text-sm font-semibold"
                 >
                   {type === activeTab && (
                     <motion.div

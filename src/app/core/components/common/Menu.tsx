@@ -53,21 +53,14 @@ export const Menu = () => {
   return (
     <Dialog.Root open={open} onOpenChange={() => setOpen(!open)} modal={false}>
       <Dialog.Trigger>
-        <button className='relative z-30'>
+        <button className="relative z-30">
           {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
         </button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
         <Dialog.Content className="fixed inset-0 z-20 bg-purple-3">
-          {/* <button
-            className="absolute top-[2.20rem] right-0 mr-5 md:mr-10 xl:mr-5"
-            onClick={() => setOpen(false)}
-          >
-            <Cross2Icon />
-          </button> */}
-
-          <ul className="flex flex-col gap-6 justify-center items-center h-full">
+          <ul className="flex h-full flex-col items-center justify-center gap-6">
             {links.map(({ href, title, isDisabled, isAdmin }, i) => {
               if (isAdmin && !userIsAdmin) return null
 
@@ -75,9 +68,9 @@ export const Menu = () => {
                 <Link href={href} key={i}>
                   <a
                     className={clsx(
-                      'font-semibold whitespace-nowrap leading-none transition-colors py-1 text-2xl',
+                      'whitespace-nowrap py-1 text-2xl font-semibold leading-none transition-colors',
                       {
-                        'opacity-40 pointer-events-none': isDisabled,
+                        'pointer-events-none opacity-40': isDisabled,
                         'text-purple-11 hover:text-black':
                           router.pathname !== href,
                         'text-purple-12': router.pathname === href,

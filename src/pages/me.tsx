@@ -19,7 +19,7 @@ const MyFines: NextPage = () => {
           <OwnFines />
         ) : (
           <Container>
-            <h2 className="inline px-6 py-3 font-semibold border border-purple-9">
+            <h2 className="inline border border-purple-9 px-6 py-3 font-semibold">
               You are not signed in.{' '}
               <span aria-label="emoji upside down face">🙃</span>
             </h2>

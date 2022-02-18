@@ -10,7 +10,7 @@ export const Container = ({ className, children }: Props) => {
   return (
     <div
       className={clsx(
-        'content-box mx-auto px-5 md:px-10 xl:px-5 w-full max-w-screen-md',
+        'content-box mx-auto w-full max-w-screen-md px-5 md:px-10 xl:px-5',
         className
       )}
     >

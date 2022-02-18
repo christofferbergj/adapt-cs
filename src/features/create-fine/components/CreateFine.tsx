@@ -54,14 +54,14 @@ export const CreateFine = () => {
       <motion.div
         initial={{ y: 0 }}
         animate={canCreateFine ? { y: -20 } : undefined}
-        className="flex fixed right-0 bottom-0 md:bottom-20 lg:bottom-40 left-0 justify-center shadow"
+        className="fixed right-0 bottom-0 left-0 flex justify-center shadow md:bottom-20 lg:bottom-40"
       >
         <button
           ref={submitRef}
           onClick={handleCreateFine}
           disabled={!canCreateFine || mutation.isLoading}
           className={clsx(
-            'px-4 py-3 md:max-w-min whitespace-nowrap rounded-lg transition-colors duration-100 disabled:opacity-40 disabled:cursor-not-allowed bg-purple-4 hover:bg-purple-5 active:bg-purple-6 text-purple-11 font-bold border border-purple-7 hover:border-purple-8 min-w-[180px]',
+            'min-w-[180px] whitespace-nowrap rounded-lg border border-purple-7 bg-purple-4 px-4 py-3 font-bold text-purple-11 transition-colors duration-100 hover:border-purple-8 hover:bg-purple-5 active:bg-purple-6 disabled:cursor-not-allowed disabled:opacity-40 md:max-w-min',
             {}
           )}
         >

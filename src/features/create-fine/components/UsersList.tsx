@@ -38,16 +38,16 @@ export const UsersList = () => {
       </Input.Wrapper>
 
       {list.length > 0 ? (
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
           {list.map(({ id, name, avatar }) => (
             <button
               key={id}
               className={clsx(
-                'flex flex-col gap-3 items-center justify-center p-5 rounded border transition-colors outline-none font-semibold min-h-[100px] lg:min-h-[140px]',
+                'flex min-h-[100px] flex-col items-center justify-center gap-3 rounded border p-5 font-semibold outline-none transition-colors lg:min-h-[140px]',
                 {
                   'border-gray-7 hover:border-gray-8 hover:bg-gray-4 focus:bg-gray-4':
                     selectedUser !== id,
-                  'border-purple-7 hover:border-purple-8 focus:border-purple-8 bg-purple-5 hover:bg-purple-6 focus:bg-purple-6':
+                  'border-purple-7 bg-purple-5 hover:border-purple-8 hover:bg-purple-6 focus:border-purple-8 focus:bg-purple-6':
                     selectedUser === id,
                 }
               )}

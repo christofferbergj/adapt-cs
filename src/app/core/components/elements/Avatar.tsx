@@ -41,15 +41,15 @@ export const Avatar = ({ imageUrl, name, size = 'md' }: Props) => {
   return (
     <div
       className={clsx(
-        'rounded-full overflow-hidden relative leading-none',
+        'relative overflow-hidden rounded-full leading-none',
         sizes[size],
         {
-          'border bg-purple-3 border-purple-6': showInitials,
+          'border border-purple-6 bg-purple-3': showInitials,
         }
       )}
     >
       {showInitials && (
-        <span className="flex overflow-hidden absolute inset-0 justify-center items-center font-medium -mb-[2px]">
+        <span className="absolute inset-0 -mb-[2px] flex items-center justify-center overflow-hidden font-medium">
           {initials}
         </span>
       )}

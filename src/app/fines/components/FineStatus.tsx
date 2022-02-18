@@ -9,9 +9,9 @@ type Props = {
 
 export const FineStatus = ({ status }: Props) => {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <span
-        className={clsx('w-[10px] h-[10px] rounded-full', {
+        className={clsx('h-[10px] w-[10px] rounded-full', {
           'bg-green-9': status === 'paid',
           'bg-yellow-9': status === 'pending',
           'bg-red-9': status === 'unpaid',
