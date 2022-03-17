@@ -52,8 +52,8 @@ export const Menu = () => {
 
   return (
     <Dialog.Root open={open} onOpenChange={() => setOpen(!open)} modal={false}>
-      <Dialog.Trigger>
-        <button className="relative z-30 flex h-[40px] w-[40px] items-center justify-center">
+      <Dialog.Trigger asChild>
+        <button className="relative z-30 flex h-[40px] w-[40px] items-center justify-center rounded border border-transparent transition-colors hover:border-purple-8">
           {open ? (
             <Cross2Icon width={24} height={24} />
           ) : (
