@@ -53,8 +53,12 @@ export const Menu = () => {
   return (
     <Dialog.Root open={open} onOpenChange={() => setOpen(!open)} modal={false}>
       <Dialog.Trigger>
-        <button className="relative z-30">
-          {open ? <Cross2Icon /> : <HamburgerMenuIcon />}
+        <button className="relative z-30 flex h-[40px] w-[40px] items-center justify-center">
+          {open ? (
+            <Cross2Icon width={24} height={24} />
+          ) : (
+            <HamburgerMenuIcon width={24} height={24} />
+          )}
         </button>
       </Dialog.Trigger>
 
