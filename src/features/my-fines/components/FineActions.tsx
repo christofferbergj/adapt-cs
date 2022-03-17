@@ -30,7 +30,10 @@ export const FineActions = ({ fine }: Props) => {
         id: fine.id,
       })
 
-      await utils.invalidateQueries('fines.own')
+      await Promise.all([
+        utils.invalidateQueries('fines.own'),
+        utils.invalidateQueries('fines.own-unpaid'),
+      ])
 
       dispatch(
         addNotification({

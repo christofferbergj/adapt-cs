@@ -1,12 +1,11 @@
 import type { GetStaticProps, NextPage } from 'next'
 
 import { ITEMS_PER_PAGE } from '@config/constants'
+import { getSSGHelpers } from '@server/ssg'
 import { usePrefetchOwnFines } from '@features/my-fines/hooks/usePrefetchOwnFines'
 
-import { Container } from '@app/core/components/layout/Container'
 import { LatestFines } from '@features/latest/components/LatestFines'
 import { Layout } from '@app/core/components/common/Layout'
-import { getSSGHelpers } from '@server/ssg'
 
 const Home: NextPage = () => {
   /**
@@ -18,10 +17,6 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Layout.Space>
-        <Container>
-          <p>Graph view</p>
-        </Container>
-
         <LatestFines />
       </Layout.Space>
     </Layout>

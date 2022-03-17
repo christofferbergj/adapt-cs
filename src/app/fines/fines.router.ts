@@ -95,6 +95,40 @@ export const finesRouter = createRouter()
       }
     },
   })
+  .query('own-unpaid', {
+    input: GetOwnInput,
+    async resolve({ ctx, input }): Promise<FineList> {
+      const { userId } = input
+
+      if (!ctx.user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED' })
+      }
+
+      const [count, fines] = await ctx.prisma.$transaction([
+        ctx.prisma.fine.count({
+          where: {
+            ownerId: userId,
+            status: 'UNPAID',
+          },
+        }),
+        ctx.prisma.fine.findMany({
+          where: {
+            ownerId: userId,
+            status: 'UNPAID',
+          },
+          include: {
+            owner: true,
+          },
+          orderBy: [{ paid: 'asc' }, { createdAt: 'desc' }],
+        }),
+      ])
+
+      return {
+        fines: fines.map(fineTransformer),
+        count,
+      }
+    },
+  })
   .query('leaders', {
     async resolve({ ctx }): Promise<FineLeader[]> {
       const result = await ctx.prisma.user.findMany({
@@ -225,7 +259,7 @@ export const finesRouter = createRouter()
           id: input.id,
         },
         data: {
-          status: ctx.isAdmin ? 'PAID' : 'PENDING',
+          status: 'PENDING',
         },
         include: {
           owner: true,
@@ -290,13 +324,6 @@ export const finesRouter = createRouter()
   })
   .query('pending', {
     resolve: async ({ ctx }) => {
-      // if (!ctx.isAdmin) {
-      //   throw new TRPCError({
-      //     code: 'FORBIDDEN',
-      //     message: 'Admin privileges is required',
-      //   })
-      // }
-
       const [count, fines] = await ctx.prisma.$transaction([
         ctx.prisma.fine.count({
           where: {
@@ -306,6 +333,31 @@ export const finesRouter = createRouter()
         ctx.prisma.fine.findMany({
           where: {
             status: 'PENDING',
+          },
+          include: {
+            owner: true,
+          },
+          orderBy: [{ createdAt: 'asc' }],
+        }),
+      ])
+
+      return {
+        count,
+        fines: fines.map(fineTransformer),
+      }
+    },
+  })
+  .query('unpaid', {
+    resolve: async ({ ctx }) => {
+      const [count, fines] = await ctx.prisma.$transaction([
+        ctx.prisma.fine.count({
+          where: {
+            status: 'UNPAID',
+          },
+        }),
+        ctx.prisma.fine.findMany({
+          where: {
+            status: 'UNPAID',
           },
           include: {
             owner: true,
