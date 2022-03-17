@@ -122,7 +122,9 @@ export const LatestFines = () => {
                   ))}
                 </Overview>
               </div>
-            ) : null}
+            ) : (
+              <span>You have no unpaid fines 🎉</span>
+            )}
           </Tabs.Content>
 
           <Tabs.Content value="overview">
