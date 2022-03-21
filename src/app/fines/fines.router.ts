@@ -259,7 +259,7 @@ export const finesRouter = createRouter()
           id: input.id,
         },
         data: {
-          status: 'PENDING',
+          status: 'PAID',
         },
         include: {
           owner: true,

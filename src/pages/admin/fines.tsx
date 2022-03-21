@@ -1,7 +1,7 @@
 import * as Tabs from '@radix-ui/react-tabs'
 import dayjs from 'dayjs'
 import type { GetStaticProps, NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import type { Fine } from '@app/fines'
 import { getSSGHelpers } from '@server/ssg'
