@@ -83,7 +83,10 @@ const AdminFines: NextPage = () => {
                   {unpaid.length > 0 ? (
                     <div>
                       {unpaid.map((fine) => (
-                        <div key={fine.id}>{fine.title}</div>
+                        <div className="flex gap-2" key={fine.id}>
+                          <span>{fine.owner.name}: </span>
+                          <span>{fine.title}</span>
+                        </div>
                       ))}
                     </div>
                   ) : (

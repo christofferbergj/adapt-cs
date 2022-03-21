@@ -13,6 +13,7 @@
     "prisma:studio": "prisma studio",
     "prepare": "husky install",
     "vercel-build": "prisma generate && next build",
+    "pscale:main": "pscale connect adapt-cs main --port 3309",
     "pscale:development": "pscale connect adapt-cs dev --port 3309",
     "pscale:shadow": "pscale connect adapt-cs shadow --port 3310",
     "pscale:dev": "run-p pscale:development pscale:shadow"
